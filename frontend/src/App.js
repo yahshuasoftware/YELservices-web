@@ -1,15 +1,12 @@
-
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes'; // Import the routes
 
 function App() {
   return (
-    <div >
-
-
-<h1 className="text-3xl font-bold underline">
-      Hello ysl-services
-    </h1>
-    </div>
+    <Router>
+      <AppRoutes /> {/* Render the routes here */}
+    </Router>
   );
 }
 
