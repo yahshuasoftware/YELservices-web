@@ -1,13 +1,10 @@
 import "./App.css";
+import ServicesAvailable from "./Component/Services/ServicesAvailable";
 
 function App() {
   return (
-    <div >
-
-
-<h1 className="text-3xl font-bold underline">
-      Hello ysl-services
-    </h1>
+    <div>
+      <ServicesAvailable/>
     </div>
   );
 }
