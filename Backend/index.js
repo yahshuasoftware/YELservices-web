@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-console.log("jaideep");
-=======
+
 const express = require("express");
 require('dotenv').config();
 var cors = require('cors')
@@ -30,4 +28,3 @@ app.use("/api", userroutes);
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
->>>>>>> 34168262b3940812b45c7064d66f43aed55c7dc9

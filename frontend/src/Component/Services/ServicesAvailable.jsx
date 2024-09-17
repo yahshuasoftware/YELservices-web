@@ -85,16 +85,16 @@ const toggleScrolling=()=>{
   setIsScrolling(!isScrolling);
 }
 
-const{popModel}=useContext(PopModelContext);
+// const{popModel}=useContext(PopModelContext);
 
   return (
     <>
-      <div className="bg-blue-300 md:w-1/2 sm:w-full lg:w-1/2 pb-9">
+      <div className="bg-blue-300 bg-opacity-5 md:w-full sm:w-full lg:w-full pb-9">
         <h1 className="rounded-t-md text-white  bg-black flex justify-center">
           Services Available Online
         </h1>
 {/*overflow-y-auto scrollbar scrollbar-thin scrollbar-track-black scrollbar-thumb-gray-500 hover:scrollbar-thumb-white*/}
-        <div className="  h-96  p-2 ">
+        <div className=" h-96  p-2 ">
           <div className="text-white text-xs font-bold justify-between flex">
             <span>Click Below Services for details</span>
             <span  
@@ -112,6 +112,7 @@ const{popModel}=useContext(PopModelContext);
             <input
               className=" w-full my-3 text-black p-2 rounded-md border-white"
               type="text"
+              placeholder="Search Here"
             />
           </div>
 
@@ -161,7 +162,7 @@ const{popModel}=useContext(PopModelContext);
             <DivyangKalyanDepartment />
             <SoilAndWaterConservation />
           </div>
-          {popModel && <PopModel/>}
+         
           
         </div>
       </div>
