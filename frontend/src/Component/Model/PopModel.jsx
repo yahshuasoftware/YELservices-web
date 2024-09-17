@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { PopModelContext } from '../../Store/PopModelContext'
+import PopModelContext from "../store/PopModelContext"
 
 const PopModel = ( props) => {
     const {closeModel}=useContext(PopModelContext)

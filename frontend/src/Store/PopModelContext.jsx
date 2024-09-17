@@ -19,4 +19,4 @@ const PopModelContextProvider = (props) => {
   )
 }
 
-export default PopModelContextProvider
+export default PopModelContextProvider;
