@@ -52,14 +52,14 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#6279B8]">
+    <div className="h-96 mt-16 flex items-center justify-center ">
       <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8">
-        <h2 className="text-2xl font-semibold text-center mb-6">Signup</h2>
+        <h2 className="text-xl font-semibold text-center mb-6">Signup</h2>
         <form onSubmit={handleSignup}>
           <input
             type="text"
             placeholder="Enter your name"
-            className="w-full h-14 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-14 px-4 mb-4 text-md border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -67,7 +67,7 @@ const Signup = () => {
           <input
             type="text"
             placeholder="Enter your email"
-            className="w-full h-14 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-14 px-4 mb-4 text-md border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -75,7 +75,7 @@ const Signup = () => {
           <input
             type="password"
             placeholder="Enter your password"
-            className="w-full h-14 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-14 px-4 mb-4 text-md border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -83,14 +83,14 @@ const Signup = () => {
           <input
             type="password"
             placeholder="Confirm your password"
-            className="w-full h-14 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-14 px-4 mb-4 text-md border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
           <input
             type="submit"
-            className="w-full h-14 bg-[#6279B8] text-white text-lg font-medium rounded-md mt-6 cursor-pointer hover:bg-[#006653] transition-colors"
+            className="w-full h-14 bg-[#6279B8] text-white text-md font-medium rounded-md mt-6 cursor-pointer hover:bg-[#006653] transition-colors"
             value="Signup"
           />
         </form>

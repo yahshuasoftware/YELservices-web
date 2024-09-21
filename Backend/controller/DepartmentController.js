@@ -10,11 +10,16 @@ const addDepartment = async (req, res) => {
       const existingDepartment = await Department.findOne({ name });
   
       if (existingDepartment) {
-        // Remove duplicates from the new certificates
-        const updatedCertificates = [...new Set([...existingDepartment.certificates, ...certificates])];
+        // Merge the existing and new certificates
+        const allCertificates = [...existingDepartment.certificates, ...certificates];
   
-        // Update the existing department with new certificates
-        existingDepartment.certificates = updatedCertificates;
+        // Remove duplicates by comparing the 'name' of each certificate
+        const uniqueCertificates = allCertificates.filter((certificate, index, self) => 
+          index === self.findIndex((c) => c.name === certificate.name)
+        );
+  
+        // Update the existing department with unique certificates
+        existingDepartment.certificates = uniqueCertificates;
         await existingDepartment.save();
   
         return res.status(200).json({ message: 'Department updated successfully', department: existingDepartment });
@@ -34,6 +39,7 @@ const addDepartment = async (req, res) => {
       res.status(500).json({ error: 'Failed to create or update department' });
     }
   };
+  
   
 
 // Get all departments
