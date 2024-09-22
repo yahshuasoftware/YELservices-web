@@ -17,25 +17,25 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [district, setDistrict] = useState('Pune'); // Default district
-  const [captchaValue, setCaptchaValue] = useState(null);
+  // const [captchaValue, setCaptchaValue] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!captchaValue) {
-      toast.error('Please verify that you are human.', {
-        position: "top-right",
-      });
-      return;
-    }
+  //   if (!captchaValue) {
+  //     toast.error('Please verify that you are human.', {
+  //       position: "top-right",
+  //     });
+  //     return;
+  //   }
 
     try {
       const response = await axios.post('http://localhost:8080/api/login', {
         email,
         password,
-        district,
-        captchaValue,
+        // district,
+        // captchaValue,
       });
 
       // Store the JWT token in localStorage
@@ -48,8 +48,8 @@ const Login = () => {
 
       // Redirect to dashboard after a short delay to allow the toast to show
       setTimeout(() => {
-        navigate('/dashboard'); // Assuming you have a dashboard route
-      }, 1500);
+        navigate('/dashbord'); // Assuming you have a dashboard route
+      }, 1000);
     } catch (error) {
       // Handle errors and show error toast
       if (error.response) {
@@ -64,9 +64,9 @@ const Login = () => {
     }
   };
 
-  const handleCaptchaChange = (value) => {
-    setCaptchaValue(value);
-  };
+  // const handleCaptchaChange = (value) => {
+  //   setCaptchaValue(value);
+  // };
 
   return (
     <div className="h-[80%] mt-7 flex items-center justify-center">
@@ -99,11 +99,11 @@ const Login = () => {
               <option key={dist} value={dist}>{dist}</option>
             ))}
           </select>
-
+{/* 
           <ReCAPTCHA
             sitekey="6Lfw60oqAAAAAP6WEMG_uT3BjpSi7gW5FKsLkySs" // Replace with your reCAPTCHA site key
             onChange={handleCaptchaChange}
-          />
+          /> */}
 
           <a href="#" className="text-[#6279B8] hover:underline text-sm">
             Forgot password?
@@ -128,6 +128,7 @@ const Login = () => {
 
       {/* Toast Container to show notifications */}
       <ToastContainer />
+
     </div>
   );
 };
