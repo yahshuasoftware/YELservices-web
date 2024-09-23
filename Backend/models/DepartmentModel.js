@@ -4,13 +4,21 @@ const certificateSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    
+    unique: true
   },
-  
   description: {
     type: String,
     required: false
+  },
+  proofOfIdentity: {
+    type: [String],
+    required: true
+  },
+  proofOfAddress: {
+    type: [String],
+    required: true
   }
+
 });
 
 const departmentSchema = new mongoose.Schema({

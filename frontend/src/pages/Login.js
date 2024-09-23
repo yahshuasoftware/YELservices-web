@@ -24,9 +24,7 @@ const Login = () => {
     e.preventDefault();
 
     if (!captchaValue) {
-      toast.error('Please verify that you are human.', {
-        position: "top-right",
-      });
+      toast.error('Please verify that you are human.', { position: "top-right" });
       return;
     }
 
@@ -34,49 +32,31 @@ const Login = () => {
       const response = await axios.post('http://localhost:8080/api/login', {
         email,
         password,
-        district,
-        captchaValue,
+        district,  // Pass district along with email and password
+    
       });
 
-      // Store the JWT token in localStorage
-      localStorage.setItem('token', response.data.jwt_token);
+      localStorage.setItem('token', response.data.jwt_token);  // Store JWT token
+      toast.success('Login successfully!', { position: "top-right" });
 
-      // Show success toast
-      toast.success('Login successfully!', {
-        position: "top-right",
-      });
-
-      // Redirect to dashboard after a short delay to allow the toast to show
-      setTimeout(() => {
-        navigate('/dashboard'); // Assuming you have a dashboard route
-      }, 1500);
+      setTimeout(() => navigate('/dashboard'), 1000);  // Redirect after successful login
     } catch (error) {
-      // Handle errors and show error toast
-      if (error.response) {
-        toast.error(error.response.data, {
-          position: "top-right",
-        });
-      } else {
-        toast.error('An error occurred during login', {
-          position: "top-right",
-        });
-      }
+      const message = error.response ? error.response.data : 'An error occurred during login';
+      toast.error(message, { position: "top-right" });
     }
   };
 
-  const handleCaptchaChange = (value) => {
-    setCaptchaValue(value);
-  };
+  const handleCaptchaChange = (value) => setCaptchaValue(value);
 
   return (
-    <div className="h-[80%] mt-7 flex items-center justify-center">
+    <div className="h-96 mt-7 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8">
         <h2 className="text-xl font-semibold text-center mb-6">Login</h2>
         <form onSubmit={handleLogin}>
           <input
             type="text"
             placeholder="Enter your email"
-            className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-14 px-4 mb-4 text-lg border border-gray-300 rounded-md"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -84,7 +64,7 @@ const Login = () => {
           <input
             type="password"
             placeholder="Enter your password"
-            className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-14 px-4 mb-4 text-lg border border-gray-300 rounded-md"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -93,7 +73,7 @@ const Login = () => {
           <select
             value={district}
             onChange={(e) => setDistrict(e.target.value)}
-            className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-14 px-4 mb-4 text-lg border border-gray-300 rounded-md"
           >
             {districts.map((dist) => (
               <option key={dist} value={dist}>{dist}</option>
@@ -105,28 +85,19 @@ const Login = () => {
             onChange={handleCaptchaChange}
           />
 
-          <a href="#" className="text-[#6279B8] hover:underline text-sm">
-            Forgot password?
-          </a>
+          <a href="#" className="text-sm hover:underline">Forgot password?</a>
           <input
             type="submit"
-            className="w-full h-10 bg-[#6279B8] text-white text-lg font-medium rounded-md mt-6 cursor-pointer hover:bg-[#006653] transition-colors"
+            className="w-full h-14 bg-blue-500 text-white rounded-md mt-6 cursor-pointer hover:bg-blue-600"
             value="Login"
           />
         </form>
         <div className="signup text-center mt-6">
           <span>Don't have an account?{' '}
-            <Link
-              to="/signup"
-              className="text-[#6279B8] cursor-pointer hover:underline"
-            >
-              Signup
-            </Link>
+            <Link to="/signup" className="hover:underline">Signup</Link>
           </span>
         </div>
       </div>
-
-      {/* Toast Container to show notifications */}
       <ToastContainer />
     </div>
   );

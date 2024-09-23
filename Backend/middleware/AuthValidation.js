@@ -2,47 +2,29 @@ const Joi = require('joi');
 
 const signupValidation = (req, res, next) => {
   const schema = Joi.object({
-    name: Joi.string()
-      .min(3)
-      .max(30)
-      .required(),
-    
-    password: Joi.string()
-      .pattern(new RegExp('^[a-zA-Z0-9!@#\\$%\\^&\\*\\)\\(+=._-]{3,30}$')) // Allow special characters
-      .required(),
-
-    email: Joi.string()
-      .email()
-      .required(),
-
-
- 
+    name: Joi.string().min(3).max(30).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+    district: Joi.string().required(),
   });
 
   const { error } = schema.validate(req.body);
-  if (error) {
-    return res.status(400).json({ message: "Signup validation failed", details: error.details }); // Return specific error message
-  }
+  if (error) return res.status(400).json({ message: "Validation failed", details: error.details });
 
-  next(); // Continue to the next middleware or route handler
+  next();
 };
 
 const loginValidation = (req, res, next) => {
   const schema = Joi.object({
-    password: Joi.string()// Allow special characters
-      .required(),
-
-    email: Joi.string()
-      .email()
-      .required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    district: Joi.string().required(),  // Add district validation here
   });
 
   const { error } = schema.validate(req.body);
-  if (error) {
-    return res.status(400).json({ message: "Login validation failed", details: error.details }); // Return specific error message
-  }
+  if (error) return res.status(400).json({ message: "Validation failed", details: error.details });
 
-  next(); // Continue to the next middleware or route handler
+  next();
 };
 
 module.exports = { signupValidation, loginValidation };
