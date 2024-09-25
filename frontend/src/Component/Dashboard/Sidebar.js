@@ -20,7 +20,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="px-4 py-2 text-left">
-            <a href="/agriculture" className="block hover:bg-blue-600">
+            <a href="/Agriculture" className="block hover:bg-blue-600">
               Agriculture
             </a>
           </li>

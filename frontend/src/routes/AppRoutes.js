@@ -9,7 +9,7 @@ const AppRoutes = () => {
     <>
           <Routes>
             <Route path="*" element={<Home/>}/>
-            <Route path="/" element={<Navigate to="/login" />} />{" "}
+            {/* <Route path="/" element={<Navigate to="/login" />} />{" "} */}
             {/* Redirect root to login */}
             <Route path="/dashbord" element={<Dashbord />} />
             <Route path="/service" element={<UplodeServices />} />

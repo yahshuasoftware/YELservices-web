@@ -23,12 +23,12 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-  //   if (!captchaValue) {
-  //     toast.error('Please verify that you are human.', {
-  //       position: "top-right",
-  //     });
-  //     return;
-  //   }
+    // if (!captchaValue) {
+    //   toast.error('Please verify that you are human.', {
+    //     position: "top-right",
+    //   });
+    //   return;
+    // }
 
     try {
       const response = await axios.post('http://localhost:8080/api/login', {
@@ -46,10 +46,7 @@ const Login = () => {
         position: "top-right",
       });
 
-      // Redirect to dashboard after a short delay to allow the toast to show
-      setTimeout(() => {
         navigate('/dashbord'); // Assuming you have a dashboard route
-      }, 1000);
     } catch (error) {
       // Handle errors and show error toast
       if (error.response) {
@@ -63,6 +60,8 @@ const Login = () => {
       }
     }
   };
+
+
 
   // const handleCaptchaChange = (value) => {
   //   setCaptchaValue(value);
