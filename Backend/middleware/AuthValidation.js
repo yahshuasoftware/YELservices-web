@@ -19,6 +19,7 @@ const loginValidation = (req, res, next) => {
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     district: Joi.string().required(),  // Add district validation here
+    state: Joi.string().required(),
   });
 
   const { error } = schema.validate(req.body);

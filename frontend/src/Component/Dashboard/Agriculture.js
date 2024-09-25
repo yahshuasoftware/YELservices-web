@@ -17,7 +17,7 @@ const Agriculture = () => {
 
     // Navigate based on the selected sub department
     if (subDepartment === 'Agriculture Licensing Services') {
-      navigate('/agriculture-licensing');
+      navigate('/agriculture');
     } else {
       alert('Please select a valid Sub Department');
     }

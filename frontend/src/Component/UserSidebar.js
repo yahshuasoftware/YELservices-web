@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { BiChevronRight, BiSearch, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
 
-const Sidebar = () => {
+const UserSidebar = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -78,4 +78,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default UserSidebar;
