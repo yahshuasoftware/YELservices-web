@@ -17,8 +17,7 @@ const UserSchema= new mongoose.Schema({
     unique: true, 
     
  },
- role:String,
- bio:String,
+ district: { type: String, required: true },
 
 
 })
