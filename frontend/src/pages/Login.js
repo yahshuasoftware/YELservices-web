@@ -205,7 +205,7 @@ const Login = () => {
             onChange={handleCaptchaChange}
           />
 
-          <a href="#" className="text-[#6279B8] hover:underline text-sm">
+          <a href="/" className="text-[#6279B8] hover:underline text-sm">
             Forgot password?
           </a>
           <input

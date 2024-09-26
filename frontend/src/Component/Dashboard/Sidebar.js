@@ -25,37 +25,37 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="px-4 py-2 text-left">
-            <a href="#" className="block hover:bg-blue-600">
+            <a href="/" className="block hover:bg-blue-600">
               Department of Animal Husbandry
             </a>
           </li>
           <li className="px-4 py-2 text-left">
-            <a href="#" className="block hover:bg-blue-600">
+            <a href="/" className="block hover:bg-blue-600">
               Co-operation Marketing
             </a>
           </li>
           <li className="px-4 py-2 text-left">
-            <a href="#" className="block hover:bg-blue-600">
+            <a href="/" className="block hover:bg-blue-600">
               Divyang Kalyan Department
             </a>
           </li>
           <li className="px-4 py-2 text-left">
-            <a href="#" className="block hover:bg-blue-600">
+            <a href="/" className="block hover:bg-blue-600">
               Finance Department
             </a>
           </li>
           <li className="px-4 py-2 text-left">
-            <a href="#" className="block hover:bg-blue-600">
+            <a href="/" className="block hover:bg-blue-600">
               Food & Public Distribution
             </a>
           </li>
           <li className="px-4 py-2 text-left">
-            <a href="#" className="block hover:bg-blue-600">
+            <a href="/" className="block hover:bg-blue-600">
               Forest Department
             </a>
           </li>
           <li className="px-4 py-2 text-left">
-            <a href="#" className="block hover:bg-blue-600">
+            <a href="/" className="block hover:bg-blue-600">
               Higher & Technical Education
             </a>
           </li>

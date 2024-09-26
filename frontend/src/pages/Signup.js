@@ -22,11 +22,13 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/api/signup', {
+      // const response = 
+      await axios.post('http://localhost:8080/api/signup', {
         name,
         email,
         password,
       });
+      
 
       // Show success toast
       toast.success('Signup successful! Please login.', {

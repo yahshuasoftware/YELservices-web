@@ -17,7 +17,7 @@ const UserSchema= new mongoose.Schema({
     unique: true, 
     
  },
- district: { type: String, required: true },
+ district: { type: String },
 
 
 })

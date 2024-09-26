@@ -6,13 +6,16 @@ import Home from "./Home";
 import DepartmentChart from "../pages/DepartmentChart";
 import Agriculture from "../Component/Dashboard/Agriculture";
 
+const token = localStorage.getItem('token');
 const AppRoutes = () => {
   return (
     <>
           <Routes>
+          {!token && <Route path="*" element={<Home />} />} 
+      {/* If no token, show Home route */}
+      {token && <Route path="*" element={<Navigate to="/dashbord" />} />} 
+      {/* If token exists, redirect to dashboard */}
             <Route path="*" element={<Home/>}/>
-            {/* <Route path="/" element={<Navigate to="/login" />} />{" "} */}
-            {/* Redirect root to login */}
             <Route path="/dashbords" element={<Dashbord />} />
             <Route path="/service" element={<UplodeServices />} />
             <Route path="/dashbord" element={<DepartmentChart/>} />
