@@ -13,8 +13,8 @@ const UplodeServices = () => {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const identityResponse = await axios.get('/api/identity-docs'); // Adjust endpoint as per your backend
-        setAvailableIdentityDocs(identityResponse.data);
+        const identityResponse = await axios.get('http://localhost:8080/api/departments'); // Adjust endpoint as per your backend
+        setAvailableIdentityDocs(identityResponse.data.certificates.proofOfIdentity);
 
         const addressResponse = await axios.get('/api/address-docs'); // Adjust endpoint as per your backend
         setAvailableAddressDocs(addressResponse.data);

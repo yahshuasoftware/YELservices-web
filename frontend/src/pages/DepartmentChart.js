@@ -1,7 +1,24 @@
 import React from "react";
 import Sidebar from "../Component/Dashboard/Sidebar";
 
+import { jwtDecode } from 'jwt-decode';
+
+import { useState, useEffect } from 'react';
+
 const DepartmentChart = () => {
+  const [user, setUser] = useState(null);
+  console.log(user);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwtDecode(token);
+      setUser(decoded);
+    }
+  }, []);
+
+  console.log(user);
+
   const data = [
     {
       id: 1,
@@ -21,87 +38,6 @@ const DepartmentChart = () => {
       secondAppeal: "Collector",
       available: "No",
     },
-    {
-      id: 3,
-      service: "Income Certificate",
-      days: 15,
-      officer: "Nayab Tahsildar",
-      firstAppeal: "Tahsildar",
-      secondAppeal: "Sub-Divisional Officer",
-      available: "Yes",
-    },
-    {
-      id: 4,
-      service: "Non Creamy Layer Certificate",
-      days: 21,
-      officer: "Sub-Divisional Officer",
-      firstAppeal: "Additional Collector",
-      secondAppeal: "Collector",
-      available: "No",
-    },
-    {
-      id: 5,
-      service: "Temporary Residence Certificate",
-      days: 7,
-      officer: "Tahsildar",
-      firstAppeal: "Sub-Divisional Officer",
-      secondAppeal: "Collector",
-      available: " Yes",
-    },
-    {
-      id: 6,
-      service: "Senior Citizen Certificate",
-      days: 7,
-      officer: "Tahsildar",
-      firstAppeal: "Sub-Divisional Officer",
-      secondAppeal: "Additional Collector",
-      available: "Yes",
-    },
-    {
-      id: 7,
-      service: "Landless Labour Certificate",
-      days: 15,
-      officer: "Tahsildar",
-      firstAppeal: "Sub-Divisional Officer",
-      secondAppeal: "Additional Collector",
-      available: "Yes",
-    },
-    {
-      id: 8,
-      service: "Agriculturist Certificate",
-      days: 15,
-      officer: "Tahsildar",
-      firstAppeal: "Sub-Divisional Officer",
-      secondAppeal: "Additional Collector",
-      available: "Yes",
-    },
-    {
-      id: 9,
-      service: "Permission for Cultural Programme",
-      days: 7,
-      officer: "Tahsildar and Taluka Executive Magistrate",
-      firstAppeal: "Sub-Divisional Magistrate",
-      secondAppeal: "Additional District Magistrate",
-      available: "Yes",
-    },
-    {
-      id: 10,
-      service: "Small Land Holder Certificate",
-      days: 15,
-      officer: "Tahsildar",
-      firstAppeal: "Sub-Divisional Officer",
-      secondAppeal: "Additional Collector",
-      available: "Yes",
-    },
-    {
-      id: 11,
-      service: "Certificate of Resldence in Hilly Area",
-      days: 7,
-      officer: "Tahsildar",
-      firstAppeal: "Sub-Divisional Officer",
-      secondAppeal: "Additional Collector",
-      available: "Yes",
-    },
     // Add more services here...
   ];
 
@@ -114,7 +50,7 @@ const DepartmentChart = () => {
       <div className="flex-grow container mx-auto my-10 ml-64 overflow-y-auto h-screen">
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h2 className="text-2xl font-bold text-center text-white bg-blue-500 py-2 mb-6 rounded-md">
-            Department Notified Services
+            Department Notified Services {user && user.email}
           </h2>
           <table className="min-w-full bg-white">
             <thead>
