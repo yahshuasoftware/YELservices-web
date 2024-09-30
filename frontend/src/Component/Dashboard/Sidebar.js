@@ -2,7 +2,7 @@ import React from "react";
 
 const Sidebar = () => {
     return (
-      <div className="w-64 h-screen bg-blue-800 text-white fixed top-0 left-0 overflow-y-auto">
+      <div className="w-64 h-screen bg-blue-800 text-white  top-0 left-0 overflow-y-auto">
         <ul className="space-y-1 py-4">
           <li className="px-4 py-2 text-left">
             <a href="/1" className="block hover:bg-blue-600">

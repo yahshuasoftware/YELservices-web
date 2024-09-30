@@ -44,7 +44,7 @@ const Agriculture = () => {
       <Sidebar />
       
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-6 ml-64">
+      <div className="container mx-auto px-4 py-6 ml-10">
         <h1 className="text-3xl font-bold text-orange-600">
           Department: <span className="text-green-600">Agriculture</span>
         </h1>

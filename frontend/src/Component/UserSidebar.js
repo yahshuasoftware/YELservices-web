@@ -60,7 +60,7 @@ const UserSidebar = () => {
 
           <div className="flex items-center justify-between mt-6">
             <div className="flex items-center space-x-4">
-              {isDarkMode ? <FaSun className="text-xl text-ocean-600 dark:text-ocean-400" /> : <FaMoon className="text-xl text-ocean-600 dark:text-ocean-400" />}
+              {isDarkMode ? <FaSun className="text-xl text-blue-600 hover:text-blue-400" /> : <FaMoon className="text-xl text-ocean-600 dark:text-ocean-400" />}
               {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">{isDarkMode ? "Light Mode" : "Dark Mode"}</span>}
             </div>
             <button onClick={toggleDarkMode} className="relative inline-flex items-center bg-ocean-200 dark:bg-ocean-600 rounded-full p-1 w-10 h-5">

@@ -5,8 +5,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes"; // Import the routes
 import { PopModelContext } from "./Store/PopModelContext";
 import PopModel from "./Component/Model/PopModel";
-import Footer from "./Component/Footer/Footer";
-import Navbar from "./Component/Navbar/Navbar";
+// import Footer from "./Component/Footer/Footer";
+// import Navbar from "./Component/Navbar/Navbar";
 
 function App() {
   const{popModel}=useContext(PopModelContext);
@@ -14,7 +14,7 @@ function App() {
     <>
      
      {popModel && <PopModel/>}
-     <Navbar/>
+     {/* <Navbar/> */}
         <div >
           <Router>
             <AppRoutes /> {/* Render the routes here */}
@@ -23,7 +23,7 @@ function App() {
           <div>
      
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   );
 }
