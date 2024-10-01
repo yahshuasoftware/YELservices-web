@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 
 const ContactUs = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex  items-center ">
         <Sidebar />
       {/* Main Container */}
       <div className="w-full max-w-4xl text-center p-8">

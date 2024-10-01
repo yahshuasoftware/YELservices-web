@@ -13,7 +13,7 @@ const UserSidebar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log("tushar   " + token)
+    console.log("token test"    + token)
     if (token) {
       try {
         // const decoded = jwtDecode(token);
@@ -29,7 +29,7 @@ const UserSidebar = () => {
               },
             });
 
-            console.log(response)
+            console.log("ttttt" + response)
   
             // Check if the response is successful
             if (!response.ok) {
@@ -40,7 +40,7 @@ const UserSidebar = () => {
             // Parse the response as JSON
             const userData = await response.json();
             setUser(userData);
-            console.log(userData)
+            console.log("user data " + userData)
           } catch (error) {
             console.error("Error fetching user profile:", error.message);
             setError(error.message);
@@ -73,13 +73,15 @@ const UserSidebar = () => {
 
   return (
     <div className={`${isDarkMode ? "dark" : ""} flex`}>
+
+      {console.log(user)}
       {/* Sidebar */}
       <nav className={`bg-white dark:bg-ocean-800 min-h-screen w-${isClosed ? "20" : "64"} p-4 transition-width duration-300`}>
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
             <div className="flex flex-col">
               <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YSL Services</span>
-              {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.username}</span>} {/* Display user email */}
+              {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.name}</span>} {/* Display user email */}
             </div>
           </div>
           <button onClick={toggleSidebar} className="bg-ocean-600 text-white p-2 rounded-full">

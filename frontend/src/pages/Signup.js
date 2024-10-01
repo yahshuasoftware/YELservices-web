@@ -22,7 +22,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/api/signup', {
+      await axios.post('http://localhost:8080/api/signup', {
         name,
         email,
         password,
@@ -40,7 +40,13 @@ const Signup = () => {
     } catch (error) {
       // Handle errors and show error toast
       if (error.response) {
-        toast.error(error.response.data, {
+        // Show specific validation error if available
+        const errorMessage =
+          error.response.data.details && error.response.data.details.length > 0
+            ? error.response.data.details[0].message
+            : error.response.data.message || 'An error occurred during signup';
+
+        toast.error(errorMessage, {
           position: "top-right",
         });
       } else {

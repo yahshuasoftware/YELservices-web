@@ -41,7 +41,7 @@ const Login = () => {
 
         setTimeout(() => {
           console.log("Navigating to dashboard");
-          navigate('/department-chart');
+          navigate('/DepartmentChart');
         }, 500);
       } else {
         toast.error('Failed to receive token', { position: "top-right" });
@@ -71,7 +71,7 @@ const Login = () => {
 
           setTimeout(() => {
             console.log("Navigating to dashboard");
-            navigate('/dashboard');
+            navigate('/departmentChart');
           }, 1000);
         } else {
           toast.error('Failed to receive token', { position: "top-right" });
