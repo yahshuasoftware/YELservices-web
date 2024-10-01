@@ -60,7 +60,7 @@ const addCertificate = async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
-
+    console.log(req.files);
     // Handle file uploads
     const proofOfIdentityDocs = req.files['proofOfIdentity'] ? req.files['proofOfIdentity'].map(file => ({
       filename: file.originalname,
@@ -68,14 +68,14 @@ const addCertificate = async (req, res) => {
       mimetype: file.mimetype,
       size: file.size
     })) : [];
-
+    
     const proofOfAddressDocs = req.files['proofOfAddress'] ? req.files['proofOfAddress'].map(file => ({
       filename: file.originalname,
       path: file.path,
       mimetype: file.mimetype,
       size: file.size
     })) : [];
-
+    
     user.certificatesApplied.push({
       certificateName: req.body.certificateName,
       uploadedDocuments: {
@@ -83,6 +83,7 @@ const addCertificate = async (req, res) => {
         proofOfAddress: proofOfAddressDocs
       }
     });
+
 
     await user.save();
     res.json(user);

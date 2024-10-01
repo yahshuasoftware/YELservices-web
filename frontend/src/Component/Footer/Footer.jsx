@@ -23,7 +23,7 @@ const Footer = () => {
                 </span>
               </div>
               <div class="col-md-4 col-sm-4 col-xs-12 footer-logo">
-                <a href="#" target="_blank">
+                <a  target="_blank">
                   {/* <img src="../../images/wc.png" class="pull-left img-responsive" alt="compliance" /> */}
                 </a>
                 <a class="ExternalLinkClick" rel="follow" target="_blank">

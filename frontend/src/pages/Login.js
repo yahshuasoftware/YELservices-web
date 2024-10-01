@@ -60,13 +60,6 @@ const Login = () => {
       }
     }
   };
-
-
-
-  // const handleCaptchaChange = (value) => {
-  //   setCaptchaValue(value);
-  // };
-  // Handle captcha change
   const handleCaptchaChange = (value) => {
     if (value) {
       setCaptchaValid(true); // Mark as valid if captcha is solved
