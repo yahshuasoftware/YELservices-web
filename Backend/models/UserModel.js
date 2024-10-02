@@ -1,4 +1,4 @@
-const mongoose= require("mongoose");
+const mongoose = require("mongoose");
 
 // ----{OLD ONLY STRING CAN BE STORED}
 // const userCertificateSchema = new mongoose.Schema({
@@ -84,8 +84,8 @@ const UserSchema= new mongoose.Schema({
  certificatesApplied: [userCertificateSchema], // Store details of applied certificates
 });
 
+const usermodel = mongoose.model("user", UserSchema);
 
 
-const usermodel=mongoose.model("user",UserSchema)
 
 module.exports=usermodel;

@@ -108,10 +108,10 @@ const DepartmentChart = () => {
   return (
     <div className="flex">
       {/* Sidebar Component */}
-      <Sidebar />
+      {/* <Sidebar /> */}
 
       {/* Main Content */}
-      <div className="flex-grow container mx-auto my-10 ml-64 overflow-y-auto h-screen">
+      <div className="flex-grow container mx-auto   overflow-y-auto h-screen">
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h2 className="text-2xl font-bold text-center text-white bg-blue-500 py-2 mb-6 rounded-md">
             Department Notified Services

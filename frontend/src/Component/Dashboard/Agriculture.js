@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
-import Sidebar from './Sidebar';
 import { toast } from 'react-toastify';
 
 const Agriculture = () => {
@@ -34,14 +33,14 @@ const Agriculture = () => {
     });
   console.log('redirecting to the page')
     // Redirect to login or home page
-    navigate('/'); // Adjust the route as needed
+    navigate('/home'); // Adjust the route as needed
   };
   
 
   return (
     <div className="flex">
       {/* Sidebar */}
-      <Sidebar />
+      {/* <Sidebar /> */}
       
       {/* Main Content */}
       <div className="container mx-auto px-4 py-6 ml-10">

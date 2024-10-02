@@ -1,14 +1,26 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';  // Import jwt-decode
 
-const UplodeServices = () => {
+const UploadServices = () => {
   const [certificateName, setCertificateName] = useState('');
-  const [proofOfIdentity, setProofOfIdentity] = useState(['']);
-  const [proofOfAddress, setProofOfAddress] = useState(['']);
+  const [proofOfIdentity, setProofOfIdentity] = useState([]);
+  const [proofOfAddress, setProofOfAddress] = useState([]);
   const [message, setMessage] = useState('');
   const [availableIdentityDocs, setAvailableIdentityDocs] = useState([]);
   const [availableAddressDocs, setAvailableAddressDocs] = useState([]);
+  const [userId, setUserId] = useState('');
+
+  // Extract user ID from JWT token
+  useEffect(() => {
+    const token = localStorage.getItem('token');  // Assuming token is stored in localStorage
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken._id);  // Set the user ID from the decoded token
+      console.log(decodedToken._id)
+    }
+  }, []);
 
   // Fetch proof of identity and address documents from backend on component load
   useEffect(() => {
@@ -17,22 +29,11 @@ const UplodeServices = () => {
         const response = await axios.get('http://localhost:8080/api/departments');
         const departments = response.data;
         
-        // Assuming there is only one department in the response
-        const department = departments[0];
-        
-        // Extract proofOfIdentity and proofOfAddress from the certificates
-        const certificates = department.certificates;
-        if (certificates && certificates.length > 0) {
-          const proofOfIdentityDocs = certificates[0].proofOfIdentity;
-          const proofOfAddressDocs = certificates[0].proofOfAddress;
-
-          setAvailableIdentityDocs(proofOfIdentityDocs);
-          setAvailableAddressDocs(proofOfAddressDocs);
-
-          console.log("Available Proof of Identity:", proofOfIdentityDocs);
-          console.log("Available Proof of Address:", proofOfAddressDocs);
-        } else {
-          console.log('No certificates found');
+        const department = departments[0];  // Assuming there is only one department
+        const certificates = department?.certificates || [];
+        if (certificates.length > 0) {
+          setAvailableIdentityDocs(certificates[0].proofOfIdentity || []);
+          setAvailableAddressDocs(certificates[0].proofOfAddress || []);
         }
       } catch (error) {
         console.error('Error fetching documents:', error);
@@ -44,72 +45,67 @@ const UplodeServices = () => {
   // Handle adding more inputs for identity/address proof
   const handleAddField = (fieldType) => {
     if (fieldType === 'identity') {
-      setProofOfIdentity([...proofOfIdentity, '']);
+      setProofOfIdentity([...proofOfIdentity, null]);
     } else if (fieldType === 'address') {
-      setProofOfAddress([...proofOfAddress, '']);
+      setProofOfAddress([...proofOfAddress, null]);
     }
   };
 
-  // Handle change for identity and address input fields
-  const handleInputChange = (index, value, fieldType) => {
-    if (fieldType === 'identity') {
-      const newProofOfIdentity = [...proofOfIdentity];
-      newProofOfIdentity[index] = value;
-      setProofOfIdentity(newProofOfIdentity);
-    } else if (fieldType === 'address') {
-      const newProofOfAddress = [...proofOfAddress];
-      newProofOfAddress[index] = value;
-      setProofOfAddress(newProofOfAddress);
-    }
-  };
-
-  // Handle file upload (image upload)
-  const handleFileUpload = async (e, fieldType, index) => {
+  // Handle file upload
+  const handleFileUpload = (e, fieldType, index) => {
     const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await axios.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      if (fieldType === 'identity') {
-        const newProofOfIdentity = [...proofOfIdentity];
-        newProofOfIdentity[index] = response.data.fileUrl; // Assuming backend returns the URL of the uploaded file
-        setProofOfIdentity(newProofOfIdentity);
-      } else if (fieldType === 'address') {
-        const newProofOfAddress = [...proofOfAddress];
-        newProofOfAddress[index] = response.data.fileUrl;
-        setProofOfAddress(newProofOfAddress);
-      }
-
-      setMessage('File uploaded successfully');
-    } catch (error) {
-      setMessage('Error uploading file');
+    if (fieldType === 'identity') {
+      const updatedFiles = [...proofOfIdentity];
+      updatedFiles[index] = file;
+      setProofOfIdentity(updatedFiles);
+    } else if (fieldType === 'address') {
+      const updatedFiles = [...proofOfAddress];
+      updatedFiles[index] = file;
+      setProofOfAddress(updatedFiles);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const data = { certificateName, proofOfIdentity, proofOfAddress };
-    
+    const formData = new FormData();
+    formData.append('certificateName', certificateName);
+
+    // Append proof of identity files
+    proofOfIdentity.forEach((file) => {
+      if (file) {
+        formData.append('proofOfIdentity', file);
+      }
+    });
+
+    // Append proof of address files
+    proofOfAddress.forEach((file) => {
+      if (file) {
+        formData.append('proofOfAddress', file);
+      }
+    });
+
     try {
-      await axios.post('/api/services', data);
-      setMessage('Service details saved successfully');
+      const token = localStorage.getItem('token');
+      console.log(userId)  // Retrieve JWT token from localStorage
+
+      const response = await axios.post(`http://localhost:8080/api/users/${userId}/certificates`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,  // Include JWT token in Authorization header
+        },
+      });
+
+      setMessage('Certificate details and files uploaded successfully');
     } catch (error) {
-      setMessage('Error saving service details');
+      console.error('Error submitting form:', error);
+      setMessage('Error uploading certificate details or files');
     }
   };
 
   return (
     <div className="max-w-lg mx-auto p-8 bg-white shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Add Service Details</h2>
+      <h2 className="text-2xl font-bold mb-6">Add Certificate Details</h2>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -127,23 +123,8 @@ const UplodeServices = () => {
         {/* Proof of Identity */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Proof of Identity</label>
-          {proofOfIdentity.map((identity, index) => (
+          {proofOfIdentity.map((_, index) => (
             <div key={index} className="mb-4">
-              <select
-                value={identity}
-                onChange={(e) => handleInputChange(index, e.target.value, 'identity')}
-                className="mt-1 p-2 block w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
-                required
-              >
-                <option value="">Select Proof of Identity</option>
-                {availableIdentityDocs.map((doc, idx) => (
-                  <option key={idx} value={doc}>
-                    {doc}
-                  </option>
-                ))}
-              </select>
-
-              {/* Upload Image for Proof of Identity */}
               <input
                 type="file"
                 onChange={(e) => handleFileUpload(e, 'identity', index)}
@@ -163,23 +144,8 @@ const UplodeServices = () => {
         {/* Proof of Address */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Proof of Address</label>
-          {proofOfAddress.map((address, index) => (
+          {proofOfAddress.map((_, index) => (
             <div key={index} className="mb-4">
-              <select
-                value={address}
-                onChange={(e) => handleInputChange(index, e.target.value, 'address')}
-                className="mt-1 p-2 block w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
-                required
-              >
-                <option value="">Select Proof of Address</option>
-                {availableAddressDocs.map((doc, idx) => (
-                  <option key={idx} value={doc}>
-                    {doc}
-                  </option>
-                ))}
-              </select>
-
-              {/* Upload Image for Proof of Address */}
               <input
                 type="file"
                 onChange={(e) => handleFileUpload(e, 'address', index)}
@@ -209,4 +175,4 @@ const UplodeServices = () => {
   );
 };
 
-export default UplodeServices;
+export default UploadServices;

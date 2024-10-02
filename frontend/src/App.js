@@ -20,9 +20,6 @@ function App() {
             <AppRoutes /> {/* Render the routes here */}
           </Router>
         </div>
-          <div>
-     
-      </div>
       {/* <Footer/> */}
     </>
   );
