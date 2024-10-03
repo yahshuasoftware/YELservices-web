@@ -7,6 +7,8 @@ import Agriculture from "../Component/Dashboard/Agriculture";
 import ContactUs from "../Component/Dashboard/ContactUs";
 import DepartmentChart from "../pages/DepartmentChart";
 import UserSidebar from "../Component/UserSidebar";
+import AadharService from "../Component/Dashboard/AadharService";
+import PanService from "../Component/Dashboard/PanService";
 
 const token = localStorage.getItem("token");
 const AppRoutes = () => {
@@ -32,6 +34,8 @@ const AppRoutes = () => {
           <Route path="service" element={<UplodeServices />} />
           <Route path="Agriculture" element={<Agriculture />} />
           <Route path="contact-us" element={<ContactUs />} />
+          <Route path="aadhar" element={<AadharService/>}/>
+          <Route path="pan" element={<PanService/>}/>
           <Route path="usersidebar" element={<UserSidebar />} />
         </Route>
       </Routes>
