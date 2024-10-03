@@ -5,8 +5,8 @@ import {jwtDecode} from 'jwt-decode';  // Import jwt-decode
 
 const UploadServices = () => {
   const [certificateName, setCertificateName] = useState('');
-  const [proofOfIdentity, setProofOfIdentity] = useState([]);
-  const [proofOfAddress, setProofOfAddress] = useState([]);
+  const [proofOfIdentity, setProofOfIdentity] = useState([""]);
+  const [proofOfAddress, setProofOfAddress] = useState([""]);
   const [message, setMessage] = useState('');
   const [availableIdentityDocs, setAvailableIdentityDocs] = useState([]);
   const [availableAddressDocs, setAvailableAddressDocs] = useState([]);
@@ -23,17 +23,49 @@ const UploadServices = () => {
   }, []);
 
   // Fetch proof of identity and address documents from backend on component load
+  // useEffect(() => {
+  //   const fetchDocuments = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:8080/api/departments');
+  //       const departments = response.data;
+        
+  //       const department = departments[0];  // Assuming there is only one department
+  //       const certificates = department?.certificates || [];
+  //       if (certificates.length > 0) {
+  //         setAvailableIdentityDocs(certificates[0].proofOfIdentity || []);
+  //         setAvailableAddressDocs(certificates[0].proofOfAddress || []);
+
+  //         console.log(availableAddressDocs);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching documents:', error);
+  //     }
+  //   };
+  //   fetchDocuments();
+  // }, []);
+
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/departments');
         const departments = response.data;
         
-        const department = departments[0];  // Assuming there is only one department
-        const certificates = department?.certificates || [];
-        if (certificates.length > 0) {
-          setAvailableIdentityDocs(certificates[0].proofOfIdentity || []);
-          setAvailableAddressDocs(certificates[0].proofOfAddress || []);
+        // Assuming there is only one department in the response
+        const department = departments[0];
+        
+        // Extract proofOfIdentity and proofOfAddress from the certificates
+        const certificates = department.certificates;
+        if (certificates && certificates.length > 0) {
+          const proofOfIdentityDocs = certificates[0].proofOfIdentity;
+          const proofOfAddressDocs = certificates[0].proofOfAddress;
+
+          setAvailableIdentityDocs(proofOfIdentityDocs);
+          setAvailableAddressDocs(proofOfAddressDocs);
+
+          console.log("Available Proof of Identity:", proofOfIdentityDocs);
+          console.log("Available Proof of Address:", proofOfAddressDocs);
+        } else {
+          console.log('No certificates found');
         }
       } catch (error) {
         console.error('Error fetching documents:', error);
@@ -119,6 +151,25 @@ const UploadServices = () => {
             required
           />
         </div>
+         {/* Select Dropdown for Available Identity Docs */}
+         <div className="mt-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Select Proof of Identity
+            </label>
+            <select
+              // value={}
+              // onChange={}
+              className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">Select Document</option>
+              {availableIdentityDocs.map((doc, idx) => (
+                <option key={idx} value={doc}>
+                  {doc}
+                </option>
+              ))}
+            </select>
+          </div>
+
 
         {/* Proof of Identity */}
         <div>
@@ -140,7 +191,29 @@ const UploadServices = () => {
             + Add more Identity
           </button>
         </div>
+         
 
+
+
+
+        <div className="mt-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Select Proof of Address
+            </label>
+            <select
+              // value={}
+              // onChange={}
+              className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">Select Document</option>
+              {availableAddressDocs.map((doc, idx) => (
+                <option key={idx} value={doc}>
+                  {doc}
+                </option>
+              ))}
+            </select>
+          </div>
+          
         {/* Proof of Address */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Proof of Address</label>
@@ -176,3 +249,5 @@ const UploadServices = () => {
 };
 
 export default UploadServices;
+
+
