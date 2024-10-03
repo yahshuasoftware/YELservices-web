@@ -16,7 +16,7 @@ const AadharService = () => {
               delivery and accurate Aadhaar based authentication.
             </p>
             <a
-              href=""
+              href="#"
               className="text-blue-600 font-medium mt-2 inline-block hover:underline"
             >
               Document update
@@ -35,7 +35,7 @@ const AadharService = () => {
               valid and is not deactivated.
             </p>
             <a
-              href=""
+              href="#"
               className="text-blue-600 font-medium mt-2 inline-block hover:underline"
             >
               Verify an Aadhaar Number
@@ -55,7 +55,7 @@ const AadharService = () => {
               Aadhaar?
             </p>
             <a
-              href=""
+              href="#"
               className="text-blue-600 font-medium mt-2 inline-block hover:underline"
             >
               Check Aadhaar Update Status
@@ -77,7 +77,7 @@ const AadharService = () => {
               update.
             </p>
             <a
-              href=""
+              href="#"
               className="text-blue-600 font-medium mt-2 inline-block hover:underline"
             >
               Verify Registered mobile or email id
@@ -97,7 +97,7 @@ const AadharService = () => {
               Linking status is fetched from NPCI Server.
             </p>
             <a
-              href=""
+              href="#"
               className="text-blue-600 font-medium mt-2 inline-block hover:underline"
             >
               Check Aadhaar Validity

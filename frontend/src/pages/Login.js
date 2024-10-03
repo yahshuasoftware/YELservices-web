@@ -109,12 +109,12 @@ const Login = () => {
   ];
 
   return (
-    <div className="h-80 mt-32 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8">
-        <h2 className="text-xl font-semibold text-center mb-6">Login</h2>
+    <div className="h-[80%] mt-7 flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6">
+        <h2 className="text-xl font-semibold text-center mb-5">Login</h2>
 
         {/* Toggle between Email/Password and Phone/OTP login */}
-        <div className="mb-4 flex justify-center">
+        <div className="mb-2 flex justify-center">
           <button 
             className={`px-4 py-2 rounded-md ${!loginWithOtp ? 'bg-[#6279B8] text-white' : 'bg-gray-300'}`} 
             onClick={() => setLoginWithOtp(false)}
@@ -136,7 +136,7 @@ const Login = () => {
               <input
                 type="text"
                 placeholder="Enter your email"
-                className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+                className="w-full h-10 px-4 mb-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -144,7 +144,7 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+                className="w-full h-10 px-4 mb-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -156,7 +156,7 @@ const Login = () => {
               <input
                 type="tel"
                 placeholder="Enter your phone number"
-                className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+                className="w-full h-10 px-4 mb-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 required
@@ -165,7 +165,7 @@ const Login = () => {
                 <input
                   type="text"
                   placeholder="Enter the OTP"
-                  className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+                  className="w-full h-10 px-4 mb-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                   required
@@ -178,7 +178,7 @@ const Login = () => {
           <select
             value={state}
             onChange={(e) => setState(e.target.value)}
-            className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-10 px-4 mb-2 text-base font-semibold border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
           >
             {states.map((stateItem) => (
               <option key={stateItem} value={stateItem}>{stateItem}</option>
@@ -188,30 +188,29 @@ const Login = () => {
           <select
             value={district}
             onChange={(e) => setDistrict(e.target.value)}
-            className="w-full h-10 px-4 mb-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full h-10 px-4 mb-4 text-base font-semibold border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
           >
             {districts.map((dist) => (
               <option key={dist} value={dist}>{dist}</option>
             ))}
           </select>
 
+     
           {/* Google ReCAPTCHA */}
           <ReCAPTCHA
             sitekey="6Lfw60oqAAAAAP6WEMG_uT3BjpSi7gW5FKsLkySs"  // Replace with your reCAPTCHA site key
             onChange={handleCaptchaChange}
           />
 
-          <a href="#" className="text-[#6279B8] hover:underline text-sm">
-            Forgot password?
-          </a>
+         
           <input
             type="submit"
-            className="w-full h-10 bg-[#6279B8] text-white text-lg font-medium rounded-md mt-6 cursor-pointer hover:bg-[#006653] transition-colors"
+            className="w-full h-10 bg-[#6279B8] text-white text-lg font-medium rounded-md mt-4 cursor-pointer hover:bg-[#006653] transition-colors"
             value={loginWithOtp ? (isOtpSent ? 'Verify OTP' : 'Send OTP') : 'Login'}
           />
         </form>
 
-        <div className="signup text-center mt-6">
+        <div className="signup text-center mt-4">
           <span>Don't have an account?{' '}
             <Link
               to="/signup"
@@ -219,7 +218,10 @@ const Login = () => {
             >
               Sign up
             </Link>
-          </span>
+          </span> <br></br>
+          <a href="#" className="text-[#6279B8] hover:underline text-sm">
+            Forgot password?
+          </a>
         </div>
       </div>
       <ToastContainer />

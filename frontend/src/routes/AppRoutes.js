@@ -1,45 +1,51 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import UplodeServices from "../pages/UplodeServices";
-import Dashbord from "../pages/Dashbord";
 import Home from "./Home";
 import Agriculture from "../Component/Dashboard/Agriculture";
 import ContactUs from "../Component/Dashboard/ContactUs";
 import DepartmentChart from "../pages/DepartmentChart";
-import UserSidebar from "../Component/UserSidebar";
+import UserSidebar from "../Component/UserDashbord/UserSidebar";
+import UserDashbords from "../Component/UserDashbord/UserDashbords"; // Ensure this is imported correctly
+import UserNotification from "../Component/UserDashbord/UserNotification";
+import Dashbord from "../pages/Dashbord" // Ensure this is imported correctly
+import ServicesList from "../Component/UserDashbord/ServicesList";
 import AadharService from "../Component/Dashboard/AadharService";
-import PanService from "../Component/Dashboard/PanService";
+import PanService from "../Component/Dashboard/PanService"
 
-const token = localStorage.getItem("token");
 const AppRoutes = () => {
+  const token = localStorage.getItem('token');
+
   return (
-    <>
-      <Routes>
-        {/* If no token, show Home route */}
-        {!token ? (
-          <Route path="/" element={<Home />} />
-        ) : (
-          // If token exists, redirect to dashboard
-          <Route path="/" element={<Navigate to="/dashbord" />} />
-        )}
+    <Routes>
+      {/* Redirect logic based on token */}
+      {!token && <Route path="*" element={<Home />} />}
+      {token && <Route path="/" element={<Navigate to="/dashboard" />} />}
 
-        {/* Redirect any other routes to Home or Dashboard based on token */}
-        <Route
-          path="*"
-          element={!token ? <Home /> : <Navigate to="/dashbord" />}
-        />
-
-        <Route path="/dashbord" element={<Dashbord />}>
+      {/* Main application routes */}
+      <Route path="/dashbord" element={<Dashbord />}>
           <Route index element={<DepartmentChart />} /> 
-          <Route path="service" element={<UplodeServices />} />
+         
           <Route path="Agriculture" element={<Agriculture />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="aadhar" element={<AadharService/>}/>
           <Route path="pan" element={<PanService/>}/>
+          
         </Route>
-          <Route path="/usersidebar" element={<UserSidebar />} />
-      </Routes>
-    </>
+      
+        <Route path="service" element={<UplodeServices />} />
+
+      {/* User dashboard route */}
+      {token &&  <Route path="/userdashboard" element={<UserSidebar />}>
+        {/* Nested dashboard routes */}
+        <Route index element={<UserDashbords />} /> {/* Default dashboard content */}
+        <Route path="notifications" element={<UserNotification />} />
+        <Route path="serviceslist" element={<ServicesList />} />
+      </Route>}
+
+      {/* Fallback route */}
+      <Route path="*" element={<Home />} />
+    </Routes>
   );
 };
 
