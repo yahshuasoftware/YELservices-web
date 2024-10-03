@@ -33,7 +33,7 @@ const Agriculture = () => {
     });
   console.log('redirecting to the page')
     // Redirect to login or home page
-    navigate('/home'); // Adjust the route as needed
+    navigate('/login'); // Adjust the route as needed
   };
   
 

@@ -36,8 +36,8 @@ const AppRoutes = () => {
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="aadhar" element={<AadharService/>}/>
           <Route path="pan" element={<PanService/>}/>
-          <Route path="usersidebar" element={<UserSidebar />} />
         </Route>
+          <Route path="/usersidebar" element={<UserSidebar />} />
       </Routes>
     </>
   );
