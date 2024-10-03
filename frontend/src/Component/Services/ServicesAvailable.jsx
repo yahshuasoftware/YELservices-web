@@ -59,7 +59,7 @@ const ServicesAvailable = () => {
 
   return (
     <>
-      <div className="w-4/5 bg-blue-300 bg-opacity-10 md:w-full sm:w-full lg:w-full pb-9">
+      <div className="w-4/5  bg-blue-300 bg-opacity-10 md:w-full sm:w-full lg:w-full pb-9">
         <h1 className="rounded-t-md text-white bg-black flex justify-center">
           Services Available Online
         </h1>
@@ -67,7 +67,7 @@ const ServicesAvailable = () => {
           <div className="text-white text-xs font-bold justify-between flex">
             <span>Click Below Services for details</span>
             <span
-              className="cursor-pointer gap-2 flex hover:bg-blue-950 p-1 rounded-md"
+              className="cursor-pointer gap-2 flex hover:bg-blue-700 p-1 rounded-md"
             >
               <div onClick={toggleScrolling} className="text-black hover:text-white text-xl">
                 {isScrolling ? <FaToggleOn /> : <FaToggleOff />}

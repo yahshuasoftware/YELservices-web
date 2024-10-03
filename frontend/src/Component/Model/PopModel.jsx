@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const PopModel = ({ certificate, closeModal }) => {
+  const navigate=useNavigate();
+
+  const handlenavigate = () => {
+   navigate("/service")
+
+  };
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -97,7 +104,7 @@ const PopModel = ({ certificate, closeModal }) => {
 
             {/* Buttons Section */}
             <div className="flex justify-end mt-4 space-x-3">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Apply</button>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onClick={handlenavigate} >Apply</button>
               <button
                 className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
                 onClick={closeModal}

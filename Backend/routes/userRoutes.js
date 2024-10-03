@@ -4,7 +4,7 @@ const UserController = require("../controller/UserController");
 const authenticateToken = require("../middleware/AuthMiddleware");
 const multer = require("multer");
 const router = express.Router();
-const path = require("path")
+const path = require('path');
 router.get('/profile',authenticateToken,UserController.getprofile);
 
 // Multer configuration for file uploads

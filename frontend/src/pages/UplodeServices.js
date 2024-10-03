@@ -151,9 +151,17 @@ const UploadServices = () => {
             required
           />
         </div>
-         {/* Select Dropdown for Available Identity Docs */}
-         <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">
+         
+
+
+        {/* Proof of Identity */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Proof of Identity</label>
+          {proofOfIdentity.map((_, index) => (
+
+            
+            <div key={index} className="mb-4">
+               <label className="block text-sm font-medium text-gray-700">
               Select Proof of Identity
             </label>
             <select
@@ -168,14 +176,6 @@ const UploadServices = () => {
                 </option>
               ))}
             </select>
-          </div>
-
-
-        {/* Proof of Identity */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Proof of Identity</label>
-          {proofOfIdentity.map((_, index) => (
-            <div key={index} className="mb-4">
               <input
                 type="file"
                 onChange={(e) => handleFileUpload(e, 'identity', index)}
@@ -196,9 +196,14 @@ const UploadServices = () => {
 
 
 
-        <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Select Proof of Address
+          
+        {/* Proof of Address */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Proof of Address</label>
+          {proofOfAddress.map((_, index) => (
+            <div key={index} className="mb-4">
+               <label className="block text-sm font-medium text-gray-700">
+              Select Proof of Identity
             </label>
             <select
               // value={}
@@ -212,13 +217,6 @@ const UploadServices = () => {
                 </option>
               ))}
             </select>
-          </div>
-          
-        {/* Proof of Address */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Proof of Address</label>
-          {proofOfAddress.map((_, index) => (
-            <div key={index} className="mb-4">
               <input
                 type="file"
                 onChange={(e) => handleFileUpload(e, 'address', index)}

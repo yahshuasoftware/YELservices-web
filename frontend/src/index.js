@@ -7,6 +7,7 @@ import PopModelContextProvider from './Store/PopModelContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  
   <PopModelContextProvider>
   <React.StrictMode>
     <App />
