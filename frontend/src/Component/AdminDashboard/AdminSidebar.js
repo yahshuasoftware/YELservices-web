@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { BiChevronRight, BiSearch, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
-import UserDashbords from "./UserDashbords";
-import UserNotification from "./UserNotification";
+import UserDashbords from "../UserDashbord/UserDashbords";
 import { Usercontext } from "../../Store/UserContext";
-import ServicesList from "./ServicesList";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import UserDetails from "./UserDetails";
+import UserInfo from "./UserInfo";
 
 const UserSidebar = () => {
   const [isClosed, setIsClosed] = useState(false); // Sidebar open/close state
@@ -16,9 +16,9 @@ const UserSidebar = () => {
   const [loading, setLoading] = useState(true); // Loading state for user data
   const [error, setError] = useState(null); // Error state
   const navigate = useNavigate(); // For navigation
-  
 
-  console.log(user)
+  console.log(user);
+  
   // Fetch user data from API
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -92,59 +92,45 @@ const UserSidebar = () => {
         </header>
 
         <div className="mt-8 space-y-6">
-        <ul className="space-y-4">
-  <li>
-    <Link to="/userdashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-      <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Dashboard</span>}
-    </Link>
-  </li>
-  
-  <li>
-    <Link to="/userdashboard/serviceslist" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-      <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Services list</span>}
-    </Link>
-  </li>
-  
-  <li>
-    <Link to="/userdashboard/notifications" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-      <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Notifications</span>}
-    </Link>
-  </li>
-  
-  <li>
-    <button onClick={handleLogout} className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md w-full">
-      <BiLogOut className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Logout</span>}
-    </button>
-  </li>
-</ul>
+          <ul className="space-y-4">
+            <li>
+              <Link to="/Admindashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+                <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Dashboard</span>}
+              </Link>
+            </li>
 
+            <li>
+              <Link to="/userdashboard/serviceslist" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+                <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Services list</span>}
+              </Link>
+            </li>
+
+            <li>
+              <Link to="/userdashboard/notifications" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+                <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Notifications</span>}
+              </Link>
+            </li>
+
+            <li>
+              <button onClick={handleLogout} className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md w-full">
+                <BiLogOut className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Logout</span>}
+              </button>
+            </li>
+          </ul>
         </div>
-
-        {/* <div className="mt-auto">
-          <div className="flex items-center justify-between mt-6">
-            <div className="flex items-center space-x-4">
-              {isDarkMode ? <FaSun className="text-xl text-ocean-600 dark:text-ocean-400" /> : <FaMoon className="text-xl text-ocean-600 dark:text-ocean-400" />}
-              {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">{isDarkMode ? "Light Mode" : "Dark Mode"}</span>}
-            </div>
-            <button onClick={toggleDarkMode} className="relative inline-flex items-center bg-ocean-200 dark:bg-ocean-600 rounded-full p-1 w-10 h-5">
-              <span className={`w-4 h-4 bg-white dark:bg-ocean-800 rounded-full transform transition-transform ${isDarkMode ? "translate-x-5" : ""}`} />
-            </button>
-          </div>
-        </div> */}
       </nav>
 
       {/* Main content */}
       <section className="flex-1 p-6">
-        <div className="text-xl font-semibold text-ocean-800 dark:text-ocean-100">Dashboard Sidebar</div>
+        <div className="text-xl font-semibold text-ocean-800 dark:text-ocean-100"> Admin Dashboard </div>
         <Usercontext.Provider value={user}>
           <Routes>
-            <Route path="/" element={<UserDashbords />} />
-            <Route path="notifications" element={<UserNotification />} />
-            <Route path="serviceslist" element={<ServicesList />} />
+            <Route path="/" element={<UserDetails />} />
+            <Route path="/user/:userId" element={<UserInfo />} /> {/* Dynamic route for user info */}
           </Routes>
         </Usercontext.Provider>
       </section>
