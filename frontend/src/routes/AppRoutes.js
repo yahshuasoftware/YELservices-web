@@ -15,6 +15,9 @@ import PanService from "../Component/Dashboard/PanService";
 import AdminSidebar from "../Component/AdminDashboard/AdminSidebar";
 import UserDetails from "../Component/AdminDashboard/UserDetails";
 import UserInfo from "../Component/AdminDashboard/UserInfo";
+import DepartmentPage from "../Component/AdminDashboard/DepartmentPage";
+import AddCertificateForm from "../Component/AdminDashboard/AddCertificateForm";
+import AddDepartmentForm from "../Component/AdminDashboard/AddDepartmentForm";
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -51,6 +54,9 @@ const AppRoutes = () => {
           {/* Nested dashboard routes */}
           <Route index element={<UserDetails />} />
           <Route path="user/:userId" element={<UserInfo />} /> {/* Route for User Info page */}
+          <Route path="department" element={<DepartmentPage />} />
+          <Route path="addCertificate" element={<AddCertificateForm />} />
+          <Route path="addDepartment" element={<AddDepartmentForm />} />
         </Route>
       )}
 

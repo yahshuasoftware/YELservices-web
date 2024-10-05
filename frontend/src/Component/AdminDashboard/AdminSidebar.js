@@ -8,6 +8,9 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import UserDetails from "./UserDetails";
 import UserInfo from "./UserInfo";
+import DepartmentPage from "./DepartmentPage";
+import AddCertificateForm from "./AddCertificateForm";
+import AddDepartmentForm from "./AddDepartmentForm";
 
 const UserSidebar = () => {
   const [isClosed, setIsClosed] = useState(false); // Sidebar open/close state
@@ -101,16 +104,22 @@ const UserSidebar = () => {
             </li>
 
             <li>
-              <Link to="/userdashboard/serviceslist" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+              <Link to="/admindashboard/department" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
                 <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Services list</span>}
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">service Management</span>}
               </Link>
             </li>
 
             <li>
-              <Link to="/userdashboard/notifications" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+              <Link to="/Admindashboard/addCertificate" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
                 <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Notifications</span>}
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">addCerticate</span>}
+              </Link>
+            </li>
+            <li>
+              <Link to="/Admindashboard/addDepartment" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+                <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">addDepartment</span>}
               </Link>
             </li>
 
@@ -131,6 +140,9 @@ const UserSidebar = () => {
           <Routes>
             <Route path="/" element={<UserDetails />} />
             <Route path="/user/:userId" element={<UserInfo />} /> {/* Dynamic route for user info */}
+            <Route path="/department" element={<DepartmentPage />} /> {/* Dynamic route for user info */}
+            <Route path="/addCertificate" element={<AddCertificateForm />} />
+            <Route path="/addDepartment" element={<AddDepartmentForm />} />
           </Routes>
         </Usercontext.Provider>
       </section>
