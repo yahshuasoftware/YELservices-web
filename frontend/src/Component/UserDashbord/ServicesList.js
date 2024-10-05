@@ -7,6 +7,7 @@ const ServicesList = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // Add search state
 
   // Fetch departments and certificates from server
   useEffect(() => {
@@ -57,6 +58,26 @@ const ServicesList = () => {
     setSelectedCertificate(null);
   };
 
+   // Handle search input
+   const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase());
+  };
+
+  // Filtered departments and certificates based on search term
+  const filteredDepartments = departments
+    .map((department) => ({
+      ...department,
+      certificates: department.certificates.filter((certificate) =>
+        certificate.name.toLowerCase().includes(searchTerm)
+      ),
+    }))
+    .filter(
+      (department) =>
+        department.name.toLowerCase().includes(searchTerm) ||
+        department.certificates.length > 0
+    );
+
+
   return (
     <>
       <div className="w-4/5 bg-white bg-opacity-10 md:w-full sm:w-full lg:w-full pb-9">
@@ -80,12 +101,40 @@ const ServicesList = () => {
              className="w-full p-3 rounded-md border-2 border-black text-black focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out hover:border-blue-500 placeholder-gray-500"
              type="text"
              placeholder="Search Here"
+             value={searchTerm}
+              onChange={handleSearchChange}
              />
         </div>
 
 
           <div ref={scrollbarDivRef} className="p-1 overflow-y-auto h-72 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent hover:scrollbar-thumb-white w-full max-w-4xl">
-            {departments.map((department, deptIndex) => (
+
+          {filteredDepartments.length > 0 ? (
+              filteredDepartments.map((department, deptIndex) => (
+                <div key={deptIndex}>
+                  <h1 className="text-black text-2xl font-bold mb-4">
+                    {department.name}
+                  </h1>
+                  <div className="grid grid-cols-2 gap-4 mb-8">
+                    {department.certificates.map((certificate, certIndex) => (
+                      <div
+                        key={certificate._id}
+                        className="bg-[#0059b3] bg-opacity-80 text-white p-4 text-center rounded-lg shadow-md hover:bg-[#003366] transition cursor-pointer"
+                        onClick={() => handleCertificateClick(certificate)}
+                      >
+                        <h2 className="text-lg font-bold">
+                          {certificate.name}
+                        </h2>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-white">No results found</p>
+            )}
+
+            {/* {departments.map((department, deptIndex) => (
               <div key={deptIndex}>
                 <h1 className="text-black text-2xl font-bold mb-4">
                   {department.name}
@@ -102,7 +151,7 @@ const ServicesList = () => {
                   ))}
                 </div>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>

@@ -3,10 +3,11 @@ import React from "react";
 const PanService = () => {
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">
-        Application for allotment of PAN
-      </h1>
-      <div className="gap-2 grid grid-cols-2 mx-auto mt-2 p-4">
+      
+      <h2 className="text-3xl flex justify-center font-bold text-blue-700 border-b-2 border-gray-300 pb-2 mb-6">
+      Application for allotment of PAN
+        </h2>
+      <div className="gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto mt-2 p-4">
         {/* Form 49A Section for Citizens of India */}
         <div className="border border-gray-600   rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-lg font-semibold mb-2">

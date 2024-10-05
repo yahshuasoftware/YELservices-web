@@ -4,38 +4,38 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
     return (
       <div className="w-64 h-[95vh] bg-blue-800 text-white top-0 left-0 overflow-y-auto">
-        <ul className="space-y-1 py-4">
-          <li className="px-4 py-2 text-left">
-            <Link className="block hover:bg-blue-600" >Home</Link>
+        <ul className="space-y-2 py-4">
+          <li className="px-4 py-2 hover:bg-blue-500 text-left">
+            <Link className="block " >Home</Link>
         
           </li>
-          <li className="px-4 py-2 text-left bg-orange-400">
-          <Link className="block hover:bg-blue-600" to="dashbord">Department Notified Services</Link>
+          <li className="px-4 py-2 text-left hover:bg-blue-500 bg-orange-400">
+          <Link className="block " to="">Department Notified Services</Link>
           </li>
-          <li className="px-4 py-2 text-left">
-          <Link className="block hover:bg-blue-600" to="contact-us">Contact</Link>
+          <li className="px-4 py-2 hover:bg-blue-500 text-left">
+          <Link className="block " to="contact-us">Contact Us</Link>
           </li>
           
-          <li className="px-4 py-2 text-left">
-          <Link className="block hover:bg-blue-600" to="aadhar">Aadhar Services</Link>
+          <li className="px-4 py-2 hover:bg-blue-500 text-left">
+          <Link className="block " to="aadhar">Aadhar Services</Link>
           
           </li>
-          <li className="px-4 py-2 text-left">
-          <Link className="block hover:bg-blue-600" to="pan">Pan Card Services</Link>
+          <li className="px-4 py-2 hover:bg-blue-500 text-left">
+          <Link className="block " to="pan">Pan Card Services</Link>
           
           </li>
-          <li className="px-4 py-2 text-left">
-            <a href="/" className="block hover:bg-blue-600">
+          <li className="px-4 py-2 hover:bg-blue-500 text-left">
+          <Link  className="block ">
               Election Card
-            </a>
+              </Link>
           </li>
-          <li className="px-4 py-2 text-left">
-            <a href="/" className="block hover:bg-blue-600">
+          <li className="px-4 py-2 hover:bg-blue-500 text-left">
+            <Link className="block">
           income Certificate
-            </a>
+          </Link>
           </li>
-          <li className="px-4 py-2 text-left">
-          <Link className="block hover:bg-blue-600" to="Agriculture">Agriculture</Link>
+          <li className="px-4 py-2 hover:bg-blue-500 text-left">
+          <Link className="block " to="Agriculture">Agriculture</Link>
             </li>
         </ul>
       </div>

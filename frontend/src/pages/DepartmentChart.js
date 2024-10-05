@@ -112,7 +112,7 @@ const DepartmentChart = () => {
 
       {/* Main Content */}
       <div className="flex-grow container mx-auto   overflow-y-auto h-screen">
-        <div className="bg-white shadow-lg rounded-lg p-6">
+        <div className="bg-white shadow-lg rounded-lg p-3">
           <h2 className="text-2xl font-bold text-center text-white bg-blue-500 py-2 mb-6 rounded-md">
             Department Notified Services
           </h2>

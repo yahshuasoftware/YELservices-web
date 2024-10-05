@@ -91,6 +91,12 @@ const UserSidebar = () => {
 
         <div className="mt-8 space-y-6">
         <ul className="space-y-4">
+        <li>
+    <Link to="/dashbord" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+      <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
+      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Home</span>}
+    </Link>
+  </li>
   <li>
     <Link to="/userdashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
       <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />

@@ -26,7 +26,7 @@ const ContactUs = () => {
             For Queries Contact numbers for clarifications
           </p>
           <h3 className="text-2xl font-bold text-gray-700">
-            24 x 7 Citizen Call Center: 1800 120 8040
+            24 x 7 Citizen Call Center: 1234 567 890
           </h3>
           <p className="text-lg text-gray-700 mt-2">(Toll Free)</p>
         </div>
