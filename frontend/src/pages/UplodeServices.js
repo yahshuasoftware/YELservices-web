@@ -5,7 +5,7 @@ import {jwtDecode} from 'jwt-decode';  // Import jwt-decode
 import { useLocation } from 'react-router-dom';
 
 const UploadServices = () => {
-  
+
   const location = useLocation();
   const { certificatename } = location.state || {}; // Fallback in case state is undefined
 
@@ -26,28 +26,6 @@ const UploadServices = () => {
       console.log(decodedToken._id)
     }
   }, []);
-
-  // Fetch proof of identity and address documents from backend on component load
-  // useEffect(() => {
-  //   const fetchDocuments = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:8080/api/departments');
-  //       const departments = response.data;
-        
-  //       const department = departments[0];  // Assuming there is only one department
-  //       const certificates = department?.certificates || [];
-  //       if (certificates.length > 0) {
-  //         setAvailableIdentityDocs(certificates[0].proofOfIdentity || []);
-  //         setAvailableAddressDocs(certificates[0].proofOfAddress || []);
-
-  //         console.log(availableAddressDocs);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching documents:', error);
-  //     }
-  //   };
-  //   fetchDocuments();
-  // }, []);
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -247,5 +225,4 @@ const UploadServices = () => {
 };
 
 export default UploadServices;
-
 
