@@ -29,7 +29,7 @@ const UserNavbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log("token test"    + token)
+    // console.log("token test"    + token)
     if (token) {
       try {
         // const decoded = jwtDecode(token);
@@ -45,7 +45,7 @@ const UserNavbar = () => {
               },
             });
 
-            console.log("ttttt" + response)
+            // console.log("ttttt" + response)
   
             // Check if the response is successful
             if (!response.ok) {
@@ -56,9 +56,9 @@ const UserNavbar = () => {
             // Parse the response as JSON
             const userData = await response.json();
             setUser(userData);
-            console.log("user data " + userData)
+            // console.log("user data " + userData)
           } catch (error) {
-            console.error("Error fetching user profile:", error.message);
+            // console.error("Error fetching user profile:", error.message);
             setError(error.message);
           } finally {
             setLoading(false);

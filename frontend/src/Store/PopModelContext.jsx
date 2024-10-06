@@ -7,7 +7,7 @@ const PopModelContextProvider = (props) => {
 
   const closeModel = () => {
     setPopModel(false);
-    console.log('model oppend')
+    // console.log('model oppend')
   };
 
   const value={

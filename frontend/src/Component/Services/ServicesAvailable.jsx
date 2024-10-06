@@ -110,7 +110,7 @@ const ServicesAvailable = () => {
 
           <div
             ref={scrollbarDivRef}
-            className="p-1 overflow-y-auto h-72 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent hover:scrollbar-thumb-white w-full max-w-4xl"
+            className="p-1 overflow-y-auto h-72 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent hover:scrollbar-thumb-white w-full"
           >
             {filteredDepartments.length > 0 ? (
               filteredDepartments.map((department, deptIndex) => (

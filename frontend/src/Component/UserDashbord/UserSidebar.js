@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Routes, Route } from "react-router-dom";
-import { FaMoon, FaSun } from "react-icons/fa";
-import { BiChevronRight, BiSearch, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
+import { BiChevronRight,  BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
 import UserDashbords from "./UserDashbords";
 import UserNotification from "./UserNotification";
 import { Usercontext } from "../../Store/UserContext";
@@ -16,7 +15,7 @@ const UserSidebar = () => {
   const [loading, setLoading] = useState(true); // Loading state for user data
   const [error, setError] = useState(null); // Error state
   const navigate = useNavigate(); // For navigation
-
+  
   // Fetch user data from API
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -36,6 +35,7 @@ const UserSidebar = () => {
           }
 
           const userData = await response.json();
+          // console.log(userData.role); // Here we can get the user role (ADMIN/NORMAL)
           setUser(userData);
         } catch (error) {
           console.error("Error fetching user profile:", error.message);
@@ -80,7 +80,7 @@ const UserSidebar = () => {
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
             <div className="flex flex-col">
-              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YSL Services</span>
+              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL Services</span>
               {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.name}</span>}
             </div>
           </div>
@@ -124,6 +124,18 @@ const UserSidebar = () => {
       {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Logout</span>}
     </button>
   </li>
+
+  
+  {user?.role === 'admin' && (
+  <li>
+    <Link to="/Admindashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+      <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
+      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">AdminDashboard</span>}
+    </Link>
+  </li>
+)}
+
+  
 </ul>
 
         </div>

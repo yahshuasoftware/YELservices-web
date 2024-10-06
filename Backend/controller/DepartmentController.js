@@ -89,5 +89,37 @@ const addCertificates = async (req, res) => {
   }
 };
 
+const getProofOfDocuments = async (req, res) => {
+  const { certificateName } = req.params;
 
-module.exports={addDepartment,getDepartments,addCertificates};
+  try {
+    // Find the department that contains the specified certificate
+    const department = await Department.findOne({ 'certificates.name': certificateName });
+
+    if (!department) {
+      return res.status(404).json({ message: 'Certificate not found' });
+    }
+
+    // Find the specific certificate within the department
+    const certificate = department.certificates.find(cert => cert.name === certificateName);
+
+    if (!certificate) {
+      return res.status(404).json({ message: 'Certificate not found in the department' });
+    }
+
+    // Extract proof of identity and proof of address
+    const proofOfIdentity = certificate.proofOfIdentity || [];
+    const proofOfAddress = certificate.proofOfAddress || [];
+
+    // Send the response with POI and POA
+    res.status(200).json({ proofOfIdentity, proofOfAddress });
+  } catch (error) {
+    console.error('Error fetching documents:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
+
+module.exports={addDepartment,getDepartments,addCertificates,getProofOfDocuments};

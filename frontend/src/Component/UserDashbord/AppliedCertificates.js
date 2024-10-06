@@ -1,19 +1,36 @@
-import React, {  useState,useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Usercontext } from '../../Store/UserContext';
 
 const AppliedCertificates = () => {
-
-const user=useContext(Usercontext)
- 
+  const user = useContext(Usercontext);
+  const [sortOrder, setSortOrder] = useState('asc'); // Set default sort order
 
   if (!user) {
     return <div>Loading...</div>;
   }
 
+  // Sort the certificates based on the applicationDate
+  const sortedCertificates = [...user.certificatesApplied].sort((a, b) => {
+    const dateA = new Date(a.applicationDate);
+    const dateB = new Date(b.applicationDate);
+    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+  });
+
+  // Toggle sorting order between 'asc' and 'desc'
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
   return (
     <div className="container mx-auto mt-4">
       <h1 className="text-2xl font-semibold">Applied Certificates</h1>
+      <button
+        className="mt-2 mb-4 px-4 py-2 bg-blue-500 text-white rounded"
+        onClick={toggleSortOrder}
+      >
+        Sort by Date ({sortOrder === 'asc' ? 'Ascending' : 'Descending'})
+      </button>
       <table className="table-auto border-collapse w-full mt-4">
         <thead>
           <tr>
@@ -25,7 +42,7 @@ const user=useContext(Usercontext)
           </tr>
         </thead>
         <tbody>
-          {user.certificatesApplied.map((certificate, index) => (
+          {sortedCertificates.map((certificate, index) => (
             <tr key={index}>
               <td className="border px-4 py-2">{certificate.certificateName}</td>
               <td className="border px-4 py-2">{certificate.status}</td>
