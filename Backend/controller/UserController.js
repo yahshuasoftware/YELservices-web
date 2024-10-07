@@ -1,4 +1,5 @@
 const UserModel = require("../models/UserModel");
+const cloudinary = require('cloudinary').v2
 
 const getprofile = async (req, res) => {
   try {
@@ -92,38 +93,110 @@ const deleteUser = async (req, res) => {
 //   }
 // };
 
+// const addCertificate = async (req, res) => {
+//   const userId = req.params.id;
+//   const uploadResult = await cloudinary.uploader
+//   .upload(
+//      req.files.path
+//   )
+//   .catch((error) => {
+//       console.log(error);
+//   });
+
+//   console.log(req.files.path)
+//   try {
+//     // Fetch the user by ID
+//     const user = await UserModel.findById(userId);
+//     console.log(req.files)
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     // Handle the uploaded files from the request
+//     const proofOfIdentityFiles = req.files['proofOfIdentity'];
+//     const proofOfAddressFiles = req.files['proofOfAddress'];
+    
+//     console.log(req.body.certificateName)
+//     // Build the certificate object to save into MongoDB
+//     const newCertificate = {
+//       certificateName: req.body.certificateName || "Default Certificate Name", // Or get the name from request
+//       status: 'pending',
+//       uploadedDocuments: {
+//         proofOfIdentity: proofOfIdentityFiles ? proofOfIdentityFiles.map(file => ({
+//           filename: file.filename,
+//           path: file.path,
+//           mimetype: file.mimetype,
+//           size: file.size
+//         })) : [],
+//         proofOfAddress: proofOfAddressFiles ? proofOfAddressFiles.map(file => ({
+//           filename: file.filename,
+//           path: file.path,
+//           mimetype: file.mimetype,
+//           size: file.size
+//         })) : []
+//       }
+//     };
+
+//     // Add the new certificate to the user's certificates array
+//     user.certificatesApplied.push(newCertificate);
+
+//     // Save the updated user document
+//     await user.save();
+
+//     // Respond with success
+//     res.json({ message: "Certificate added successfully", user });
+//   } catch (error) {
+//     console.error("Error adding certificate:", error);
+//     res.status(500).json({ message: "Server error", error: error.message });
+//   }
+// }
+
+
 const addCertificate = async (req, res) => {
   const userId = req.params.id;
 
   try {
     // Fetch the user by ID
     const user = await UserModel.findById(userId);
-    console.log(req.files)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Handle the uploaded files from the request
-    const proofOfIdentityFiles = req.files['proofOfIdentity'];
-    const proofOfAddressFiles = req.files['proofOfAddress'];
+    // Upload files to Cloudinary and retrieve their URLs
+    const proofOfIdentityFiles = req.files['proofOfIdentity'] || [];
+    const proofOfAddressFiles = req.files['proofOfAddress'] || [];
+
+    const proofOfIdentityUploads = await Promise.all(
+      proofOfIdentityFiles.map(async (file) => {
+        const uploadResult = await cloudinary.uploader.upload(file.path); // Access the correct file path
+        return {
+          filename: file.filename,
+          path: uploadResult.secure_url,  // Use Cloudinary URL instead of local path
+          mimetype: file.mimetype,
+          size: file.size
+        };
+      })
+    );
+
+    const proofOfAddressUploads = await Promise.all(
+      proofOfAddressFiles.map(async (file) => {
+        const uploadResult = await cloudinary.uploader.upload(file.path); // Access the correct file path
+        return {
+          filename: file.filename,
+          path: uploadResult.secure_url,  // Use Cloudinary URL instead of local path
+          mimetype: file.mimetype,
+          size: file.size
+        };
+      })
+    );
 
     // Build the certificate object to save into MongoDB
     const newCertificate = {
       certificateName: req.body.certificateName || "Default Certificate Name", // Or get the name from request
       status: 'pending',
       uploadedDocuments: {
-        proofOfIdentity: proofOfIdentityFiles ? proofOfIdentityFiles.map(file => ({
-          filename: file.filename,
-          path: file.path,
-          mimetype: file.mimetype,
-          size: file.size
-        })) : [],
-        proofOfAddress: proofOfAddressFiles ? proofOfAddressFiles.map(file => ({
-          filename: file.filename,
-          path: file.path,
-          mimetype: file.mimetype,
-          size: file.size
-        })) : []
+        proofOfIdentity: proofOfIdentityUploads,
+        proofOfAddress: proofOfAddressUploads,
       }
     };
 
@@ -139,6 +212,6 @@ const addCertificate = async (req, res) => {
     console.error("Error adding certificate:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
-}
+};
 
 module.exports = {getprofile,deleteUser,getAllUsers,getUserById ,createUser,addCertificate};
