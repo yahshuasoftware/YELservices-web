@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Import jwt-decode
+import {jwtDecode} from 'jwt-decode'; // Fix import for jwt-decode
 import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify styles
 
 const UploadServices = () => {
   const location = useLocation();
@@ -10,7 +12,6 @@ const UploadServices = () => {
   const [certificateName, setCertificateName] = useState(certificatename);
   const [proofOfIdentity, setProofOfIdentity] = useState([""]);
   const [proofOfAddress, setProofOfAddress] = useState([""]);
-  const [message, setMessage] = useState('');
   const [availableIdentityDocs, setAvailableIdentityDocs] = useState([]);
   const [availableAddressDocs, setAvailableAddressDocs] = useState([]);
   const [userId, setUserId] = useState('');
@@ -99,10 +100,12 @@ const UploadServices = () => {
         },
       });
 
-      setMessage('Certificate details and files uploaded successfully');
+      console.log(response.data.message)
+
+      toast.success('Certificate details and files uploaded successfully'); // Success notification
     } catch (error) {
       console.error('Error submitting form:', error);
-      setMessage('Error uploading certificate details or files');
+      toast.error('Error uploading certificate details or files'); // Error notification
     }
   };
 
@@ -193,9 +196,10 @@ const UploadServices = () => {
         >
           Submit
         </button>
-
-        {message && <p className="mt-4 text-green-500">{message}</p>}
       </form>
+
+      {/* Toast notification container */}
+      <ToastContainer />
     </div>
   );
 };

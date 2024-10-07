@@ -49,7 +49,7 @@ const AppliedCertificates = () => {
               <td className="border px-4 py-2">
                 {certificate.uploadedDocuments.proofOfIdentity.map((doc, idx) => (
                   <div key={idx}>
-                    <a href={`/${doc.path}`} target="_blank" rel="noopener noreferrer">
+                    <a href={doc.path} target="_blank" rel="noopener noreferrer">
                       {doc.filename}
                     </a>
                   </div>
