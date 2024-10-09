@@ -35,36 +35,30 @@ const AppliedCertificates = () => {
         <thead>
           <tr>
             <th className="border px-4 py-2">Certificate Name </th>
-            <th className="border px-4 py-2">Status</th>
-            <th className="border px-4 py-2">Proof of Identity</th>
-            <th className="border px-4 py-2">Proof of Address</th>
+            
+            <th className="border px-4 py-2">Proof of Identity & Address</th> {/* Combined column */}
             <th className="border px-4 py-2">Application Date</th>
+            <th className="border px-4 py-2">Status</th>
           </tr>
         </thead>
         <tbody>
           {sortedCertificates.map((certificate, index) => (
             <tr key={index}>
               <td className="border px-4 py-2">{certificate.certificateName}</td>
-              <td className="border px-4 py-2">{certificate.status}</td>
+              
               <td className="border px-4 py-2">
-                {certificate.uploadedDocuments.proofOfIdentity.map((doc, idx) => (
+                {certificate.uploadedDocuments.proofOfIdentity.concat(certificate.uploadedDocuments.proofOfAddress).map((doc, idx) => (
                   <div key={idx}>
+                    {idx + 1}.{' '}
                     <a href={doc.path} target="_blank" rel="noopener noreferrer">
                       {doc.filename}
                     </a>
                   </div>
                 ))}
               </td>
-              <td className="border px-4 py-2">
-                {certificate.uploadedDocuments.proofOfAddress.map((doc, idx) => (
-                  <div key={idx}>
-                    <a href={`/${doc.path}`} target="_blank" rel="noopener noreferrer">
-                      {doc.filename}
-                    </a>
-                  </div>
-                ))}
-              </td>
+             
               <td className="border px-4 py-2">{new Date(certificate.applicationDate).toLocaleDateString()}</td>
+              <td className="border px-4 py-2">{certificate.status}</td>
             </tr>
           ))}
         </tbody>

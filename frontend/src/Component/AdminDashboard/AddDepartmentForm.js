@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 
 const proofOfIdentityOptions = [
   { value: 'Passport', label: 'Passport' },
@@ -15,10 +18,10 @@ const proofOfAddressOptions = [
   { value: 'Driving License', label: 'Driving License' }
 ];
 
-const AddDepartmentForm = ({ addDepartment }) => {
+const AddDepartmentForm = () => {
   const [departmentName, setDepartmentName] = useState('');
   const [certificates, setCertificates] = useState([
-    { name: '', description: '', proofOfIdentity: [], proofOfAddress: [] }
+    { name: '', description: '', proofOfIdentity: null, proofOfAddress: null }
   ]);
 
   const handleDepartmentChange = (e) => {
@@ -31,21 +34,26 @@ const AddDepartmentForm = ({ addDepartment }) => {
     setCertificates(updatedCertificates);
   };
 
-  const addNewCertificate = () => {
-    setCertificates([...certificates, { name: '', description: '', proofOfIdentity: [], proofOfAddress: [] }]);
-  };
-
-  const addNewDepartment = () => {
+  const addNewDepartment = async () => {
     const formattedCertificates = certificates.map(cert => ({
       ...cert,
-      proofOfIdentity: cert.proofOfIdentity.map(option => option.value),
-      proofOfAddress: cert.proofOfAddress.map(option => option.value)
+      proofOfIdentity: cert.proofOfIdentity ? cert.proofOfIdentity.value : '',
+      proofOfAddress: cert.proofOfAddress ? cert.proofOfAddress.value : ''
     }));
-    addDepartment(departmentName, formattedCertificates);
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/departments', { name: departmentName, certificates: formattedCertificates });
+      toast.success(response.data.message); // Show success message
+      // getDepartments(); // Update department list after adding
+    } catch (error) {
+      console.error('Error adding department:', error);
+      toast.error('Failed to add department'); // Show error message
+    }
   };
 
   return (
     <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg mt-6">
+      <ToastContainer /> {/* Toast Container for notifications */}
       <h2 className="text-2xl font-bold text-center mb-4">Add New Department</h2>
       <input
         type="text"
@@ -85,9 +93,10 @@ const AddDepartmentForm = ({ addDepartment }) => {
             <Select
               options={proofOfIdentityOptions}
               value={certificate.proofOfIdentity}
-              onChange={(selectedOptions) => handleCertificateChange(index, 'proofOfIdentity', selectedOptions)}
+              onChange={(selectedOption) => handleCertificateChange(index, 'proofOfIdentity', selectedOption)}
               className="w-full"
               placeholder="Select Proof of Identity"
+              isClearable
               isMulti
             />
           </div>
@@ -97,21 +106,14 @@ const AddDepartmentForm = ({ addDepartment }) => {
             <Select
               options={proofOfAddressOptions}
               value={certificate.proofOfAddress}
-              onChange={(selectedOptions) => handleCertificateChange(index, 'proofOfAddress', selectedOptions)}
+              onChange={(selectedOption) => handleCertificateChange(index, 'proofOfAddress', selectedOption)}
               className="w-full"
               placeholder="Select Proof of Address"
-              isMulti
+              isClearable
             />
           </div>
         </div>
       ))}
-
-      <button
-        onClick={addNewCertificate}
-        className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
-      >
-        Add Another Certificate
-      </button>
 
       <button
         onClick={addNewDepartment}

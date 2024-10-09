@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode'; // Fix import for jwt-decode
+import { jwtDecode } from 'jwt-decode'; // Fix import for jwt-decode
 import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
 import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify styles
@@ -15,6 +15,7 @@ const UploadServices = () => {
   const [availableIdentityDocs, setAvailableIdentityDocs] = useState([]);
   const [availableAddressDocs, setAvailableAddressDocs] = useState([]);
   const [userId, setUserId] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state
 
   // Extract user ID from JWT token
   useEffect(() => {
@@ -71,6 +72,7 @@ const UploadServices = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true
 
     const formData = new FormData();
     formData.append('certificateName', certificateName);
@@ -100,12 +102,15 @@ const UploadServices = () => {
         },
       });
 
-      console.log(response.data.message)
-
-      toast.success('Certificate details and files uploaded successfully'); // Success notification
+      console.log(response.data.message);
+      toast.success('Certificate details and files uploaded successfully', {
+        onClose: () => setLoading(false), // Turn off loading after toast
+      }); // Success notification
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Error uploading certificate details or files'); // Error notification
+      toast.error('Error uploading certificate details or files', {
+        onClose: () => setLoading(false), // Turn off loading after toast
+      }); // Error notification
     }
   };
 
@@ -193,13 +198,17 @@ const UploadServices = () => {
         <button
           type="submit"
           className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          disabled={loading} // Disable button while loading
         >
-          Submit
+          {loading ? 'Uploading...' : 'Submit'}
         </button>
       </form>
 
       {/* Toast notification container */}
       <ToastContainer />
+
+      {/* Loading indicator */}
+      {loading && <p className="text-center text-gray-500 mt-4">Uploading, please wait...</p>}
     </div>
   );
 };

@@ -2,18 +2,32 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 
+// Proof of Identity Options
 const proofOfIdentityOptions = [
+  { value: 'PAN Card', label: 'PAN Card' },
   { value: 'Passport', label: 'Passport' },
-  { value: 'Driving License', label: 'Driving License' },
+  { value: 'RSBY Card', label: 'RSBY Card' },
   { value: 'Aadhaar Card', label: 'Aadhaar Card' },
-  { value: 'Voter ID', label: 'Voter ID' }
+  { value: 'Voter ID Card', label: 'Voter ID Card' },
+  { value: 'MNREGA Job Card', label: 'MNREGA Job Card' },
+  { value: 'Driving License', label: 'Driving License' },
+  { value: 'Photo of Applicant', label: 'Photo of Applicant' },
+  { value: 'Signature of Applicant', label: 'Signature of Applicant' },
+  { value: 'Identity card issued by Govt or Semi Govt organizations', label: 'Identity card issued by Govt or Semi Govt organizations' }
 ];
 
+// Proof of Address Options
 const proofOfAddressOptions = [
-  { value: 'Utility Bill', label: 'Utility Bill' },
-  { value: 'Rental Agreement', label: 'Rental Agreement' },
-  { value: 'Bank Statement', label: 'Bank Statement' },
-  { value: 'Driving License', label: 'Driving License' }
+  { value: 'Passport', label: 'Passport' },
+  { value: 'Water Bill', label: 'Water Bill' },
+  { value: 'Ration Card', label: 'Ration Card' },
+  { value: 'Aadhaar Card', label: 'Aadhaar Card' },
+  { value: 'Voter ID Card', label: 'Voter ID Card' },
+  { value: 'Telephone Bill', label: 'Telephone Bill' },
+  { value: 'Driving License', label: 'Driving License' },
+  { value: 'Electricity Bill', label: 'Electricity Bill' },
+  { value: 'Property Tax Receipt', label: 'Property Tax Receipt' },
+  { value: 'Extracts of 7/12 and 8 A/Rent Receipt', label: 'Extracts of 7/12 and 8 A/Rent Receipt' }
 ];
 
 const AddCertificateForm = () => {
@@ -126,13 +140,6 @@ const AddCertificateForm = () => {
           </div>
         </div>
       ))}
-
-      <button
-        onClick={addNewCertificate}
-        className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
-      >
-        Add Another Certificate
-      </button>
 
       <button
         onClick={addNewDepartment}
