@@ -16,7 +16,7 @@ const SummaryApi = {
         url: `${backendDomain}/api/profile`,
         method: "Get"
     },
-    department: {
+    addDepartment: {
         url: `${backendDomain}/api/departments`,
         
     },

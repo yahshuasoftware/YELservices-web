@@ -1,46 +1,68 @@
-
 const express = require("express");
-const cloudinary = require('cloudinary').v2
+const cloudinary = require('cloudinary').v2;
 const { v4: uuidv4 } = require('uuid');
-require("dotenv").config()
+require("dotenv").config();
 const UserController = require("../controller/UserController");
 const authenticateToken = require("../middleware/AuthMiddleware");
 const multer = require("multer");
-const router = express.Router();
+const fs = require('fs');
 const path = require('path');
-router.get('/profile',authenticateToken,UserController.getprofile);
+const router = express.Router();
 
-
+// Cloudinary configuration
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
   api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET // Click 'View API Keys' above to copy your API secret
+  api_secret: process.env.API_SECRET
 });
+
+// Ensure uploads directory exists
+const uploadsDir = 'uploads/';
+if (!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir);
+}
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Directory to store files
+    cb(null, uploadsDir); // Directory to store files
   },
   filename: function (req, file, cb) {
-
-    pattern=Math.floor(1000 + Math.random() * 9000);
-    cb(null, pattern+file.originalname); // Timestamp + file extension
+    const uniqueSuffix = uuidv4() + path.extname(file.originalname); // UUID + file extension
+    cb(null, uniqueSuffix); // Unique filename
   }
 });
-const upload = multer({ storage: storage });
 
-// Define routes and map them to controller functions
+// File filter to allow specific file types (optional)
+const fileFilter = (req, file, cb) => {
+  const filetypes = /jpeg|jpg|png|pdf/; // Allowed file types
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  }
+  cb(new Error('File type not allowed'), false);
+};
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: fileFilter, // Apply file filter
+  limits: { fileSize: 5 * 1024 * 1024 } // Limit file size to 5 MB
+});
+
+// Routes
+router.get('/profile', authenticateToken, UserController.getprofile);
 router.post('/users', UserController.createUser);
 router.get('/users', UserController.getAllUsers);
 router.get('/users/:id', UserController.getUserById);
 router.delete('/users/:id', UserController.deleteUser);
+router.put('/users/:userId/certificates/:certificateId/status', UserController.updateCertificateStatus);
 
 // Add certificate with file uploads
 router.post('/users/:id/certificates', upload.fields([
   { name: 'proofOfIdentity', maxCount: 2 },
   { name: 'proofOfAddress', maxCount: 2 }
 ]), UserController.addCertificate);
-
 
 module.exports = router;

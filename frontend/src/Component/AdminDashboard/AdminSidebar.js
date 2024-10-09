@@ -100,7 +100,7 @@ const UserSidebar = () => {
           <li>
               <Link to="/userdashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">user Dashboard</span>}
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">User Dashboard</span>}
               </Link>
             </li>
             <li>
@@ -113,22 +113,11 @@ const UserSidebar = () => {
             <li>
               <Link to="/admindashboard/department" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
                 <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">service Management</span>}
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Service Management</span>}
               </Link>
             </li>
 
-            <li>
-              <Link to="/Admindashboard/addCertificate" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-                <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">addCerticate</span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/Admindashboard/addDepartment" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-                <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">addDepartment</span>}
-              </Link>
-            </li>
+            
 
             <li>
               <button onClick={handleLogout} className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md w-full">

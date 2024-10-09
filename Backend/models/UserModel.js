@@ -57,8 +57,8 @@ const UserSchema = new mongoose.Schema({
   },
   phoneNo: {
     type: String,
-    unique: true, // Ensure phone number is unique
-    required: true,
+    // unique: true, // Ensure phone number is unique
+    // required: true,
   },
   district: {
     type: String,

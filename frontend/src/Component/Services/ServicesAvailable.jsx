@@ -14,7 +14,7 @@ const ServicesAvailable = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await fetch(SummaryApi.department.url); // Replace with your API endpoint
+        const response = await fetch(SummaryApi.addDepartment.url); // Replace with your API endpoint
         const data = await response.json();
         setDepartments(data);
       } catch (error) {

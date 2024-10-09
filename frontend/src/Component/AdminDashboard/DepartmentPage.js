@@ -1,68 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import AddDepartmentForm from './AddDepartmentForm';
-import AddCertificateForm from './AddCertificateForm';
-import DepartmentList from './DepartmentList';
-import SummaryApi from '../../common/Apis';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const DepartmentPage = () => {
-  const [departments, setDepartments] = useState([]);
-  const [message, setMessage] = useState('');
+  return (<>
+  
+ 
+    <div className=" mx-auto p-6 bg-white shadow-md rounded-lg mt-6 ">
+    <h2 className="text-2xl font-bold text-center mb-4">Department Management</h2>
 
-  // Fetch all departments when the component mounts
-  useEffect(() => {
-    getDepartments();
-  }, []);
+      <div className='flex justify-around m-10'>
 
-  const getDepartments = async () => {
-    try {
-      const response = await axios.get(SummaryApi.department.url);
-      setDepartments(response.data);
-    } catch (error) {
-      console.error('Error fetching departments:', error);
-    }
-  };
+   
+     
+      <div className="mb-4 w-96">
+        <Link
+          to="/Admindashboard/addCertificate" // Link to your Add Certificate page
+          className="block w-full text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mb-2"
+        >
+          Add Certificate
+        </Link>
+      </div>
+      <div className="mb-4 w-96">
+        <Link
+          to="/Admindashboard/addDepartment" // Link to your Add Department page
+          className="block w-full text-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline"
+        >
+          Add Department
+        </Link>
+      </div>
 
-  // Add a new department
-  const addDepartment = async (name, certificates) => {
-    try {
-      const response = await axios.post(SummaryApi.department.url, { name, certificates });
-      setMessage(response.data.message);
-      getDepartments();  // Update department list after adding
-    } catch (error) {
-      console.error('Error adding department:', error);
-      setMessage('Failed to add department');
-    }
-  };
-
-  // Add certificates to an existing department
-  const addCertificatesToDepartment = async (departmentName, newCertificate) => {
-    try {
-      const response = await axios.post(SummaryApi.addCertificates.url, {
-        departmentName,
-        newCertificates: [newCertificate],
-      });
-      setMessage(response.data.message);
-      getDepartments();  // Update department list after adding certificates
-    } catch (error) {
-      console.error('Error adding certificates:', error);
-      setMessage('Failed to add certificates');
-    }
-  };
-
-  return (
-    <div>
-      <h1>Department Management</h1>
-
-      {/* Render AddDepartmentForm only once */}
-      <AddDepartmentForm addDepartment={addDepartment} />
-      <div className=' h-11'></div>
-      <AddCertificateForm addCertificatesToDepartment={addCertificatesToDepartment} />
-      <div className='h-20'></div>
-      <DepartmentList departments={departments} />
-
-      {message && <p>{message}</p>}
+      </div>
     </div>
+    </>
   );
 };
 
