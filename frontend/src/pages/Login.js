@@ -4,6 +4,10 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from 'react-google-recaptcha';
+import {RecaptchaVerifier, signInWithPhoneNumber} from 'firebase/auth'
+import { auth } from '../firebase/setup';
+import SummaryApi from '../common/Apis';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +21,19 @@ const Login = () => {
   const [captchaValid, setCaptchaValid] = useState(false);
   const navigate = useNavigate();
 
+
+  const sendOtp =async()=>{
+    try {
+      const recaptch = new RecaptchaVerifier(auth,"recaptcha",{})
+      const confirmation = await signInWithPhoneNumber(auth,phoneNumber)
+      console.log(confirmation)
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
   // Email and Password Login Handler
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,13 +44,16 @@ const Login = () => {
       });
       return;
     }
-
     try {
-      const response = await axios.post('http://localhost:8080/api/login', {
-        email,
-        password,
-        district,
-        state,
+      const response = await axios({
+        url: SummaryApi.signIn.url,        // Use URL from the API configuration
+        method: SummaryApi.signIn.method,  // Use method from the API configuration
+        data: {
+          email,
+          password,
+          district,
+          state,
+        },
       });
       if (response.data.jwt_token) {
         localStorage.setItem('token', response.data.jwt_token);
@@ -141,6 +161,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+           
               <input
                 type="password"
                 placeholder="Enter your password"
@@ -154,7 +175,7 @@ const Login = () => {
             <>
               {/* Phone Number/OTP Login */}
               <input
-                type="tel"
+                type="number"
                 placeholder="Enter your phone number"
                 className="w-full h-10 px-4 mb-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
                 value={phoneNumber}

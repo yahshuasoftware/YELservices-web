@@ -1,41 +1,50 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SummaryApi from "../common/Apis";
+// import PhoneInput from 'react-phone-number-input'
 
 const Signup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match', {
+      toast.error("Passwords do not match", {
         position: "top-right",
       });
       return;
     }
 
     try {
-      await axios.post('http://localhost:8080/api/signup', {
+      await axios.post({
+        method: SummaryApi.signUp.method,  // Use method from the API configuration
+        url: SummaryApi.signIn.url,
+        data:{
         name,
         email,
         password,
+        phoneNo,
+      },
       });
+      
 
       // Show success toast
-      toast.success('Signup successful! Please login.', {
+      toast.success("Signup successful! Please login.", {
         position: "top-right",
       });
 
       // Redirect to login page after a short delay to allow the toast to show
       setTimeout(() => {
-        navigate('/login');
+        navigate("/login");
       }, 1500);
     } catch (error) {
       // Handle errors and show error toast
@@ -44,13 +53,13 @@ const Signup = () => {
         const errorMessage =
           error.response.data.details && error.response.data.details.length > 0
             ? error.response.data.details[0].message
-            : error.response.data.message || 'An error occurred during signup';
+            : error.response.data.message || "An error occurred during signup";
 
         toast.error(errorMessage, {
           position: "top-right",
         });
       } else {
-        toast.error('An error occurred during signup', {
+        toast.error("An error occurred during signup", {
           position: "top-right",
         });
       }
@@ -58,7 +67,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="h-[80%] mt-5 flex items-center justify-center" >
+    <div className="h-[80%] mt-5 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-8">
         <h2 className="text-xl font-semibold text-center mb-6">Signup</h2>
         <form onSubmit={handleSignup}>
@@ -76,6 +85,14 @@ const Signup = () => {
             className="w-full h-10 px-4 mb-4 text-md border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Enter your phone number" // Phone number input field
+            className="w-full h-10 px-4 mb-4 text-md border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+            value={phoneNo}
+            onChange={(e) => setPhoneNo(e.target.value)}
             required
           />
           <input
@@ -101,7 +118,8 @@ const Signup = () => {
           />
         </form>
         <div className="login text-center mt-6">
-          <span>Already have an account?{' '}
+          <span>
+            Already have an account?{" "}
             <Link
               to="/login"
               className="text-[#6279B8] cursor-pointer hover:underline"

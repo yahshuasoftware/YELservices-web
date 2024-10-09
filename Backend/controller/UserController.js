@@ -12,6 +12,21 @@ const getprofile = async (req, res) => {
     res.status(500).send('Error fetching user profile: ' + error.message);
   }
 };
+// const getprofile = async (req, res) => {
+//   try {
+//     // Search by email or phone number
+//     const user = await UserModel.findOne({
+//       $or: [{ email: req.body.email }, { phoneNo: req.body.phoneNo }]
+//     });
+    
+//     if (!user) return res.status(404).send('User not found');
+    
+//     res.json(user); // Return the user details
+//   } catch (error) {
+//     res.status(500).send('Error fetching user profile: ' + error.message);
+//   }
+// };
+
 
 // Create a new user
 const createUser = async (req, res) => {

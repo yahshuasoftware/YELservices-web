@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Usercontext } from '../../Store/UserContext';
 import { useNavigate } from 'react-router-dom'; // Updated import
+import SummaryApi from '../../common/Apis';
 
 const UserDetails = () => {
   const user = useContext(Usercontext);
@@ -16,8 +17,8 @@ const UserDetails = () => {
     if (token) {
       const fetchUserData = async () => {
         try {
-          const response = await fetch('http://localhost:8080/api/users', {
-            method: 'GET',
+          const response = await fetch(SummaryApi.users.url, {
+            method: SummaryApi.users.method,
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -32,7 +33,7 @@ const UserDetails = () => {
           setAllUsers(userData);
           setFilteredUsers(userData);
         } catch (error) {
-          console.error("Error fetching user profile:", error.message);
+          // console.error("Error fetching user profile:", error.message);
           setError(error.message);
         } finally {
           setLoading(false);

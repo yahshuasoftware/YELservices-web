@@ -5,6 +5,7 @@ import { FaTachometerAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import SummaryApi from "../../common/Apis";
 
 const UserNavbar = () => {
   const [user, setUser] = useState(null);
@@ -38,8 +39,8 @@ const UserNavbar = () => {
         // Fetch user profile data from the API
         const fetchUserData = async () => {
           try {
-            const response = await fetch('http://localhost:8080/api/profile', {
-              method: 'GET',
+            const response = await fetch(SummaryApi.profile.url, {
+              method: SummaryApi.profile.method,
               headers: {
                 'Authorization': token,
               },

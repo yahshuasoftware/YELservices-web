@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import SummaryApi from "../../common/Apis";
 
 const UserInfo = () => {
   const { userId } = useParams(); // Get user ID from URL
@@ -9,9 +10,11 @@ const UserInfo = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+      const url=`${SummaryApi.users.url}/${userId}`
+      // console.log("this is url",url)
       try {
         const response = await fetch(
-          `http://localhost:8080/api/users/${userId}`
+         url
         );
         if (!response.ok) {
           throw new Error("Failed to fetch user details");

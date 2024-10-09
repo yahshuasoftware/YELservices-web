@@ -11,6 +11,7 @@ import UserInfo from "./UserInfo";
 import DepartmentPage from "./DepartmentPage";
 import AddCertificateForm from "./AddCertificateForm";
 import AddDepartmentForm from "./AddDepartmentForm";
+import SummaryApi from "../../common/Apis";
 
 const UserSidebar = () => {
   const [isClosed, setIsClosed] = useState(false); // Sidebar open/close state
@@ -20,7 +21,7 @@ const UserSidebar = () => {
   const [error, setError] = useState(null); // Error state
   const navigate = useNavigate(); // For navigation
 
-  console.log(user);
+  // console.log(JSON.stringify(user));
   
   // Fetch user data from API
   useEffect(() => {
@@ -28,8 +29,8 @@ const UserSidebar = () => {
     if (token) {
       const fetchUserData = async () => {
         try {
-          const response = await fetch('http://localhost:8080/api/profile', {
-            method: 'GET',
+          const response = await fetch(SummaryApi.profile.url, {
+            method: SummaryApi.profile.method,
             headers: {
               Authorization: token,
             },

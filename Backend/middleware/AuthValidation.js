@@ -4,6 +4,7 @@ const signupValidation = (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
     email: Joi.string().email().required(),
+    phoneNo: Joi.string().length(10).required(), // Phone number validation
     password: Joi.string().min(8).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
     district: Joi.string(),
   });

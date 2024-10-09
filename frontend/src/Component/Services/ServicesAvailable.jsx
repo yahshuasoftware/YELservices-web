@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaToggleOn, FaToggleOff } from "react-icons/fa";
 import PopModel from "../Model/PopModel"; // Import the PopModel component
+import SummaryApi from "../../common/Apis";
 
 const ServicesAvailable = () => {
   const [departments, setDepartments] = useState([]);
@@ -13,7 +14,7 @@ const ServicesAvailable = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/departments"); // Replace with your API endpoint
+        const response = await fetch(SummaryApi.department.url); // Replace with your API endpoint
         const data = await response.json();
         setDepartments(data);
       } catch (error) {

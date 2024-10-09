@@ -45,7 +45,7 @@ const AppRoutes = () => {
         }
 
         const userData = await response.json();
-        console.log('this approutes',userData.role); // Here we can get the user role (ADMIN/NORMAL)
+        // console.log('this approutes',userData.role); // Here we can get the user role (ADMIN/NORMAL)
         setUserRole(userData.role);
       } catch (error) {
         console.error("Error fetching user profile:", error.message);

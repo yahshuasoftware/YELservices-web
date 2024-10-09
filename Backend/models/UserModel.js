@@ -55,6 +55,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  phoneNo: {
+    type: String,
+    unique: true, // Ensure phone number is unique
+    required: true,
+  },
   district: {
     type: String,
   },

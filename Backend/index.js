@@ -20,7 +20,7 @@ const connectDB=require("./config/DB")
 const port = 8080;
 
 connectDB()
-// Middleware to parse JSON bodies
+// Middleware to parse JSON bodies 
 app.use(express.json());
 app.use(cors())
 
@@ -29,7 +29,6 @@ app.use("/api", servicesroutes);
 app.use("/api", authroutes);
 app.use("/api", userroutes);
 app.use('/api', departmentRoutes);
-app.use('/api', userroutes);
 
 
 app.listen(port, () => {

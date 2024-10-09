@@ -38,11 +38,11 @@ const login = async (req, res) => {
 
 // Signup Function
 const signup = async (req, res) => {
-  const { name, password, email} = req.body;
+  const { name, password, email,phoneNo} = req.body;
 
   try {
     // Check if user already exists
-    const existingUser = await usermodel.findOne({ email });
+    const existingUser = await usermodel.findOne({ $or: [{ email }, { phoneNo }] });
     
     if (existingUser) {
       return res.status(400).send("User already exists");
@@ -52,7 +52,7 @@ const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
-    const newUser = new usermodel({ name, password: hashedPassword, email });
+    const newUser = new usermodel({ name, password: hashedPassword, email,phoneNo });
     await newUser.save();
 
     return res.status(201).send('User details saved successfully');

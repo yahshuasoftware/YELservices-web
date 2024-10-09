@@ -3,6 +3,7 @@ import axios from 'axios';
 import AddDepartmentForm from './AddDepartmentForm';
 import AddCertificateForm from './AddCertificateForm';
 import DepartmentList from './DepartmentList';
+import SummaryApi from '../../common/Apis';
 
 const DepartmentPage = () => {
   const [departments, setDepartments] = useState([]);
@@ -15,7 +16,7 @@ const DepartmentPage = () => {
 
   const getDepartments = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/departments');
+      const response = await axios.get(SummaryApi.department.url);
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
@@ -25,7 +26,7 @@ const DepartmentPage = () => {
   // Add a new department
   const addDepartment = async (name, certificates) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/departments', { name, certificates });
+      const response = await axios.post(SummaryApi.department.url, { name, certificates });
       setMessage(response.data.message);
       getDepartments();  // Update department list after adding
     } catch (error) {
@@ -37,7 +38,7 @@ const DepartmentPage = () => {
   // Add certificates to an existing department
   const addCertificatesToDepartment = async (departmentName, newCertificate) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/departments/add-certificates', {
+      const response = await axios.post(SummaryApi.addCertificates.url, {
         departmentName,
         newCertificates: [newCertificate],
       });

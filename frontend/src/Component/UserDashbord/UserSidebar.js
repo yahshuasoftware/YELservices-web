@@ -7,6 +7,7 @@ import { Usercontext } from "../../Store/UserContext";
 import ServicesList from "./ServicesList";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import SummaryApi from "../../common/Apis";
 
 const UserSidebar = () => {
   const [isClosed, setIsClosed] = useState(false); // Sidebar open/close state
@@ -22,17 +23,22 @@ const UserSidebar = () => {
     if (token) {
       const fetchUserData = async () => {
         try {
-          const response = await fetch('http://localhost:8080/api/profile', {
-            method: 'GET',
+          const response = await fetch(SummaryApi.profile.url, {
+            method: SummaryApi.profile.method,
             headers: {
               Authorization: token,
             },
           });
+          console.log(response,"this is response")
 
           if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Error ${response.status}: ${errorText}`);
           }
+          const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Expected JSON, but got something else.");
+      }
 
           const userData = await response.json();
           // console.log(userData.role); // Here we can get the user role (ADMIN/NORMAL)
