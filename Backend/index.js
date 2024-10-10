@@ -9,7 +9,7 @@ app.use(express.static("uploads"));
 
 const connectDB=require("./config/DB")
 
-const Port = process.env.Port;
+const Port = process.env.REACT_APP_PORT;
 const port = Port;
 
 connectDB()
