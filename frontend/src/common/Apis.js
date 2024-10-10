@@ -5,30 +5,33 @@ const backendDomain= process.env.REACT_APP_LOCALHOST_URI
 const SummaryApi = {
 
     signUp: {
-        url: `${backendDomain}/api/signup`,
+        url: `${backendDomain}/app/api/signup`,
         method: "post"
     },
     signIn: {
-        url: `${backendDomain}/api/login`,
+        url: `${backendDomain}/app/api/login`,
         method: "post"
     },
     profile: {
-        url: `${backendDomain}/api/profile`,
+        url: `${backendDomain}/app/api/profile`,
         method: "Get"
     },
     addDepartment: {
-        url: `${backendDomain}/api/departments`,
+        url: `${backendDomain}/app/api/departments`,
         
     },
     addCertificates: {
-        url: `${backendDomain}/api/departments/add-certificates`,
+        url: `${backendDomain}/app/api/departments/add-certificates`,
         
     },
     users: {
-        url: `${backendDomain}/api/users`,
+        url: `${backendDomain}/app/api/users`,
         method: "Get"
     },
-
+    documents: {
+        url: `${backendDomain}/app/api/documents`,
+        method: "Get"
+    },
 
 }
 export default SummaryApi;

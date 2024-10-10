@@ -2,33 +2,22 @@
 const express = require("express");
 require('dotenv').config();
 const cors = require('cors')
-
-
-
- 
+const router=require('./App/index')
 
 const app = express();
 app.use(express.static("uploads"));
-const servicesroutes = require("./routes/ServicesRoutes");
-const authroutes = require("./routes/authRoutes");
-const userroutes=require("./routes/userRoutes")
-const departmentRoutes=require("./routes/departmentRoutes")
-
 
 const connectDB=require("./config/DB")
 
-const port = 8080;
+const Port = process.env.Port;
+const port = Port;
 
 connectDB()
 // Middleware to parse JSON bodies 
 app.use(express.json());
 app.use(cors())
 
-// Use the services routes
-app.use("/api", servicesroutes);
-app.use("/api", authroutes);
-app.use("/api", userroutes);
-app.use('/api', departmentRoutes);
+app.use("/app",router);
 
 
 app.listen(port, () => {

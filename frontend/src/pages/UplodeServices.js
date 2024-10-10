@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode'; // Fix import for jwt-decode
 import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
 import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify styles
+import SummaryApi from '../common/Apis';
 
 const UploadServices = () => {
   const location = useLocation();
@@ -30,8 +31,10 @@ const UploadServices = () => {
   // Fetch proof of identity and address documents from backend on component load
   useEffect(() => {
     const fetchDocuments = async () => {
+      // original url=`http://localhost:8080/app/api/documents/${certificateName}`
+     const url=`${SummaryApi.documents.url}/${certificateName}`
       try {
-        const response = await axios.get(`http://localhost:8080/api/documents/${certificateName}`); // Update endpoint
+        const response = await axios.get(url); // Update endpoint
         const { proofOfIdentity, proofOfAddress } = response.data; // Adjust based on response structure
 
         // Set available documents
@@ -94,8 +97,10 @@ const UploadServices = () => {
     try {
       const token = localStorage.getItem('token'); // Retrieve JWT token from localStorage
       console.log(userId);
+      const url = `${SummaryApi.users.url}/${userId}/certificates`
+      // `http://localhost:8080/app/api/users/${userId}/certificates`
 
-      const response = await axios.post(`http://localhost:8080/api/users/${userId}/certificates`, formData, {
+      const response = await axios.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`, // Include JWT token in Authorization header

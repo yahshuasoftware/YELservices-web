@@ -18,6 +18,7 @@ import UserInfo from "../Component/AdminDashboard/UserInfo";
 import DepartmentPage from "../Component/AdminDashboard/DepartmentPage";
 import AddCertificateForm from "../Component/AdminDashboard/AddCertificateForm";
 import AddDepartmentForm from "../Component/AdminDashboard/AddDepartmentForm";
+import SummaryApi from "../common/Apis";
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -32,8 +33,8 @@ const AppRoutes = () => {
   if (token) {
     const fetchUserData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/profile', {
-          method: 'GET',
+        const response = await fetch(SummaryApi.profile.url, {
+          method: SummaryApi.profile.method,
           headers: {
             Authorization: token,
           },
