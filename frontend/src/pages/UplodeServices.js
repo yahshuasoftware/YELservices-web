@@ -10,6 +10,7 @@ import SummaryApi from '../common/Apis';
 
 const UploadServices = () => {
   const location = useLocation();
+  const navigate =useNavigate()
   const { certificatename } = location.state || {}; // Fallback in case state is undefined
 
   const [certificateName, setCertificateName] = useState(certificatename || ''); // Fallback for certificate name
@@ -76,6 +77,55 @@ const UploadServices = () => {
       setProofOfAddress(updatedFiles);
     }
   };
+  const handlePayment = async () => {
+    try {
+      // Create Razorpay order by calling your backend
+      const url=SummaryApi.payment.url
+      const paymentResponse = await axios.post(url, {
+        amount: 500, // Replace with the actual amount
+      });
+  
+      const { amount, id: order_id, currency } = paymentResponse.data;
+  
+      // Ensure Razorpay script is available
+      if (typeof window.Razorpay === 'undefined') {
+        console.error('Razorpay SDK not loaded');
+        toast.error('Payment gateway not available');
+        return;
+      }
+  
+      const options = {
+        key: 'rzp_test_U4XuiM2cjeWzma', // Razorpay key ID
+        amount: amount,
+        currency: currency,
+        name: 'Certificate Service',
+        description: 'Payment for certificate',
+        order_id: order_id,
+        handler: async (response) => {
+          try {
+            const paymentId = response.razorpay_payment_id;
+            console.log('Payment successful:', paymentId);
+  
+            // Proceed with form submission after successful payment
+            await handleSubmit();
+
+          } catch (error) {
+            console.error('Error during payment handling:', error);
+          }
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+  
+      const rzp = new window.Razorpay(options); // Razorpay instance
+      rzp.open();
+    } catch (error) {
+      console.error('Error creating Razorpay order:', error); // Inspect the error
+      toast.error('Error initiating payment');
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,10 +161,11 @@ const UploadServices = () => {
         },
       });
 
-      console.log(response.data.message);
-      toast.success('Certificate details and files uploaded successfully', {
-        onClose: () => setLoading(false), // Turn off loading after toast
-      }); // Success notification
+      toast.success('Certificate details and files uploaded successfully');
+      setTimeout(() => {
+        navigate('/userdashboard');
+        
+      }, 5000);
     } catch (error) {
       toast.error('Error uploading certificate details');
       console.error(error);
