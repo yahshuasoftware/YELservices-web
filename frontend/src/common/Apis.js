@@ -32,6 +32,9 @@ const SummaryApi = {
         url: `${backendDomain}/app/api/documents`,
         method: "Get"
     },
+    payment:{
+        url:`${backendDomain}/app/api/payment/checkout`
+    }
 
 }
 export default SummaryApi;

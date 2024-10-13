@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react';
+
+
+ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Fix import for jwt-decode
-import { useLocation } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'; // Fix import for jwt-decode
+import { useLocation,useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
 import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify styles
 import SummaryApi from '../common/Apis';
 
 const UploadServices = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const { certificatename } = location.state || {}; // Fallback in case state is undefined
 
-  const [certificateName, setCertificateName] = useState(certificatename);
+  const [certificateName, setCertificateName] = useState(certificatename || ''); // Fallback for certificate name
   const [proofOfIdentity, setProofOfIdentity] = useState([""]);
   const [proofOfAddress, setProofOfAddress] = useState([""]);
   const [availableIdentityDocs, setAvailableIdentityDocs] = useState([]);
@@ -31,13 +35,12 @@ const UploadServices = () => {
   // Fetch proof of identity and address documents from backend on component load
   useEffect(() => {
     const fetchDocuments = async () => {
-      // original url=`http://localhost:8080/app/api/documents/${certificateName}`
+      // original url=http://localhost:8080/app/api/documents/${certificateName}
      const url=`${SummaryApi.documents.url}/${certificateName}`
       try {
-        const response = await axios.get(url); // Update endpoint
+        const response = await axios.get(url);
         const { proofOfIdentity, proofOfAddress } = response.data; // Adjust based on response structure
 
-        // Set available documents
         setAvailableIdentityDocs(proofOfIdentity);
         setAvailableAddressDocs(proofOfAddress);
 
@@ -47,8 +50,11 @@ const UploadServices = () => {
         console.error('Error fetching documents:', error);
       }
     };
-    fetchDocuments();
-  }, [certificateName]); // Run again if certificateName changes
+
+    if (certificateName) {
+      fetchDocuments();
+    }
+  }, [certificateName]);
 
   // Handle adding more inputs for identity/address proof
   const handleAddField = (fieldType) => {
@@ -73,9 +79,58 @@ const UploadServices = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true); // Set loading state to true
+  const handlePayment = async () => {
+    try {
+      // Create Razorpay order by calling your backend
+      // 'http://localhost:8080/app/api/payment/checkout'
+      const url=SummaryApi.payment.url
+      const paymentResponse = await axios.post(url, {
+        amount: 500, // Replace with the actual amount
+      });
+  
+      const { amount, id: order_id, currency } = paymentResponse.data;
+  
+      // Ensure Razorpay script is available
+      if (typeof window.Razorpay === 'undefined') {
+        console.error('Razorpay SDK not loaded');
+        toast.error('Payment gateway not available');
+        return;
+      }
+  
+      const options = {
+        key: 'rzp_test_U4XuiM2cjeWzma', // Razorpay key ID
+        amount: amount,
+        currency: currency,
+        name: 'Certificate Service',
+        description: 'Payment for certificate',
+        order_id: order_id,
+        handler: async (response) => {
+          try {
+            const paymentId = response.razorpay_payment_id;
+            console.log('Payment successful:', paymentId);
+  
+            // Proceed with form submission after successful payment
+            await handleSubmit();
+
+          } catch (error) {
+            console.error('Error during payment handling:', error);
+          }
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+  
+      const rzp = new window.Razorpay(options); // Razorpay instance
+      rzp.open();
+    } catch (error) {
+      console.error('Error creating Razorpay order:', error); // Inspect the error
+      toast.error('Error initiating payment');
+    }
+  };
+  // Handle form submission (called after successful payment)
+  const handleSubmit = async () => {
+    setLoading(true);
 
     const formData = new FormData();
     formData.append('certificateName', certificateName);
@@ -95,27 +150,28 @@ const UploadServices = () => {
     });
 
     try {
-      const token = localStorage.getItem('token'); // Retrieve JWT token from localStorage
-      console.log(userId);
-      const url = `${SummaryApi.users.url}/${userId}/certificates`
+      const token = localStorage.getItem('token');
+      const url=`${SummaryApi.users.url}/${userId}/certificates`
       // `http://localhost:8080/app/api/users/${userId}/certificates`
-
+      {console.log(url);}
       const response = await axios.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`, // Include JWT token in Authorization header
+          'Authorization': `Bearer ${token}`,
         },
       });
 
-      console.log(response.data.message);
-      toast.success('Certificate details and files uploaded successfully', {
-        onClose: () => setLoading(false), // Turn off loading after toast
-      }); // Success notification
+      toast.success('Certificate details uploaded successfully');
+      setTimeout(()=>{
+
+        navigate('/userdashboard')
+      },5000)
+
     } catch (error) {
-      console.error('Error submitting form:', error);
-      toast.error('Error uploading certificate details or files', {
-        onClose: () => setLoading(false), // Turn off loading after toast
-      }); // Error notification
+      toast.error('Error uploading certificate details');
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -123,7 +179,7 @@ const UploadServices = () => {
     <div className="max-w-lg mx-auto p-8 bg-white shadow-md">
       <h2 className="text-2xl font-bold mb-6">Add Certificate Details</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">Certificate Name</label>
           <input
@@ -201,18 +257,16 @@ const UploadServices = () => {
         </div>
 
         <button
-          type="submit"
+          type="button"
+          onClick={handlePayment} // Call Razorpay before submission
           className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-          disabled={loading} // Disable button while loading
+          disabled={loading}
         >
-          {loading ? 'Uploading...' : 'Submit'}
+          {loading ? 'Processing...' : 'Pay & Submit'}
         </button>
       </form>
 
-      {/* Toast notification container */}
       <ToastContainer />
-
-      {/* Loading indicator */}
       {loading && <p className="text-center text-gray-500 mt-4">Uploading, please wait...</p>}
     </div>
   );
