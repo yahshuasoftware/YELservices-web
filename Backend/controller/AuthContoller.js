@@ -18,7 +18,7 @@ const login = async (req, res) => {
     // Compare the password
     const isEqual = await bcrypt.compare(password, user.password);
 
-    const jwt_token=jwt.sign({email:user.email,_id:user._id},process.env.JWT_SECRET,{expiresIn:"24h"})
+    const jwt_token=jwt.sign({email:user.email,_id:user._id},process.env.REACT_APP_JWT_SECRET,{expiresIn:"24h"})
     console.log(jwt_token);
 
     if (isEqual) {

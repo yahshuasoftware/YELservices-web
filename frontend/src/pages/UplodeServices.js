@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+
+
+ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode'; // Fix import for jwt-decode
 import { useLocation,useNavigate } from 'react-router-dom';
@@ -8,8 +10,6 @@ import SummaryApi from '../common/Apis';
 
 const UploadServices = () => {
   const location = useLocation();
-  // const navigate = useNavigate();
-
   const { certificatename } = location.state || {}; // Fallback in case state is undefined
 
   const [certificateName, setCertificateName] = useState(certificatename || ''); // Fallback for certificate name
@@ -33,10 +33,10 @@ const UploadServices = () => {
   // Fetch proof of identity and address documents from backend on component load
   useEffect(() => {
     const fetchDocuments = async () => {
-      // original url=`http://localhost:8080/app/api/documents/${certificateName}`
+      // original url=http://localhost:8080/app/api/documents/${certificateName}
      const url=`${SummaryApi.documents.url}/${certificateName}`
       try {
-        const response = await axios.get(`http://localhost:8080/api/documents/${certificateName}`);
+        const response = await axios.get(url); // Update endpoint
         const { proofOfIdentity, proofOfAddress } = response.data; // Adjust based on response structure
 
         setAvailableIdentityDocs(proofOfIdentity);
@@ -77,56 +77,9 @@ const UploadServices = () => {
     }
   };
 
-  const handlePayment = async () => {
-    try {
-      // Create Razorpay order by calling your backend
-      const paymentResponse = await axios.post('http://localhost:8080/api/payment/checkout', {
-        amount: 500, // Replace with the actual amount
-      });
-  
-      const { amount, id: order_id, currency } = paymentResponse.data;
-  
-      // Ensure Razorpay script is available
-      if (typeof window.Razorpay === 'undefined') {
-        console.error('Razorpay SDK not loaded');
-        toast.error('Payment gateway not available');
-        return;
-      }
-  
-      const options = {
-        key: 'rzp_test_U4XuiM2cjeWzma', // Razorpay key ID
-        amount: amount,
-        currency: currency,
-        name: 'Certificate Service',
-        description: 'Payment for certificate',
-        order_id: order_id,
-        handler: async (response) => {
-          try {
-            const paymentId = response.razorpay_payment_id;
-            console.log('Payment successful:', paymentId);
-  
-            // Proceed with form submission after successful payment
-            await handleSubmit();
-
-          } catch (error) {
-            console.error('Error during payment handling:', error);
-          }
-        },
-        theme: {
-          color: '#3399cc',
-        },
-      };
-  
-      const rzp = new window.Razorpay(options); // Razorpay instance
-      rzp.open();
-    } catch (error) {
-      console.error('Error creating Razorpay order:', error); // Inspect the error
-      toast.error('Error initiating payment');
-    }
-  };
-  // Handle form submission (called after successful payment)
-  const handleSubmit = async () => {
-    setLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true); // Set loading state to true
 
     const formData = new FormData();
     formData.append('certificateName', certificateName);
@@ -146,15 +99,22 @@ const UploadServices = () => {
     });
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`http://localhost:8080/api/users/${userId}/certificates`, formData, {
+      const token = localStorage.getItem('token'); // Retrieve JWT token from localStorage
+      console.log(userId);
+      const url = `${SummaryApi.users.url}/${userId}/certificates`
+      // `http://localhost:8080/app/api/users/${userId}/certificates`
+
+      const response = await axios.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`,
         },
       });
 
-      toast.success('Certificate details uploaded successfully');
+      console.log(response.data.message);
+      toast.success('Certificate details and files uploaded successfully', {
+        onClose: () => setLoading(false), // Turn off loading after toast
+      }); // Success notification
     } catch (error) {
       toast.error('Error uploading certificate details');
       console.error(error);
