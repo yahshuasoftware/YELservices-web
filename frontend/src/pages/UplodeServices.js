@@ -82,7 +82,6 @@ const UploadServices = () => {
   const handlePayment = async () => {
     try {
       // Create Razorpay order by calling your backend
-      // 'http://localhost:8080/app/api/payment/checkout'
       const url=SummaryApi.payment.url
       const paymentResponse = await axios.post(url, {
         amount: 500, // Replace with the actual amount
