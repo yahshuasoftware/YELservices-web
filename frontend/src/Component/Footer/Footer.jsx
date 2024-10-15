@@ -4,12 +4,12 @@ const Footer = () => {
   return (
     <div>
       <footer>
-        <div className="bg-gray-600 p-10 ">
+        <div className="bg-gray-600 p-5 ">
               <div>
                 <ul className=" flex pl-24">
                   <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Disclaimer and Policies</a> | </li>
                   <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Accessibility Statement</a> | </li>
-                  <li className="text-sm  p-1 hover:underline cursor-pointer text-white"> <a>Sitemap</a> |</li>
+                  <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Sitemap</a> |</li>
                   <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Help</a></li>
                 </ul>
                 <div class="clearfix"></div>
@@ -23,7 +23,7 @@ const Footer = () => {
                 </span>
               </div>
               <div class="col-md-4 col-sm-4 col-xs-12 footer-logo">
-                <a href="#" target="_blank">
+                <a  target="_blank">
                   {/* <img src="../../images/wc.png" class="pull-left img-responsive" alt="compliance" /> */}
                 </a>
                 <a class="ExternalLinkClick" rel="follow" target="_blank">

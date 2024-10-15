@@ -9,6 +9,19 @@ const getServices = async (req, res) => {
 
 
 };
+const getAllServices = async (req, res) => {
+    try {
+        const services = await servicemodel.find();
+
+        if (services.length === 0) {
+            return res.status(404).json({ message: "No services found" });
+        }
+
+        res.status(200).json(services);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
 
 const postServices = async (req, res) => {
     const { certificateName, proofOfIdentity, proofOfAddress } = req.body;
@@ -26,4 +39,4 @@ const postServices = async (req, res) => {
     
 };
 
-module.exports = { getServices, postServices };
+module.exports = { getServices, postServices,getAllServices };

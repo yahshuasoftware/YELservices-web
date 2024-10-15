@@ -5,10 +5,11 @@ import Sidebar from './Sidebar';
 
 const ContactUs = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-        <Sidebar />
+    
+    <div className="flex  items-center ">
+        {/* <Sidebar /> */}
       {/* Main Container */}
-      <div className="w-full max-w-4xl text-center p-8">
+      <div className="w-full ml-40 max-w-4xl text-center p-8">
         {/* Title */}
         <h2 className="text-3xl font-bold text-blue-700 border-b-2 border-gray-300 pb-2 mb-6">
           Contact Us
@@ -26,7 +27,7 @@ const ContactUs = () => {
             For Queries Contact numbers for clarifications
           </p>
           <h3 className="text-2xl font-bold text-gray-700">
-            24 x 7 Citizen Call Center: 1800 120 8040
+            24 x 7 Citizen Call Center: 1234 567 890
           </h3>
           <p className="text-lg text-gray-700 mt-2">(Toll Free)</p>
         </div>

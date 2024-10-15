@@ -1,28 +1,77 @@
-const mongoose= require("mongoose");
+const mongoose = require("mongoose");
 
-const UserSchema= new mongoose.Schema({
- name:{
-    type:String,
-    required:true,
+// User Certificate Schema
+const userCertificateSchema = new mongoose.Schema({
+  certificateName: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'], // Status of the certificate application
+    default: 'pending',
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['paid', 'unpaid', 'pending'], // Payment status for the certificate
+    default: 'pending',
+  },
+  uploadedDocuments: {
+    proofOfIdentity: [
+      {
+        filename: String, // Name of the file
+        path: String,     // File path or URL
+        mimetype: String, // MIME type (e.g., image/jpeg, application/pdf)
+        size: Number,     // File size in bytes
+      },
+    ],
+    proofOfAddress: [
+      {
+        filename: String, 
+        path: String,
+        mimetype: String,
+        size: Number,
+      },
+    ],
+  },
+  applicationDate: {
+    type: Date,
+    default: Date.now, // Automatically store the date of application
+  },
+});
 
- },
- password:{
-    type:String,
-    required:true,
-    
- },
- email:{
-    type:String,
-    required:true,
-    unique: true, 
-    
- },
- role:String,
- bio:String,
+// User Schema
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phoneNo: {
+    type: String,
+    // unique: true, // Ensure phone number is unique
+    // required: true,
+  },
+  district: {
+    type: String,
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'subadmin', 'general user'], // Roles for the user
+    default: 'general user', // Default role
+  },
+  certificatesApplied: [userCertificateSchema], // Store details of applied certificates
+});
 
+// Create User Model
+const usermodel = mongoose.model("User", UserSchema);
 
-})
-
-const usermodel=mongoose.model("user",UserSchema)
-
-module.exports=usermodel;
+module.exports = usermodel;

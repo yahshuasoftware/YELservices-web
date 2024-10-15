@@ -1,101 +1,184 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
-const UplodeServices = () => {
-  const [certificateName, setCertificateName] = useState('');
-  const [proofOfIdentity, setProofOfIdentity] = useState(['']);
-  const [proofOfAddress, setProofOfAddress] = useState(['']);
-  const [message, setMessage] = useState('');
+
+ import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {jwtDecode} from 'jwt-decode'; // Fix import for jwt-decode
+import { useLocation,useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify styles
+import SummaryApi from '../common/Apis';
+
+const UploadServices = () => {
+  const location = useLocation();
+  const navigate =useNavigate()
+  const { certificatename } = location.state || {}; // Fallback in case state is undefined
+
+  const [certificateName, setCertificateName] = useState(certificatename || ''); // Fallback for certificate name
+  const [proofOfIdentity, setProofOfIdentity] = useState([""]);
+  const [proofOfAddress, setProofOfAddress] = useState([""]);
   const [availableIdentityDocs, setAvailableIdentityDocs] = useState([]);
   const [availableAddressDocs, setAvailableAddressDocs] = useState([]);
+  const [userId, setUserId] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state
+
+  // Extract user ID from JWT token
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken._id); // Set the user ID from the decoded token
+      console.log(decodedToken._id);
+    }
+  }, []);
 
   // Fetch proof of identity and address documents from backend on component load
   useEffect(() => {
     const fetchDocuments = async () => {
+      // original url=http://localhost:8080/app/api/documents/${certificateName}
+     const url=`${SummaryApi.documents.url}/${certificateName}`
       try {
-        const identityResponse = await axios.get('/api/identity-docs'); // Adjust endpoint as per your backend
-        setAvailableIdentityDocs(identityResponse.data);
+        const response = await axios.get(url); // Update endpoint
+        const { proofOfIdentity, proofOfAddress } = response.data; // Adjust based on response structure
 
-        const addressResponse = await axios.get('/api/address-docs'); // Adjust endpoint as per your backend
-        setAvailableAddressDocs(addressResponse.data);
+        setAvailableIdentityDocs(proofOfIdentity);
+        setAvailableAddressDocs(proofOfAddress);
+
+        console.log("Available Proof of Identity:", proofOfIdentity);
+        console.log("Available Proof of Address:", proofOfAddress);
       } catch (error) {
         console.error('Error fetching documents:', error);
       }
     };
-    fetchDocuments();
-  }, []);
+
+    if (certificateName) {
+      fetchDocuments();
+    }
+  }, [certificateName]);
 
   // Handle adding more inputs for identity/address proof
   const handleAddField = (fieldType) => {
     if (fieldType === 'identity') {
-      setProofOfIdentity([...proofOfIdentity, '']);
+      setProofOfIdentity([...proofOfIdentity, null]);
     } else if (fieldType === 'address') {
-      setProofOfAddress([...proofOfAddress, '']);
+      setProofOfAddress([...proofOfAddress, null]);
     }
   };
 
-  // Handle change for identity and address input fields
-  const handleInputChange = (index, value, fieldType) => {
-    if (fieldType === 'identity') {
-      const newProofOfIdentity = [...proofOfIdentity];
-      newProofOfIdentity[index] = value;
-      setProofOfIdentity(newProofOfIdentity);
-    } else if (fieldType === 'address') {
-      const newProofOfAddress = [...proofOfAddress];
-      newProofOfAddress[index] = value;
-      setProofOfAddress(newProofOfAddress);
-    }
-  };
-
-  // Handle file upload (image upload)
-  const handleFileUpload = async (e, fieldType, index) => {
+  // Handle file upload
+  const handleFileUpload = (e, fieldType, index) => {
     const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await axios.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      if (fieldType === 'identity') {
-        const newProofOfIdentity = [...proofOfIdentity];
-        newProofOfIdentity[index] = response.data.fileUrl; // Assuming backend returns the URL of the uploaded file
-        setProofOfIdentity(newProofOfIdentity);
-      } else if (fieldType === 'address') {
-        const newProofOfAddress = [...proofOfAddress];
-        newProofOfAddress[index] = response.data.fileUrl;
-        setProofOfAddress(newProofOfAddress);
-      }
-
-      setMessage('File uploaded successfully');
-    } catch (error) {
-      setMessage('Error uploading file');
+    if (fieldType === 'identity') {
+      const updatedFiles = [...proofOfIdentity];
+      updatedFiles[index] = file;
+      setProofOfIdentity(updatedFiles);
+    } else if (fieldType === 'address') {
+      const updatedFiles = [...proofOfAddress];
+      updatedFiles[index] = file;
+      setProofOfAddress(updatedFiles);
     }
   };
+  const handlePayment = async () => {
+    try {
+      // Create Razorpay order by calling your backend
+      const url=SummaryApi.payment.url
+      const paymentResponse = await axios.post(url, {
+        amount: 500, // Replace with the actual amount
+      });
+  
+      const { amount, id: order_id, currency } = paymentResponse.data;
+  
+      // Ensure Razorpay script is available
+      if (typeof window.Razorpay === 'undefined') {
+        console.error('Razorpay SDK not loaded');
+        toast.error('Payment gateway not available');
+        return;
+      }
+  
+      const options = {
+        key: 'rzp_test_U4XuiM2cjeWzma', // Razorpay key ID
+        amount: amount,
+        currency: currency,
+        name: 'Certificate Service',
+        description: 'Payment for certificate',
+        order_id: order_id,
+        handler: async (response) => {
+          try {
+            const paymentId = response.razorpay_payment_id;
+            console.log('Payment successful:', paymentId);
+  
+            // Proceed with form submission after successful payment
+            await handleSubmit();
+
+          } catch (error) {
+            console.error('Error during payment handling:', error);
+          }
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+  
+      const rzp = new window.Razorpay(options); // Razorpay instance
+      rzp.open();
+    } catch (error) {
+      console.error('Error creating Razorpay order:', error); // Inspect the error
+      toast.error('Error initiating payment');
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const data = { certificateName, proofOfIdentity, proofOfAddress };
-    
+    setLoading(true); // Set loading state to true
+
+    const formData = new FormData();
+    formData.append('certificateName', certificateName);
+
+    // Append proof of identity files
+    proofOfIdentity.forEach((file) => {
+      if (file) {
+        formData.append('proofOfIdentity', file);
+      }
+    });
+
+    // Append proof of address files
+    proofOfAddress.forEach((file) => {
+      if (file) {
+        formData.append('proofOfAddress', file);
+      }
+    });
+
     try {
-      await axios.post('/api/services', data);
-      setMessage('Service details saved successfully');
+      const token = localStorage.getItem('token'); // Retrieve JWT token from localStorage
+      console.log(userId);
+      const url = `${SummaryApi.users.url}/${userId}/certificates`
+      // `http://localhost:8080/app/api/users/${userId}/certificates`
+
+      const response = await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      toast.success('Certificate details and files uploaded successfully');
+      setTimeout(() => {
+        navigate('/userdashboard');
+        
+      }, 5000);
     } catch (error) {
-      setMessage('Error saving service details');
+      toast.error('Error uploading certificate details');
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="max-w-lg mx-auto p-8 bg-white shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Add Service Details</h2>
-      
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-2xl font-bold mb-6">Add Certificate Details</h2>
+
+      <form className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">Certificate Name</label>
           <input
@@ -111,23 +194,19 @@ const UplodeServices = () => {
         {/* Proof of Identity */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Proof of Identity</label>
-          {proofOfIdentity.map((identity, index) => (
+          {proofOfIdentity.map((_, index) => (
             <div key={index} className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Select Proof of Identity</label>
               <select
-                value={identity}
-                onChange={(e) => handleInputChange(index, e.target.value, 'identity')}
-                className="mt-1 p-2 block w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
-                required
+                className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="">Select Proof of Identity</option>
-                {availableIdentityDocs.map((doc) => (
-                  <option key={doc._id} value={doc.documentUrl}>
-                    {doc.documentType}
+                <option value="">Select Document</option>
+                {availableIdentityDocs.map((doc, idx) => (
+                  <option key={idx} value={doc}>
+                    {doc}
                   </option>
                 ))}
               </select>
-
-              {/* Upload Image for Proof of Identity */}
               <input
                 type="file"
                 onChange={(e) => handleFileUpload(e, 'identity', index)}
@@ -147,23 +226,19 @@ const UplodeServices = () => {
         {/* Proof of Address */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Proof of Address</label>
-          {proofOfAddress.map((address, index) => (
+          {proofOfAddress.map((_, index) => (
             <div key={index} className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Select Proof of Address</label>
               <select
-                value={address}
-                onChange={(e) => handleInputChange(index, e.target.value, 'address')}
-                className="mt-1 p-2 block w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
-                required
+                className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="">Select Proof of Address</option>
-                {availableAddressDocs.map((doc) => (
-                  <option key={doc._id} value={doc.documentUrl}>
-                    {doc.documentType}
+                <option value="">Select Document</option>
+                {availableAddressDocs.map((doc, idx) => (
+                  <option key={idx} value={doc}>
+                    {doc}
                   </option>
                 ))}
               </select>
-
-              {/* Upload Image for Proof of Address */}
               <input
                 type="file"
                 onChange={(e) => handleFileUpload(e, 'address', index)}
@@ -181,16 +256,19 @@ const UplodeServices = () => {
         </div>
 
         <button
-          type="submit"
+          type="button"
+          onClick={handlePayment} // Call Razorpay before submission
           className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          disabled={loading}
         >
-          Submit
+          {loading ? 'Processing...' : 'Pay & Submit'}
         </button>
-
-        {message && <p className="mt-4 text-green-500">{message}</p>}
       </form>
+
+      <ToastContainer />
+      {loading && <p className="text-center text-gray-500 mt-4">Uploading, please wait...</p>}
     </div>
   );
 };
 
-export default UplodeServices;
+export default UploadServices;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
-import Sidebar from './Sidebar';
+import { toast } from 'react-toastify';
 
 const Agriculture = () => {
   const [subDepartment, setSubDepartment] = useState('');
@@ -17,19 +17,33 @@ const Agriculture = () => {
 
     // Navigate based on the selected sub department
     if (subDepartment === 'Agriculture Licensing Services') {
-      navigate('/agriculture-licensing');
+      navigate('/agriculture');
     } else {
       alert('Please select a valid Sub Department');
     }
   };
 
+  const handleLogout = () => {
+    // Remove the JWT token from localStorage
+    localStorage.removeItem('token');
+  
+    // Show success toast
+    toast.success('Logged out successfully!', {
+      position: "top-right",
+    });
+  console.log('redirecting to the page')
+    // Redirect to login or home page
+    navigate('/login'); // Adjust the route as needed
+  };
+  
+
   return (
     <div className="flex">
       {/* Sidebar */}
-      <Sidebar />
+      {/* <Sidebar /> */}
       
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-6 ml-64">
+      <div className="container mx-auto px-4 py-6 ml-10">
         <h1 className="text-3xl font-bold text-orange-600">
           Department: <span className="text-green-600">Agriculture</span>
         </h1>
@@ -61,8 +75,11 @@ const Agriculture = () => {
             >
               Proceed
             </button>
+
+
           </div>
         </form>
+        <button onClick={handleLogout} className="bg-red-800 text-white py-2 px-4 rounded hover:bg-black" >logout</button>
 
         {/* Additional Content */}
         <div className="mt-8">

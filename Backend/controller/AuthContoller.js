@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 // Login Function
 const login = async (req, res) => {
   const { password, email } = req.body;
-
+  console.log(req.body);
   try {
     // Find the user by email
     const user = await usermodel.findOne({ email });
@@ -18,7 +18,8 @@ const login = async (req, res) => {
     // Compare the password
     const isEqual = await bcrypt.compare(password, user.password);
 
-    const jwt_token=jwt.sign({email:user.email,_id:user._id},process.env.JWT_SECRET,{expiresIn:"24h"})
+    const jwt_token=jwt.sign({email:user.email,_id:user._id},process.env.REACT_APP_JWT_SECRET,{expiresIn:"24h"})
+    console.log(jwt_token);
 
     if (isEqual) {
       return res.status(200).json(
@@ -37,11 +38,11 @@ const login = async (req, res) => {
 
 // Signup Function
 const signup = async (req, res) => {
-  const { name, password, email} = req.body;
+  const { name, password, email,phoneNo} = req.body;
 
   try {
     // Check if user already exists
-    const existingUser = await usermodel.findOne({ email });
+    const existingUser = await usermodel.findOne({ $or: [{ email }, { phoneNo }] });
     
     if (existingUser) {
       return res.status(400).send("User already exists");
@@ -51,7 +52,7 @@ const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
-    const newUser = new usermodel({ name, password: hashedPassword, email });
+    const newUser = new usermodel({ name, password: hashedPassword, email,phoneNo });
     await newUser.save();
 
     return res.status(201).send('User details saved successfully');

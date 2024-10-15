@@ -1,32 +1,26 @@
 
 const express = require("express");
 require('dotenv').config();
-var cors = require('cors')
-
- 
+const cors = require('cors')
+const router=require('./App/index')
 
 const app = express();
-const servicesroutes = require("./routes/ServicesRoutes");
-const authroutes = require("./routes/authRoutes");
-const userroutes=require("./routes/userRoutes")
-const departmentRoutes=require("./routes/departmentRoutes")
-
-
+app.use(express.static("uploads"));
 
 const connectDB=require("./config/DB")
 
-const port = 8080;
+const Port = process.env.REACT_APP_PORT;
+const port = Port;
 
 connectDB()
-// Middleware to parse JSON bodies
+// Middleware to parse JSON bodies 
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+    origin: ['http://100.26.236.115:3000','http://localhost:3000'],
+   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+}));
 
-// Use the services routes
-app.use("/api", servicesroutes);
-app.use("/api", authroutes);
-app.use("/api", userroutes);
-app.use('/api', departmentRoutes);
+app.use("/app",router);
 
 
 app.listen(port, () => {
