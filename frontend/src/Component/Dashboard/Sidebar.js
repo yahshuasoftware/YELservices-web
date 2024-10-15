@@ -38,6 +38,7 @@ const Sidebar = () => {
           <Link className="block " to="Agriculture">Agriculture</Link>
             </li>
         </ul>
+       
       </div>
     );
   };

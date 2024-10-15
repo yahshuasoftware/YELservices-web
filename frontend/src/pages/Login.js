@@ -129,7 +129,7 @@ const Login = () => {
   ];
 
   return (
-    <div className="h-[80%] mt-7 flex items-center justify-center">
+    <div className="h-[80%] mt-7 flex items-center justify-center text-base md:text-lg lg:text-xl xl:text-2xl">
       <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6">
         <h2 className="text-xl font-semibold text-center mb-5">Login</h2>
 

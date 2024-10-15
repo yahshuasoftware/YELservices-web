@@ -9,7 +9,7 @@ const AadharService = () => {
 
       <div className=" gap-2 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto mt-6">
         {/* First Card - Document Update */}
-        <div className="border w-96 border-gray-600 rounded-lg shadow-sm mb-4">
+        <div className="border w-full border-gray-600 rounded-lg shadow-sm mb-4">
           <div className="bg-gradient-to-r  from-red-500 to-teal-400 h-1 rounded-t-lg"></div>
           <div className="p-4">
             <h2 className="text-lg font-semibold text-gray-800">
@@ -31,7 +31,7 @@ const AadharService = () => {
         
 
         {/* Third Card - Check Aadhaar Update Status */}
-        <div className="border w-96 border-gray-600 rounded-lg shadow-sm mb-4">
+        <div className="border w-full border-gray-600 rounded-lg shadow-sm mb-4">
           <div className="bg-gradient-to-r from-red-500 to-teal-400 h-1 rounded-t-lg"></div>
           <div className="p-4">
             <h2 className="text-lg font-semibold text-gray-800">

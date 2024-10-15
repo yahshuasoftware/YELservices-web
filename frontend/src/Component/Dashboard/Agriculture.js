@@ -38,12 +38,12 @@ const Agriculture = () => {
   
 
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row w-full">
       {/* Sidebar */}
       {/* <Sidebar /> */}
       
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-6 ml-10">
+      <div className="flex-grow container mx-auto px-4 py-6 md:ml-10">
         <h1 className="text-3xl font-bold text-orange-600">
           Department: <span className="text-green-600">Agriculture</span>
         </h1>
@@ -51,13 +51,13 @@ const Agriculture = () => {
         <hr className="border-t-2 border-orange-600 my-4" />
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
             <label className="font-semibold" htmlFor="subDepartment">
               Sub Department <span className="text-red-600">*</span>
             </label>
             <select
               id="subDepartment"
-              className="border border-gray-300 rounded p-2"
+              className="border border-gray-300 rounded p-2 w-full md:w-64 mt-2 md:mt-0"
               value={subDepartment}
               onChange={handleSubDepartmentChange}
             >
@@ -71,15 +71,19 @@ const Agriculture = () => {
             </select>
             <button
               type="submit"
-              className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600"
+              className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 mt-2 md:mt-0"
             >
               Proceed
             </button>
-
-
           </div>
         </form>
-        <button onClick={handleLogout} className="bg-red-800 text-white py-2 px-4 rounded hover:bg-black" >logout</button>
+
+        <button
+          onClick={handleLogout}
+          className="bg-red-800 text-white py-2 px-4 rounded hover:bg-black mt-4"
+        >
+          Logout
+        </button>
 
         {/* Additional Content */}
         <div className="mt-8">
