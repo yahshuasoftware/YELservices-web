@@ -12,21 +12,21 @@ const Footer = () => {
                   <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Sitemap</a> |</li>
                   <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Help</a></li>
                 </ul>
-                <div class="clearfix"></div>
+                <div className="clearfix"></div>
                 <span  className="text-sm pl-24 p-1 text-white" >
                   Copyright &#169; 2015 Maharashtra Information Technology
-                  Corporation, All Rights Reserved <b class="serverid">B | </b>
+                  Corporation, All Rights Reserved <b className="serverid">B | </b>
                 </span>
-                <div class="clearfix"></div>
+                <div className="clearfix"></div>
                 <span  className="text-sm pl-24  p-1 text-white">
                   Best Viewed on internet explorer 9+, firefox, Chrome |
                 </span>
               </div>
-              <div class="col-md-4 col-sm-4 col-xs-12 footer-logo">
+              <div className="col-md-4 col-sm-4 col-xs-12 footer-logo">
                 <a  target="_blank">
                   {/* <img src="../../images/wc.png" class="pull-left img-responsive" alt="compliance" /> */}
                 </a>
-                <a class="ExternalLinkClick" rel="follow" target="_blank">
+                <a className="ExternalLinkClick" rel="follow" target="_blank">
                   {/* <img src="../../Images/Maha_IT_LogoB.png" alt="MahaIT Corporation Limited" class="pull-right img-responsive" /> */}
                 </a>
               </div>

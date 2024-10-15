@@ -1,4 +1,4 @@
-// const backendDomain=process.env.REACT_APP;
+
 // const backendDomain= process.env.REACT_APP_LOCALHOST_URI
 
 const backendDomain=process.env.REACT_APP_API_URL
