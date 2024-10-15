@@ -1,10 +1,12 @@
 // db.js
 const mongoose = require('mongoose');
 
+
 const connectDB = async () => {
     try {
         // Replace 'your_mongodb_uri' with your actual MongoDB connection string
-        await mongoose.connect('mongodb+srv://tusharsarode0228:XATushar@techtroops.aykfmnj.mongodb.net/?retryWrites=true&w=majority&appName=techtroops'
+        await mongoose.connect(
+            process.env.REACT_APP_MONGODB_URI
         );
         console.log('MongoDB connected');
     } catch (err) {
