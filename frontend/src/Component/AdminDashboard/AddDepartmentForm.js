@@ -37,11 +37,12 @@ const AddDepartmentForm = () => {
 
   const addNewDepartment = async () => {
     const formattedCertificates = certificates.map(cert => ({
-      ...cert,
-      proofOfIdentity: cert.proofOfIdentity ? cert.proofOfIdentity.value : '',
-      proofOfAddress: cert.proofOfAddress ? cert.proofOfAddress.value : ''
+      name: cert.name,
+      description: cert.description,
+      proofOfIdentity: cert.proofOfIdentity ? cert.proofOfIdentity.map(option => option.value) : [],
+      proofOfAddress: cert.proofOfAddress ? cert.proofOfAddress.map(option => option.value) : []
     }));
-
+  
     try {
       const response = await axios.post(SummaryApi.addDepartment.url, { name: departmentName, certificates: formattedCertificates });
       toast.success(response.data.message); // Show success message
