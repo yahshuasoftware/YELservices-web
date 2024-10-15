@@ -1,6 +1,4 @@
-
-
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode'; // Fix import for jwt-decode
 import { useLocation,useNavigate } from 'react-router-dom';
@@ -10,7 +8,8 @@ import SummaryApi from '../common/Apis';
 
 const UploadServices = () => {
   const location = useLocation();
-  const navigate =useNavigate()
+  // const navigate = useNavigate();
+
   const { certificatename } = location.state || {}; // Fallback in case state is undefined
 
   const [certificateName, setCertificateName] = useState(certificatename || ''); // Fallback for certificate name
@@ -37,7 +36,7 @@ const UploadServices = () => {
       // original url=http://localhost:8080/app/api/documents/${certificateName}
      const url=`${SummaryApi.documents.url}/${certificateName}`
       try {
-        const response = await axios.get(url); // Update endpoint
+        const response = await axios.get(url);
         const { proofOfIdentity, proofOfAddress } = response.data; // Adjust based on response structure
 
         setAvailableIdentityDocs(proofOfIdentity);
@@ -77,10 +76,11 @@ const UploadServices = () => {
       setProofOfAddress(updatedFiles);
     }
   };
+
   const handlePayment = async () => {
     try {
-      // Create Razorpay order by calling your backend
       const url=SummaryApi.payment.url
+      // Create Razorpay order by calling your backend
       const paymentResponse = await axios.post(url, {
         amount: 500, // Replace with the actual amount
       });
@@ -125,11 +125,9 @@ const UploadServices = () => {
       toast.error('Error initiating payment');
     }
   };
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true); // Set loading state to true
+  // Handle form submission (called after successful payment)
+  const handleSubmit = async () => {
+    setLoading(true);
 
     const formData = new FormData();
     formData.append('certificateName', certificateName);
@@ -149,11 +147,8 @@ const UploadServices = () => {
     });
 
     try {
-      const token = localStorage.getItem('token'); // Retrieve JWT token from localStorage
-      console.log(userId);
-      const url = `${SummaryApi.users.url}/${userId}/certificates`
-      // `http://localhost:8080/app/api/users/${userId}/certificates`
-
+      const token = localStorage.getItem('token');
+       const url = `${SummaryApi.users.url}/${userId}/certificates`
       const response = await axios.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -161,11 +156,7 @@ const UploadServices = () => {
         },
       });
 
-      toast.success('Certificate details and files uploaded successfully');
-      setTimeout(() => {
-        navigate('/userdashboard');
-        
-      }, 5000);
+      toast.success('Certificate details uploaded successfully');
     } catch (error) {
       toast.error('Error uploading certificate details');
       console.error(error);
