@@ -217,11 +217,11 @@ const Login = () => {
           </select>
 
      
-          {/* Google ReCAPTCHA */}
-          <ReCAPTCHA
+          
+          {/* <ReCAPTCHA
             sitekey="6Lfw60oqAAAAAP6WEMG_uT3BjpSi7gW5FKsLkySs"  // Replace with your reCAPTCHA site key
             onChange={handleCaptchaChange}
-          />
+          /> */}
 
          
           <input
