@@ -78,13 +78,17 @@ const Login = () => {
 
     try {
       if (!isOtpSent) {
+        const SendOtpUrl = `${SummaryApi.sendOtp.url}`
         // Send OTP
-        await axios.post('http://localhost:8080/api/send-otp', { phoneNumber });
+        // http://localhost:8080/api/send-otp
+        await axios.post(SendOtpUrl, { phoneNumber });
         setIsOtpSent(true);
         toast.success('OTP sent to your phone number.', { position: "top-right" });
       } else {
         // Verify OTP
-        const response = await axios.post('http://localhost:8080/api/verify-otp', { phoneNumber, otp });
+        const verifyOtpUrl=`${SummaryApi.verifyOtp.url}`
+        
+        const response = await axios.post(verifyOtpUrl, { phoneNumber, otp });
         if (response.data.jwt_token) {
           localStorage.setItem('token', response.data.jwt_token);
           toast.success('Login successfully!', { position: "top-right" });

@@ -34,9 +34,9 @@ const UploadServices = () => {
 
   // Fetch proof of identity and address documents from backend on component load
   useEffect(() => {
+    const url=`${SummaryApi.documents.url}/${certificateName}`
     const fetchDocuments = async () => {
       // original url=http://localhost:8080/app/api/documents/${certificateName}
-     const url=`${SummaryApi.documents.url}/${certificateName}`
       try {
         const response = await axios.get(url);
         const { proofOfIdentity, proofOfAddress } = response.data; // Adjust based on response structure

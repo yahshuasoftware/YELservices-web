@@ -34,6 +34,14 @@ const SummaryApi = {
     },
     payment:{
         url:`${backendDomain}/app/api/payment/checkout`
+    },
+    sendOtp:{
+        url:`${backendDomain}/app/api/send-otp`,
+        method:"Post"
+    },
+    verifyOtp:{
+        url:`${backendDomain}/app/api/verify-otp`,
+        method:"Post"
     }
 
 }

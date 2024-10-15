@@ -9,8 +9,8 @@ app.use(express.static("uploads"));
 
 const connectDB=require("./config/DB")
 
-const Port = process.env.REACT_APP_PORT;
-const port = Port;
+const PORT = process.env.REACT_APP_PORT;
+// const port = Port;
 
 connectDB()
 // Middleware to parse JSON bodies 
@@ -23,6 +23,6 @@ app.use(cors({
 app.use("/app",router);
 
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

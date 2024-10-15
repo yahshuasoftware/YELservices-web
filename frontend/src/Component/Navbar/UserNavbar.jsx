@@ -85,9 +85,7 @@ const UserNavbar = () => {
           <li className="hover:bg-orange-700 hover:text-white flex items-center justify-center pt-4 pb-4 font-thin text-xs h-16">
             <span className="m-1"><IoMdHome /></span>Home
           </li>
-          <li className="hover:bg-orange-700 hover:text-white flex items-center justify-center pt-4 pb-4 font-thin text-xs h-16">
-            <span className="m-1"><FaPhoneAlt /></span>CONTACT US
-          </li>
+        
           <li className="hover:bg-orange-700 hover:text-white flex items-center justify-center pt-4 pb-4 font-thin text-xs h-16">
             <span className="m-1"><FaUser /></span>{user.name}
           </li>

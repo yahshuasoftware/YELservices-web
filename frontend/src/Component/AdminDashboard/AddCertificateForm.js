@@ -7,6 +7,9 @@ import SummaryApi from '../../common/Apis';
 // Proof of Identity Options
 const proofOfIdentityOptions = [
   { value: 'PAN Card', label: 'PAN Card' },
+  { value: 'Photo', label: 'Photo' },
+  { value: 'Signature', label: 'Signature' },
+  { value: 'Old Pan Card', label: 'Old Pan Card' },
   { value: 'Passport', label: 'Passport' },
   { value: 'RSBY Card', label: 'RSBY Card' },
   { value: 'Aadhaar Card', label: 'Aadhaar Card' },

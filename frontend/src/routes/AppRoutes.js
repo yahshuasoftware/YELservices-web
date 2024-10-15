@@ -19,6 +19,8 @@ import DepartmentPage from "../Component/AdminDashboard/DepartmentPage";
 import AddCertificateForm from "../Component/AdminDashboard/AddCertificateForm";
 import AddDepartmentForm from "../Component/AdminDashboard/AddDepartmentForm";
 import SummaryApi from "../common/Apis";
+import RationCard from "../Component/Dashboard/RationCard";
+import ElectionService from "../Component/Dashboard/ElectionCard";
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -81,6 +83,8 @@ const AppRoutes = () => {
         <Route path="contact-us" element={<ContactUs />} />
         <Route path="aadhar" element={<AadharService />} />
         <Route path="pan" element={<PanService />} />
+        <Route path="ration" element={<RationCard/>} />
+        <Route path="election" element={<ElectionService/>} />
       </Route>
 
       <Route path="service" element={<UplodeServices />} />

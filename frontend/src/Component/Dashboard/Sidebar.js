@@ -25,13 +25,13 @@ const Sidebar = () => {
           
           </li>
           <li className="px-4 py-2 hover:bg-blue-500 text-left">
-          <Link  className="block ">
+          <Link  to="election"  className="block ">
               Election Card
               </Link>
           </li>
           <li className="px-4 py-2 hover:bg-blue-500 text-left">
-            <Link className="block">
-          income Certificate
+            <Link to="ration" className="block">
+          Ration Card
           </Link>
           </li>
           <li className="px-4 py-2 hover:bg-blue-500 text-left">
