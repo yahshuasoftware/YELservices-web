@@ -38,12 +38,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!captchaValid) {
-      toast.error('Please verify that you are human.', {
-        position: "top-right",
-      });
-      return;
-    }
+    
     try {
       const response = await axios({
         url: SummaryApi.signIn.url,        // Use URL from the API configuration
@@ -217,7 +212,7 @@ const Login = () => {
           </select>
 
      
-          
+          {/* Google ReCAPTCHA */}
           {/* <ReCAPTCHA
             sitekey="6Lfw60oqAAAAAP6WEMG_uT3BjpSi7gW5FKsLkySs"  // Replace with your reCAPTCHA site key
             onChange={handleCaptchaChange}
