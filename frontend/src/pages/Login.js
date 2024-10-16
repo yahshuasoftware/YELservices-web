@@ -134,7 +134,7 @@ const Login = () => {
             className={`px-4 py-2 rounded-md ${!loginWithOtp ? 'bg-[#6279B8] text-white' : 'bg-gray-300'}`} 
             onClick={() => setLoginWithOtp(false)}
           >
-            Login with ysl
+            Login with Email
           </button>
           <button 
             className={`px-4 py-2 ml-4 rounded-md ${loginWithOtp ? 'bg-[#6279B8] text-white' : 'bg-gray-300'}`} 
