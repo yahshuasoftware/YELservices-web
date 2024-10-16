@@ -76,6 +76,7 @@ const PanService = () => {
             Apply
           </a>
         </div>
+        
       </div>
     </>
   );
