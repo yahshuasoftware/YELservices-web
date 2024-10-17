@@ -5,7 +5,7 @@ const AadharService = () => {
     <>
       <h2 className="text-3xl flex justify-center font-bold text-blue-700 border-b-2 border-gray-300 pb-2 mb-6">
           Aadhaar Services  </h2>
-    <div className="flex justify-center w-full ml-5 items-center">
+    <div className=" sm-text flex justify-center w-full ml-5 items-center">
 
       <div className=" gap-2 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto mt-6">
         {/* First Card - Document Update */}
