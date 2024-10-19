@@ -112,9 +112,10 @@ const getProofOfDocuments = async (req, res) => {
     // Extract proof of identity and proof of address
     const proofOfIdentity = certificate.proofOfIdentity || [];
     const proofOfAddress = certificate.proofOfAddress || [];
+    const amount = certificate.amount;
 
     // Send the response with POI and POA
-    res.status(200).json({ proofOfIdentity, proofOfAddress });
+    res.status(200).json({ proofOfIdentity, proofOfAddress , amount });
   } catch (error) {
     console.error('Error fetching documents:', error);
     res.status(500).json({ message: 'Server error' });
