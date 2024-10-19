@@ -9,11 +9,14 @@ const razorpay = new Razorpay({
 });
 
 const checkout = async (req, res) => {
+    console.log(req.body.amount)
     try {
         const options = {
-            // amount: req.body.amount * 100, // amount in smallest currency unit
-            amount:100,
+            amount: req.body.amount * 100, // amount in smallest currency unit
+       
+            // amount:100,
             currency: 'INR',
+            receipt:`receipt_${Date.now()}`,
         };
         const order = await razorpay.orders.create(options);
         res.json(order);

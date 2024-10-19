@@ -19,6 +19,8 @@ const UploadServices = () => {
   const [availableAddressDocs, setAvailableAddressDocs] = useState([]);
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
+  const [payAmount,setAmount]=useState(0)
+
 
   // Extract user ID from JWT token
   useEffect(() => {
@@ -37,7 +39,9 @@ const UploadServices = () => {
       // original url=http://localhost:8080/app/api/documents/${certificateName}
       try {
         const response = await axios.get(url);
-        const { proofOfIdentity, proofOfAddress } = response.data; // Adjust based on response structure
+        const { proofOfIdentity, proofOfAddress, amount } = response.data; // Adjust based on response structure
+        console.log(amount);
+        setAmount(amount)
 
         setAvailableIdentityDocs(proofOfIdentity);
         setAvailableAddressDocs(proofOfAddress);
@@ -82,7 +86,7 @@ const UploadServices = () => {
       const url = SummaryApi.payment.url;
       // Create Razorpay order by calling your backend
       const paymentResponse = await axios.post(url, {
-        amount: 500, // Replace with the actual amount
+        amount: payAmount, // Replace with the actual amount
       });
 
       const { amount, id: order_id, currency } = paymentResponse.data;
