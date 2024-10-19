@@ -1,6 +1,4 @@
-
-
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode'; // Fix import for jwt-decode
 import { useLocation,useNavigate } from 'react-router-dom';
@@ -10,7 +8,7 @@ import SummaryApi from '../common/Apis';
 
 const UploadServices = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const { certificatename } = location.state || {}; // Fallback in case state is undefined
 
@@ -81,8 +79,8 @@ const UploadServices = () => {
 
   const handlePayment = async () => {
     try {
-      // Create Razorpay order by calling your backend
       const url=SummaryApi.payment.url
+      // Create Razorpay order by calling your backend
       const paymentResponse = await axios.post(url, {
         amount: 500, // Replace with the actual amount
       });
@@ -150,9 +148,7 @@ const UploadServices = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const url=`${SummaryApi.users.url}/${userId}/certificates`
-      // `http://localhost:8080/app/api/users/${userId}/certificates`
-      {console.log(url);}
+       const url = `${SummaryApi.users.url}/${userId}/certificates`
       const response = await axios.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -161,11 +157,6 @@ const UploadServices = () => {
       });
 
       toast.success('Certificate details uploaded successfully');
-      setTimeout(()=>{
-
-        navigate('/userdashboard')
-      },5000)
-
     } catch (error) {
       toast.error('Error uploading certificate details');
       console.error(error);
