@@ -93,7 +93,7 @@ const AppRoutes = () => {
       {token && (
         <Route path="/userdashboard" element={<UserSidebar />}>
           {/* Nested dashboard routes */}
-          <Route index element={<UserDashbords />} /> {/* Default dashboard content */}
+          <Route path="" element={<UserDashbords />} /> {/* Default dashboard content */}
           <Route path="notifications" element={<UserNotification />} />
           <Route path="serviceslist" element={<ServicesList />} />
         </Route>
@@ -104,7 +104,7 @@ const AppRoutes = () => {
       {token && userRole?.toLowerCase() === 'admin' && (
         <Route path="/Admindashboard" element={<AdminSidebar />}>
           {/* Nested dashboard routes */}
-          <Route index element={<UserDetails />} />
+          <Route path="" element={<UserDetails />} />
           <Route path="user/:userId" element={<UserInfo />} /> {/* Route for User Info page */}
           <Route path="department" element={<DepartmentPage />} />
           <Route path="addCertificate" element={<AddCertificateForm />} />

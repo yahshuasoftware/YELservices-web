@@ -86,7 +86,7 @@ const UserSidebar = () => {
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
             <div className="flex flex-col">
-              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL Services</span>
+              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL Seva</span>
               {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.name}</span>}
             </div>
           </div>
