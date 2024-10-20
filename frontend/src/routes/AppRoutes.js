@@ -12,8 +12,9 @@ import Dashbord from "../pages/Dashbord"; // Ensure this is imported correctly
 import ServicesList from "../Component/UserDashbord/ServicesList";
 import AadharService from "../Component/Dashboard/AadharService";
 import PanService from "../Component/Dashboard/PanService";
-import AdminSidebar from "../Component/AdminDashboard/AdminSidebar";
+import AdminSidebar from "../Component/AdminDashboard/AdminSidebar"
 import UserDetails from "../Component/AdminDashboard/UserDetails";
+import AllUserCertificates from "../Component/AdminDashboard/AllUserCertificates";
 import UserInfo from "../Component/AdminDashboard/UserInfo";
 import DepartmentPage from "../Component/AdminDashboard/DepartmentPage";
 import AddCertificateForm from "../Component/AdminDashboard/AddCertificateForm";
@@ -109,6 +110,7 @@ const AppRoutes = () => {
           <Route path="department" element={<DepartmentPage />} />
           <Route path="addCertificate" element={<AddCertificateForm />} />
           <Route path="addDepartment" element={<AddDepartmentForm />} />
+          <Route path="allcertificates" element={<AllUserCertificates/>}/>
         </Route>
       )}
 
