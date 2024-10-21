@@ -65,10 +65,12 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'subadmin', 'general user'], // Roles for the user
-    default: 'general user', // Default role
+    enum: ['admin', 'normal', 'superadmin'], // Roles for the user
+    default: 'normal', // Default role
   },
-  certificatesApplied: [userCertificateSchema], // Store details of applied certificates
+  certificatesApplied: [userCertificateSchema], // Store details of applied certificates  
+
+  assignedCertificates: [userCertificateSchema],
 });
 
 // Create User Model
