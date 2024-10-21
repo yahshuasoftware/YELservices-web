@@ -22,6 +22,8 @@ import AddDepartmentForm from "../Component/AdminDashboard/AddDepartmentForm";
 import SummaryApi from "../common/Apis";
 import RationCard from "../Component/Dashboard/RationCard";
 import ElectionService from "../Component/Dashboard/ElectionCard";
+import SuperAdminSidebar from "../Component/SuperAdmin/SuperAdminSidebar"
+import AdminUserManagement from "../Component/SuperAdmin/AdminUserManagement";
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -111,6 +113,15 @@ const AppRoutes = () => {
           <Route path="addCertificate" element={<AddCertificateForm />} />
           <Route path="addDepartment" element={<AddDepartmentForm />} />
           <Route path="allcertificates" element={<AllUserCertificates/>}/>
+        </Route>
+      )}
+
+{token && userRole?.toLowerCase() === 'superadmin' && (
+        <Route path="/superAdmin" element={<SuperAdminSidebar />}>
+          {/* Nested dashboard routes */}
+          <Route path="adminmangemnt" element={<AdminUserManagement />} />
+          <Route path="user/:userId" element={<UserInfo />} /> {/* Route for User Info page */}
+          
         </Route>
       )}
 
