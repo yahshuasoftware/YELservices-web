@@ -86,7 +86,7 @@ const UserSidebar = () => {
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
             <div className="flex flex-col">
-              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL Seva</span>
+              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL-SEVA</span>
               {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.name}</span>}
             </div>
           </div>
@@ -98,9 +98,9 @@ const UserSidebar = () => {
         <div className="mt-8 space-y-6">
           <ul className="space-y-4">
           <li>
-              <Link to="/userdashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+              <Link to="/dashbord" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">User Dashboard</span>}
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">HOME</span>}
               </Link>
             </li>
             <li>

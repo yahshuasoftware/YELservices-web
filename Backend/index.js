@@ -18,7 +18,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
 
-app.use("/",router);
+app.use("/app",router);
 
 
 const PORT = process.env.REACT_APP_PORT || 8000  ;

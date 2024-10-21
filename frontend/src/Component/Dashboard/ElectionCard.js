@@ -5,7 +5,7 @@ const ElectionService = () => {
     const navigate = useNavigate();
 
     const handlenavigate = () => {
-        navigate("/service")
+        navigate("/userdashboard/serviceslist")
      
        };
     return (
