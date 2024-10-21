@@ -8,17 +8,22 @@ import SummaryApi from '../../common/Apis';
 const proofOfIdentityOptions = [
   { value: 'Passport', label: 'Passport' },
   { value: 'Driving License', label: 'Driving License' },
-  { value: 'Aadhaar Card', label: 'Aadhaar Card' },
-  { value: 'Voter ID', label: 'Voter ID' }
+  { value: 'Aadhaar Card(BothSide)', label: 'Aadhaar Card(Both Side)' },
+  { value: 'Aadhaar Card(All Family Members)', label: 'Aadhaar Card(All Family Members)' },
+  { value: 'Pan Card(BothSide)', label: 'Pan Card(Both Side)' },
+  { value: 'Voter ID', label: 'Voter ID' },
+  { value: 'Photo', label: 'Photo' },
+  { value: 'Signature', label: 'Signature' },
+  { value: 'Old Pan Card', label: 'Old Pan Card' }
 ];
 
 const proofOfAddressOptions = [
   { value: 'Utility Bill', label: 'Utility Bill' },
   { value: 'Rental Agreement', label: 'Rental Agreement' },
   { value: 'Bank Statement', label: 'Bank Statement' },
-  { value: 'Driving License', label: 'Driving License' }
+  { value: 'Driving License', label: 'Driving License' },
+  { value: 'Electricity Bill(within 3 months)', label: 'Electricity Bill(within 3 months)' }
 ];
-
 const AddDepartmentForm = () => {
   const [departmentName, setDepartmentName] = useState('');
   const [certificates, setCertificates] = useState([
@@ -37,11 +42,12 @@ const AddDepartmentForm = () => {
 
   const addNewDepartment = async () => {
     const formattedCertificates = certificates.map(cert => ({
-      ...cert,
-      proofOfIdentity: cert.proofOfIdentity ? cert.proofOfIdentity.value : '',
-      proofOfAddress: cert.proofOfAddress ? cert.proofOfAddress.value : ''
+      name: cert.name,
+      description: cert.description,
+      proofOfIdentity: cert.proofOfIdentity ? cert.proofOfIdentity.map(option => option.value) : [],
+      proofOfAddress: cert.proofOfAddress ? cert.proofOfAddress.map(option => option.value) : []
     }));
-
+  
     try {
       const response = await axios.post(SummaryApi.addDepartment.url, { name: departmentName, certificates: formattedCertificates });
       toast.success(response.data.message); // Show success message

@@ -25,16 +25,13 @@ const Signup = () => {
     }
 
     try {
-      await axios.post({
-        method: SummaryApi.signUp.method,  // Use method from the API configuration
-        url: SummaryApi.signIn.url,
-        data:{
+      const response = await axios.post(SummaryApi.signUp.url, {
         name,
         email,
         password,
         phoneNo,
-      },
       });
+  
       
 
       // Show success toast

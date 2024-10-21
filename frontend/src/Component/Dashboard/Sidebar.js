@@ -1,105 +1,111 @@
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa"; // Importing icons for hamburger and close
+import { Link } from "react-router-dom";
+import { FaBars } from "react-icons/fa"; // Import the hamburger icon
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false); // State to manage sidebar visibility
-  const location = useLocation(); // Get the current location
+  const [activeLink, setActiveLink] = useState(null); // State to track the active link
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to toggle sidebar
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen); // Toggle sidebar visibility
+  const handleLinkClick = (index) => {
+    setActiveLink(index); // Update the active link when clicked
+    setIsSidebarOpen(false); // Close sidebar after link click (for small screens)
+  };
+
+  const toggleMenu = () => {
+    setIsSidebarOpen((prev) => !prev); // Toggle the sidebar open state
   };
 
   return (
-    <div className="relative">
+    <div className="relative mt-2">
       {/* Hamburger button for small screens */}
-      <button onClick={toggleSidebar} className="text-white p-4 md:hidden">
-        {isOpen ? <FaTimes /> : <FaBars />} {/* Show icon based on state */}
-      </button>
+      <div className="md:hidden p-2" onClick={toggleMenu}>
+        <FaBars className="text-xl cursor-pointer" />
+      </div>
 
       {/* Sidebar */}
-      <div className={`w-64 h-[95vh] bg-blue-800 text-white top-0 left-0 overflow-y-auto transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative md:h-full`}>
+      <div
+        className={`w-64 h-[95vh] bg-blue-800 text-white top-0 left-0 overflow-y-auto transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`} // Toggle sidebar for small screens
+      >
         <ul className="space-y-2 py-4">
-          <li className="px-4 py-2 text-left">
-            <NavLink 
-              className={({ isActive }) => 
-                isActive ? "inline-block px-2 py-1 " : "inline-block px-2 py-1 hover:bg-blue-500"
-              }
-              to=""
-            >
-              Home
-            </NavLink>
+          <li
+            className={`px-4 py-2 text-left ${
+              activeLink === 0 ? "bg-orange-400" : "hover:bg-blue-500"
+            }`}
+            onClick={() => handleLinkClick(0)}
+          >
+            <Link className="block">Home</Link>
           </li>
-          <li className="px-4 py-2 text-left">
-            <NavLink 
-              className={({ isActive }) => 
-                (isActive || location.pathname === "/department-notified-services") ? 
-                "inline-block px-2 py-1 bg-teal-500" : "inline-block px-2 py-1 hover:bg-blue-500"
-              }
-              to=""
-            >
+          <li
+            className={`px-4 py-2 text-left ${
+              activeLink === 1 ? "bg-orange-400" : "hover:bg-blue-500"
+            }`}
+            onClick={() => handleLinkClick(1)}
+          >
+            <Link className="block" to="">
               Department Notified Services
-            </NavLink>
+            </Link>
           </li>
-          <li className="px-4 py-2 text-left">
-            <NavLink 
-              className={({ isActive }) => 
-                isActive ? "inline-block px-2 py-1 bg-teal-500" : "inline-block px-2 py-1 hover:bg-blue-500"
-              }
-              to="contact-us"
-            >
+          <li
+            className={`px-4 py-2 text-left ${
+              activeLink === 2 ? "bg-orange-400" : "hover:bg-blue-500"
+            }`}
+            onClick={() => handleLinkClick(2)}
+          >
+            <Link className="block" to="contact-us">
               Contact Us
-            </NavLink>
+            </Link>
           </li>
-          <li className="px-4 py-2 text-left">
-            <NavLink 
-              className={({ isActive }) => 
-                isActive ? "inline-block px-2 py-1 bg-teal-500" : "inline-block px-2 py-1 hover:bg-blue-500"
-              }
-              to="aadhar"
-            >
+          <li
+            className={`px-4 py-2 text-left ${
+              activeLink === 3 ? "bg-orange-400" : "hover:bg-blue-500"
+            }`}
+            onClick={() => handleLinkClick(3)}
+          >
+            <Link className="block" to="aadhar">
               Aadhar Services
-            </NavLink>
+            </Link>
           </li>
-          <li className="px-4 py-2 text-left">
-            <NavLink 
-              className={({ isActive }) => 
-                isActive ? "inline-block px-2 py-1 bg-teal-500" : "inline-block px-2 py-1 hover:bg-blue-500"
-              }
-              to="pan"
-            >
+          <li
+            className={`px-4 py-2 text-left ${
+              activeLink === 4 ? "bg-orange-400" : "hover:bg-blue-500"
+            }`}
+            onClick={() => handleLinkClick(4)}
+          >
+            <Link className="block" to="pan">
               Pan Card Services
-            </NavLink>
+            </Link>
           </li>
-          <li className="px-4 py-2 text-left">
-            <NavLink 
-              className={({ isActive }) => 
-                isActive ? "inline-block px-2 py-1 bg-teal-500" : "inline-block px-2 py-1 hover:bg-blue-500"
-              }
-              to="election"
-            >
+          <li
+            className={`px-4 py-2 text-left ${
+              activeLink === 5 ? "bg-orange-400" : "hover:bg-blue-500"
+            }`}
+            onClick={() => handleLinkClick(5)}
+          >
+            <Link className="block" to="election">
               Election Card
-            </NavLink>
+            </Link>
           </li>
-          <li className="px-4 py-2 text-left">
-            <NavLink 
-              className={({ isActive }) => 
-                isActive ? "inline-block px-2 py-1 bg-teal-500" : "inline-block px-2 py-1 hover:bg-blue-500"
-              }
-              to="ration"
-            >
+          <li
+            className={`px-4 py-2 text-left ${
+              activeLink === 6 ? "bg-orange-400" : "hover:bg-blue-500"
+            }`}
+            onClick={() => handleLinkClick(6)}
+          >
+            <Link className="block" to="ration">
               Ration Card
-            </NavLink>
+            </Link>
           </li>
-          <li className="px-4 py-2 text-left">
-            <NavLink 
-              className={({ isActive }) => 
-                isActive ? "inline-block px-2 py-1 bg-teal-500" : "inline-block px-2 py-1 hover:bg-blue-500"
-              }
-              to="agriculture"
-            >
+          <li
+            className={`px-4 py-2 text-left ${
+              activeLink === 7 ? "bg-orange-400" : "hover:bg-blue-500"
+            }`}
+            onClick={() => handleLinkClick(7)}
+          >
+            <Link className="block" to="Agriculture">
               Agriculture
-            </NavLink>
+            </Link>
           </li>
         </ul>
       </div>

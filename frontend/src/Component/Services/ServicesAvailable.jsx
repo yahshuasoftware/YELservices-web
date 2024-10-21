@@ -82,7 +82,7 @@ const ServicesAvailable = () => {
 
   return (
     <>
-      <div className="w-full mt-9 bg-blue-300 bg-opacity-10 pb-9 text-base md:text-lg lg:text-xl xl:text-2xl">
+      <div className="w-full mt-6 bg-blue-300 bg-opacity-10 pb-9 text-base md:text-lg lg:text-xl xl:text-2xl">
 
         <h1 className="rounded-t-md text-white bg-blue-500 flex justify-center">
           Services Available Online
@@ -117,7 +117,7 @@ const ServicesAvailable = () => {
             {filteredDepartments.length > 0 ? (
               filteredDepartments.map((department, deptIndex) => (
                 <div key={deptIndex}>
-                  <h1 className="text-yellow-400 text-2xl font-bold mb-4">
+                  <h1 className="text-black text-2xl font-bold mb-4">
                     {department.name}
                   </h1>
                   <div className="grid grid-cols-2 gap-4 mb-8">

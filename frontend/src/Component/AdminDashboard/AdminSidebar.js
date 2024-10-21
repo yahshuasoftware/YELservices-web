@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, Routes, Route } from "react-router-dom";
-import { FaMoon, FaSun } from "react-icons/fa";
-import { BiChevronRight, BiSearch, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
-import UserDashbords from "../UserDashbord/UserDashbords";
+import { Link, Routes, Route } from "react-router-dom";
+
+import { BiChevronRight, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
 import { Usercontext } from "../../Store/UserContext";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
-import UserDetails from "./UserDetails";
-import UserInfo from "./UserInfo";
-import DepartmentPage from "./DepartmentPage";
-import AddCertificateForm from "./AddCertificateForm";
-import AddDepartmentForm from "./AddDepartmentForm";
-import SummaryApi from "../../common/Apis";
 
-const UserSidebar = () => {
+import SummaryApi from "../../common/Apis";
+import AllUserCertificates from "./AllUserCertificates";
+
+const AdminSidebar = () => {
   const [isClosed, setIsClosed] = useState(false); // Sidebar open/close state
   const [isDarkMode, setIsDarkMode] = useState(false); // Dark mode toggle
   const [user, setUser] = useState(null); // Store user data
   const [loading, setLoading] = useState(true); // Loading state for user data
   const [error, setError] = useState(null); // Error state
+  const [activeLink, setActiveLink] = useState(null); // State to track the active link
   const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
@@ -70,6 +67,10 @@ const UserSidebar = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const handleLinkClick = (index) => {
+    setActiveLink(index); // Update active link when clicked
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -79,7 +80,7 @@ const UserSidebar = () => {
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
             <div className="flex flex-col">
-              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL Seva</span>
+              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL-SEVA</span>
               {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.name}</span>}
             </div>
           </div>
@@ -90,39 +91,53 @@ const UserSidebar = () => {
 
         <div className="mt-8 space-y-6">
           <ul className="space-y-4">
-            <li>
-              <NavLink
-                to="/userdashboard"
-                className={({ isActive }) => 
-                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
-                }
-              >
+            <li
+              className={`flex items-center space-x-4 p-2 rounded-md ${
+                activeLink === 0 ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'
+              }`}
+              onClick={() => handleLinkClick(0)}
+            >
+              <Link to="/dashbord" className="flex items-center space-x-4">
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">User Dashboard</span>}
-              </NavLink>
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">HOME</span>}
+              </Link>
             </li>
-            <li>
-              <NavLink
-                to="/Admindashboard"
-                className={({ isActive }) => 
-                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
-                }
-              >
-                <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
-                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Admin Dashboard</span>}
-              </NavLink>
+            <li
+              className={`flex items-center space-x-4 p-2 rounded-md ${
+                activeLink === 1 ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'
+              }`}
+              onClick={() => handleLinkClick(1)}
+            >
+              <Link to="/admindashboard/allcertificates" className="flex items-center space-x-4">
+                <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">All Certificates</span>}
+              </Link>
             </li>
-
-            <li>
-              <NavLink
-                to="/admindashboard/department"
-                className={({ isActive }) => 
-                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
-                }
-              >
+            <li
+      className={`flex items-center space-x-4 p-2 rounded-md ${
+        activeLink === '/Admindashboard' ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'
+      }`}
+      onClick={() => handleLinkClick('/Admindashboard')}
+    >
+      <Link to="/Admindashboard" className="flex items-center space-x-4">
+        <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
+        {!isClosed && (
+          <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">
+            Admin Dashboard
+          </span>
+        )}
+      </Link>
+    </li>
+            <li
+              className={`flex items-center space-x-4 p-2 rounded-md ${
+                activeLink === 2 ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'
+              }`}
+              onClick={() => handleLinkClick(2)}
+            >
+              <Link to="/admindashboard/department" className="flex items-center space-x-4">
                 <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Service Management</span>}
-              </NavLink>
+              </Link>
             </li>
 
             <li>
@@ -134,22 +149,8 @@ const UserSidebar = () => {
           </ul>
         </div>
       </nav>
-
-      {/* Main content */}
-      <section className="flex-1 p-6">
-        <div className="text-xl font-semibold text-ocean-800 dark:text-ocean-100">Admin Dashboard</div>
-        <Usercontext.Provider value={user}>
-          <Routes>
-            <Route path="/" element={<UserDetails />} />
-            <Route path="/user/:userId" element={<UserInfo />} />
-            <Route path="/department" element={<DepartmentPage />} />
-            <Route path="/addCertificate" element={<AddCertificateForm />} />
-            <Route path="/addDepartment" element={<AddDepartmentForm />} />
-          </Routes>
-        </Usercontext.Provider>
-      </section>
     </div>
   );
 };
 
-export default UserSidebar;
+export default AdminSidebar;

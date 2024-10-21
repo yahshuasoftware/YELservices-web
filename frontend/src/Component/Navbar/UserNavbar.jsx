@@ -9,17 +9,17 @@ const UserNavbar = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isOpen, setIsOpen] = useState(false); // State to manage open/close of navbar
+  const [menuOpen, setMenuOpen] = useState(false); // State to track menu open/close
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
     localStorage.removeItem("token");
-
-    toast.success("Logged out successfully!", {
-      position: "top-right",
-    });
-
+    toast.success("Logged out successfully!", { position: "top-right" });
     navigate("/login");
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen); // Toggle the menu open/close
   };
 
   useEffect(() => {
@@ -29,9 +29,7 @@ const UserNavbar = () => {
         try {
           const response = await fetch(SummaryApi.profile.url, {
             method: SummaryApi.profile.method,
-            headers: {
-              Authorization: token,
-            },
+            headers: { Authorization: token },
           });
 
           if (!response.ok) {
@@ -54,67 +52,67 @@ const UserNavbar = () => {
     }
   }, []);
 
-  // Toggle the navbar open/close state
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
-  };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <nav className="bg-gray-300 shadow-md">
-        {/* Hamburger Menu for Small Screens */}
-        <div className="flex items-center justify-around p-4 md:hidden">
-          <span className="text-lg font-bold">Menu</span>
-          <button onClick={toggleNavbar} className="text-xl">
-            {isOpen ? <FaTimes /> : <FaBars />} {/* Toggle icon */}
-          </button>
-        </div>
-
-        {/* Navbar links container */}
-        <ul
-          className={`${
-            isOpen ? "block" : "hidden"
-          } md:flex md:flex-row justify-between items-center p-4 md:p-0 transition-transform duration-300 ease-in-out`}
-        >
-          <li className="flex items-center justify-center p-2 hover:bg-orange-700 hover:text-white text-xs md:text-sm">
-            <span className="mr-1">
-              <IoMdHome />
-            </span>
-            <Link to="/" className="no-underline">
-              Home
-            </Link>
+    <nav className="bg-gray-300 p-4 flex justify-between items-center">
+  <div className="flex items-center">
+    <p className="font-bold mr-4">YEL-SEVA</p>
+    <button
+      className="text-2xl md:hidden"
+      onClick={toggleMenu}
+    >
+      {menuOpen ? <FaTimes /> : <FaBars />} {/* Hamburger Icon */}
+    </button>
+    <ul
+      className={`md:flex space-x-2 absolute md:static top-16 left-0 w-full md:w-auto bg-gray-300 md:bg-transparent p-4 md:p-0 transition-transform duration-300 ease-in-out ${
+        menuOpen ? "block" : "hidden"
+      } md:flex`} // Reduced spacing with space-x-2
+    >
+      <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+        <IoMdHome className="mr-1" />
+        Home
+      </li>
+      <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+        <FaUser className="mr-1" />
+        {user?.name}
+      </li>
+      {user?.role === "general user" && (
+        <Link to="/userdashboard">
+          <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+            <FaTachometerAlt className="mr-1" />
+            DASHBOARD
           </li>
-
-          <li className="flex items-center justify-center p-2 hover:bg-orange-700 hover:text-white text-xs md:text-sm">
-            <span className="mr-1">
-              <FaUser />
-            </span>
-            {user?.name || "User"}
+        </Link>
+      )}
+      {user?.role === "admin" && (
+        <Link to="/Admindashboard">
+          <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+            <FaTachometerAlt className="mr-1" />
+            Admin DASHBOARD
           </li>
-
-          <Link to="/userdashboard" className="w-full sm:w-auto">
-            <li className="flex items-center justify-center p-2 hover:bg-orange-700 hover:text-white text-xs md:text-sm">
-              <span className="mr-1">
-                <FaTachometerAlt />
-              </span>
-              DASHBOARD
-            </li>
-          </Link>
-
-          <li className="flex items-center justify-center p-2">
-            <button
-              onClick={handleLogout}
-              className="bg-red-800 text-white py-2 px-4 rounded hover:bg-black text-xs md:text-sm"
-            >
-              Logout
-            </button>
+        </Link>
+      )}
+      {user?.role === "superadmin" && (
+        <Link to="/Superadmin">
+          <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+            <FaTachometerAlt className="mr-1" />
+            SuperAdmin
           </li>
-        </ul>
-      </nav>
-    </div>
+        </Link>
+      )}
+    </ul>
+  </div>
+
+  <button
+    onClick={handleLogout}
+    className="bg-gray-500 h-10 text-white py-2 px-4 rounded hover:bg-black"
+  >
+    Logout
+  </button>
+</nav>
+
   );
 };
 

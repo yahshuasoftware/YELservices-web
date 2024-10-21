@@ -1,15 +1,12 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 
-
-
 const ContactUs = () => {
   return (
-    
-    <div className="flex  items-center ">
-        {/* <Sidebar /> */}
+    <div className="flex items-center flex-col md:flex-row">
+      {/* <Sidebar /> */}
       {/* Main Container */}
-      <div className="w-full ml-40 max-w-4xl text-center p-8">
+      <div className="w-full mx-4 max-w-4xl text-center p-8">
         {/* Title */}
         <h2 className="text-3xl font-bold text-blue-700 border-b-2 border-gray-300 pb-2 mb-6">
           Contact Us

@@ -107,11 +107,11 @@ const DepartmentChart = () => {
 
   return (
     <div className="flex flex-col md:flex-row">
-    {/* Sidebar Component */}
-  
+      {/* Sidebar Component */}
+      
 
-    {/* Main Content */}
-    <div className="flex-grow container mx-auto overflow-y-auto h-screen p-4">
+      {/* Main Content */}
+      <div className="flex-grow container mx-auto overflow-y-auto h-screen p-4">
         <div className="bg-white shadow-lg rounded-lg p-3">
           <h2 className="text-2xl font-bold text-center text-white bg-blue-500 py-2 mb-6 rounded-md">
             Department Notified Services
@@ -162,7 +162,7 @@ const DepartmentChart = () => {
           </div>
         </div>
       </div>
-  </div>
+    </div>
   
   );
 };

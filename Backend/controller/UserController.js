@@ -1,5 +1,7 @@
 const UserModel = require("../models/UserModel");
 const cloudinary = require('cloudinary').v2;
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const fs = require('fs');
 
 // Fetch user profile by email
 const getprofile = async (req, res) => {
@@ -12,21 +14,6 @@ const getprofile = async (req, res) => {
     res.status(500).send('Error fetching user profile: ' + error.message);
   }
 };
-// const getprofile = async (req, res) => {
-//   try {
-//     // Search by email or phone number
-//     const user = await UserModel.findOne({
-//       $or: [{ email: req.body.email }, { phoneNo: req.body.phoneNo }]
-//     });
-    
-//     if (!user) return res.status(404).send('User not found');
-    
-//     res.json(user); // Return the user details
-//   } catch (error) {
-//     res.status(500).send('Error fetching user profile: ' + error.message);
-//   }
-// };
-
 
 // Create a new user
 const createUser = async (req, res) => {
@@ -71,7 +58,34 @@ const deleteUser = async (req, res) => {
   }
 };
 
-// Add a certificate to a user's profile
+// Configure the AWS S3 client
+const s3 = new S3Client({
+  region: process.env.REACT_APP_BUCKET_REGION,
+  credentials: {
+    accessKeyId: process.env.REACT_APP_ACCESS_KEY,
+    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+  },
+});
+
+// Function to upload a file to S3
+const uploadToS3 = async (file) => {
+  const fileStream = fs.createReadStream(file.path);
+
+  const uploadParams = {
+    Bucket: process.env.REACT_APP_BUCKET_NAME,
+    Key: `documents/${Date.now()}-${file.filename}`, // Unique file name
+    Body: fileStream,
+    ContentType: file.mimetype, // Ensure correct file type
+  };
+
+  // Upload the file using PutObjectCommand
+  const command = new PutObjectCommand(uploadParams);
+  await s3.send(command);
+
+  // Construct the S3 URL
+  return `https://${process.env.REACT_APP_BUCKET_NAME}.s3.${process.env.REACT_APP_BUCKET_REGION}.amazonaws.com/${uploadParams.Key}`;
+};
+
 const addCertificate = async (req, res) => {
   const userId = req.params.id;
 
@@ -79,45 +93,47 @@ const addCertificate = async (req, res) => {
     // Fetch the user by ID
     const user = await UserModel.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    // Upload files to Cloudinary and retrieve their URLs
+    // Handle Proof of Identity and Address files
     const proofOfIdentityFiles = req.files['proofOfIdentity'] || [];
     const proofOfAddressFiles = req.files['proofOfAddress'] || [];
 
+    // Upload identity documents to S3
     const proofOfIdentityUploads = await Promise.all(
       proofOfIdentityFiles.map(async (file) => {
-        const uploadResult = await cloudinary.uploader.upload(file.path); // Access the correct file path
+        const s3Url = await uploadToS3(file);
         return {
           filename: file.filename,
-          path: uploadResult.secure_url,  // Use Cloudinary URL instead of local path
+          path: s3Url, // S3 URL
           mimetype: file.mimetype,
-          size: file.size
+          size: file.size,
         };
       })
     );
 
+    // Upload address documents to S3
     const proofOfAddressUploads = await Promise.all(
       proofOfAddressFiles.map(async (file) => {
-        const uploadResult = await cloudinary.uploader.upload(file.path); // Access the correct file path
+        const s3Url = await uploadToS3(file);
         return {
           filename: file.filename,
-          path: uploadResult.secure_url,  // Use Cloudinary URL instead of local path
+          path: s3Url, // S3 URL
           mimetype: file.mimetype,
-          size: file.size
+          size: file.size,
         };
       })
     );
 
-    // Build the certificate object to save into MongoDB
+    // Create a new certificate object
     const newCertificate = {
-      certificateName: req.body.certificateName || "Default Certificate Name",
+      certificateName: req.body.certificateName || 'Default Certificate Name',
       status: 'pending',
       uploadedDocuments: {
         proofOfIdentity: proofOfIdentityUploads,
         proofOfAddress: proofOfAddressUploads,
-      }
+      },
     };
 
     // Add the new certificate to the user's certificates array
@@ -127,10 +143,10 @@ const addCertificate = async (req, res) => {
     await user.save();
 
     // Respond with success
-    res.json({ message: "Certificate added successfully", user });
+    res.json({ message: 'Certificate added successfully', user });
   } catch (error) {
-    console.error("Error adding certificate:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+    console.error('Error adding certificate:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 

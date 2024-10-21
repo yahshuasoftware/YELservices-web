@@ -4,9 +4,10 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import {RecaptchaVerifier, signInWithPhoneNumber} from 'firebase/auth'
 import { auth } from '../firebase/setup';
 import SummaryApi from '../common/Apis';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,20 +21,24 @@ const Login = () => {
   const [captchaValid, setCaptchaValid] = useState(false);
   const navigate = useNavigate();
 
-  const sendOtp = async () => {
+
+  const sendOtp =async()=>{
     try {
-      const recaptch = new RecaptchaVerifier(auth, "recaptcha", {});
-      const confirmation = await signInWithPhoneNumber(auth, phoneNumber);
-      console.log(confirmation);
+      const recaptch = new RecaptchaVerifier(auth,"recaptcha",{})
+      const confirmation = await signInWithPhoneNumber(auth,phoneNumber)
+      console.log(confirmation)
+      
     } catch (error) {
       console.log(error);
+      
     }
-  };
+  }
 
   // Email and Password Login Handler
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    
     try {
       const response = await axios({
         url: SummaryApi.signIn.url,        // Use URL from the API configuration
@@ -68,14 +73,16 @@ const Login = () => {
 
     try {
       if (!isOtpSent) {
-        const SendOtpUrl = `${SummaryApi.sendOtp.url}`;
+        const SendOtpUrl = `${SummaryApi.sendOtp.url}`
         // Send OTP
+        // http://localhost:8080/api/send-otp
         await axios.post(SendOtpUrl, { phoneNumber });
         setIsOtpSent(true);
         toast.success('OTP sent to your phone number.', { position: "top-right" });
       } else {
         // Verify OTP
-        const verifyOtpUrl = `${SummaryApi.verifyOtp.url}`;
+        const verifyOtpUrl=`${SummaryApi.verifyOtp.url}`
+        
         const response = await axios.post(verifyOtpUrl, { phoneNumber, otp });
         if (response.data.jwt_token) {
           localStorage.setItem('token', response.data.jwt_token);
@@ -115,8 +122,8 @@ const Login = () => {
     'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya',
     'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim',
     'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand',
-    'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh',
-    'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep',
+    'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh', 
+    'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep', 
     'Delhi', 'Puducherry', 'Ladakh', 'Jammu and Kashmir'
   ];
 
@@ -208,32 +215,36 @@ const Login = () => {
             ))}
           </select>
 
+     
           {/* Google ReCAPTCHA */}
-          {/* <ReCAPTCHA sitekey="YOUR_SITE_KEY" onChange={handleCaptchaChange} /> */}
+          {/* <ReCAPTCHA
+            sitekey="6Lfw60oqAAAAAP6WEMG_uT3BjpSi7gW5FKsLkySs"  // Replace with your reCAPTCHA site key
+            onChange={handleCaptchaChange}
+          /> */}
 
-          {/* Login Button */}
-          <button
+         
+          <input
             type="submit"
-            className={`bg-[#6279B8] text-white px-4 py-2 rounded-md w-full mt-2 ${!captchaValid ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={!captchaValid}
-          >
-            {loginWithOtp ? (isOtpSent ? 'Verify OTP' : 'Send OTP') : 'Login'}
-          </button>
-
-          {/* Forgot Password and Signup Links */}
-          <div className="flex justify-between mt-4">
-            <Link to="/forgot-password" className="text-[#6279B8] hover:underline">
-              Forgot Password?
-            </Link>
-            <Link to="/signup" className="text-[#6279B8] hover:underline">
-              Don't have an account? Signup
-            </Link>
-          </div>
+            className="w-full h-10 bg-[#6279B8] text-white text-lg font-medium rounded-md mt-4 cursor-pointer hover:bg-[#006653] transition-colors"
+            value={loginWithOtp ? (isOtpSent ? 'Verify OTP' : 'Send OTP') : 'Login'}
+          />
         </form>
 
-        {/* Toast Notifications */}
-        <ToastContainer />
+        <div className="signup text-center mt-4">
+          <span>Don't have an account?{' '}
+            <Link
+              to="/signup"
+              className="text-[#6279B8] hover:underline font-medium"
+            >
+              Sign up
+            </Link>
+          </span> <br></br>
+          <a href="#" className="text-[#6279B8] hover:underline text-sm">
+            Forgot password?
+          </a>
+        </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
