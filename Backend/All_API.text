@@ -1,0 +1,14 @@
+# SUPER_ADMIN APIS 
+
+1)
+    POST -  http://localhost:8080/api/changerole
+    json -  {
+    "newRole":"superadmin",
+    "userId":"66efb3a490eedcaa8b7ae79a"
+    }
+
+2)
+   GET -   http://localhost:8080/api/adminusers
+
+
+3) delete - http://localhost:8080/api/users/6714e595284b1d26c5e55906

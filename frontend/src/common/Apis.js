@@ -1,6 +1,7 @@
 
 const backendDomain= process.env.REACT_APP_LOCALHOST_URI
 
+
 // const backendDomain=process.env.REACT_APP_API_URI
 
 const SummaryApi = {
@@ -43,7 +44,19 @@ const SummaryApi = {
     verifyOtp:{
         url:`${backendDomain}/api/verify-otp`,
         method:"Post"
-    }
+    },
+    adminUsers: {
+        url: `${backendDomain}/api/adminusers`,
+        method: "GET",
+      },
+      changeRole: {
+        url: `${backendDomain}/api/changerole`,
+        method: "POST",
+      },
+      deleteUser: {
+        url: `${backendDomain}/api/users`,
+        
+      },
 
 }
 export default SummaryApi;

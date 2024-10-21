@@ -12,7 +12,6 @@ import Dashbord from "../pages/Dashbord"; // Ensure this is imported correctly
 import ServicesList from "../Component/UserDashbord/ServicesList";
 import AadharService from "../Component/Dashboard/AadharService";
 import PanService from "../Component/Dashboard/PanService";
-import AdminSidebar from "../Component/AdminDashboard/AdminSidebar"
 import UserDetails from "../Component/AdminDashboard/UserDetails";
 import AllUserCertificates from "../Component/AdminDashboard/AllUserCertificates";
 import UserInfo from "../Component/AdminDashboard/UserInfo";
@@ -23,6 +22,8 @@ import SummaryApi from "../common/Apis";
 import RationCard from "../Component/Dashboard/RationCard";
 import ElectionService from "../Component/Dashboard/ElectionCard";
 import AdminDashboard from "../pages/AdminDashboard";
+import SuperAdminSidebar from "../Component/SuperAdmin/SuperAdminSidebar"
+import AdminUserManagement from "../Component/SuperAdmin/AdminUserManagement";
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -112,6 +113,18 @@ const AppRoutes = () => {
           <Route path="addCertificate" element={<AddCertificateForm />} />
           <Route path="addDepartment" element={<AddDepartmentForm />} />
           <Route path="allcertificates" element={<AllUserCertificates/>}/>
+        </Route>
+      )}
+
+{token && userRole?.toLowerCase() === 'superadmin' && (
+        <Route path="/superAdmin" element={<SuperAdminSidebar />}>
+          {/* Nested dashboard routes */}
+          <Route path="adminmangemnt" element={<AdminUserManagement />} />
+          <Route path="user/:userId" element={<UserInfo />} /> {/* Route for User Info page */}
+          <Route path="department" element={<DepartmentPage />} />
+          <Route path="addCertificate" element={<AddCertificateForm />} />
+          <Route path="addDepartment" element={<AddDepartmentForm />} />
+          
         </Route>
       )}
 

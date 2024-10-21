@@ -5,7 +5,7 @@ const signupValidation = (req, res, next) => {
     name: Joi.string().min(3).max(30).required(),
     email: Joi.string().email().required(),
     phoneNo: Joi.string().length(10).required(), // Phone number validation
-    password: Joi.string().min(8).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+    password: Joi.string().min(8).pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,30}$')).required(),
     district: Joi.string(),
   });
 
