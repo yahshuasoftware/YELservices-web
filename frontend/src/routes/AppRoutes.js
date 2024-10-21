@@ -121,6 +121,9 @@ const AppRoutes = () => {
           {/* Nested dashboard routes */}
           <Route path="adminmangemnt" element={<AdminUserManagement />} />
           <Route path="user/:userId" element={<UserInfo />} /> {/* Route for User Info page */}
+          <Route path="department" element={<DepartmentPage />} />
+          <Route path="addCertificate" element={<AddCertificateForm />} />
+          <Route path="addDepartment" element={<AddDepartmentForm />} />
           
         </Route>
       )}
