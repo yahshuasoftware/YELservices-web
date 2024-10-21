@@ -8,8 +8,9 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 import SummaryApi from "../../common/Apis";
+import AllUserCertificates from "./AllUserCertificates";
 
-const UserSidebar = () => {
+const AdminSidebar = () => {
   const [isClosed, setIsClosed] = useState(false); // Sidebar open/close state
   const [isDarkMode, setIsDarkMode] = useState(false); // Dark mode toggle
   const [user, setUser] = useState(null); // Store user data
@@ -100,6 +101,12 @@ const UserSidebar = () => {
               </Link>
             </li>
             <li>
+              <Link to="/admindashboard/allcertificates" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+                <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">All certificate</span>}
+              </Link>
+            </li>
+            <li>
               <Link to="/Admindashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Admin Dashboard</span>}
@@ -145,4 +152,4 @@ const UserSidebar = () => {
   );
 };
 
-export default UserSidebar;
+export default AdminSidebar;
