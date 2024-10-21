@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, Routes, Route } from "react-router-dom";
-import { FaMoon, FaSun } from "react-icons/fa";
-import { BiChevronRight, BiSearch, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
-import UserDashbords from "../UserDashbord/UserDashbords";
+
+import { BiChevronRight, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
+
 import { Usercontext } from "../../Store/UserContext";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
-import UserDetails from "./UserDetails";
-import UserInfo from "./UserInfo";
-import DepartmentPage from "./DepartmentPage";
-import AddCertificateForm from "./AddCertificateForm";
-import AddDepartmentForm from "./AddDepartmentForm";
+
 import SummaryApi from "../../common/Apis";
 
 const UserSidebar = () => {
@@ -129,19 +125,22 @@ const UserSidebar = () => {
         </div>
       </nav>
 
+ 
       {/* Main content */}
-      <section className="flex-1 p-6">
-        <div className="text-xl font-semibold text-ocean-800 dark:text-ocean-100"> Admin Dashboard </div>
-        <Usercontext.Provider value={user}>
-          <Routes>
-            <Route path="/" element={<UserDetails />} />
-            <Route path="/user/:userId" element={<UserInfo />} /> {/* Dynamic route for user info */}
-            <Route path="/department" element={<DepartmentPage />} /> {/* Dynamic route for user info */}
-            <Route path="/addCertificate" element={<AddCertificateForm />} />
-            <Route path="/addDepartment" element={<AddDepartmentForm />} />
-          </Routes>
-        </Usercontext.Provider>
-      </section>
+      {/* <section className="flex-1 p-6">
+        {/* <div className="text-xl font-semibold text-ocean-800 dark:text-ocean-100"> Admin Dashboard </div> */}
+        {/* <Usercontext.Provider value={user}> */}
+          {/* <Routes> */}
+            {/* <Route path="/" element={<UserDetails />} /> */}
+            {/* <Route path="/user/:userId" element={<UserInfo />} /> Dynamic route for user info */}
+            {/* <Route path="/department" element={<DepartmentPage />} /> Dynamic route for user info */}
+            {/* <Route path="/addCertificate" element={<AddCertificateForm />} /> */}
+            {/* <Route path="/addDepartment" element={<AddDepartmentForm />} /> */}
+          {/* </Routes> */}
+        {/* // </Usercontext.Provider> */}
+      {/* // </section>  */}
+   
+  
     </div>
   );
 };

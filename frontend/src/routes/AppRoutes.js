@@ -12,7 +12,6 @@ import Dashbord from "../pages/Dashbord"; // Ensure this is imported correctly
 import ServicesList from "../Component/UserDashbord/ServicesList";
 import AadharService from "../Component/Dashboard/AadharService";
 import PanService from "../Component/Dashboard/PanService";
-import AdminSidebar from "../Component/AdminDashboard/AdminSidebar";
 import UserDetails from "../Component/AdminDashboard/UserDetails";
 import UserInfo from "../Component/AdminDashboard/UserInfo";
 import DepartmentPage from "../Component/AdminDashboard/DepartmentPage";
@@ -21,6 +20,7 @@ import AddDepartmentForm from "../Component/AdminDashboard/AddDepartmentForm";
 import SummaryApi from "../common/Apis";
 import RationCard from "../Component/Dashboard/RationCard";
 import ElectionService from "../Component/Dashboard/ElectionCard";
+import AdminDashboard from "../pages/AdminDashboard";
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -102,9 +102,9 @@ const AppRoutes = () => {
 
        {/* AdminDashboard route */}
       {token && userRole?.toLowerCase() === 'admin' && (
-        <Route path="/Admindashboard" element={<AdminSidebar />}>
+        <Route path="/Admindashboard" element={<AdminDashboard/>}>
           {/* Nested dashboard routes */}
-          <Route path="" element={<UserDetails />} />
+          <Route index element={<UserDetails />} />
           <Route path="user/:userId" element={<UserInfo />} /> {/* Route for User Info page */}
           <Route path="department" element={<DepartmentPage />} />
           <Route path="addCertificate" element={<AddCertificateForm />} />
