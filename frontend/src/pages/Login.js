@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { auth } from '../firebase/setup';
 import SummaryApi from '../common/Apis';
@@ -17,7 +16,6 @@ const Login = () => {
   const [loginWithOtp, setLoginWithOtp] = useState(false);
   const [district, setDistrict] = useState('Pune');
   const [state, setState] = useState('Maharashtra');
-  const [captchaValid, setCaptchaValid] = useState(false);
   const navigate = useNavigate();
 
   const sendOtp = async () => {
@@ -33,12 +31,6 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!captchaValid) {
-      toast.error('Please verify that you are human.', {
-        position: "top-right",
-      });
-      return;
-    }
     try {
       const response = await axios({
         url: SummaryApi.signIn.url,
@@ -91,16 +83,12 @@ const Login = () => {
     }
   };
 
-  const handleCaptchaChange = (value) => {
-    setCaptchaValid(!!value);
-  };
-
   const districts = ['Ahmednagar', 'Akola', 'Amravati', 'Aurangabad', 'Beed', 'Bhandara', 'Buldhana', 'Chandrapur', 'Dhule', 'Gadchiroli', 'Gondia', 'Hingoli', 'Jalgaon', 'Jalna', 'Kolhapur', 'Latur', 'Mumbai City', 'Mumbai Suburban', 'Nagpur', 'Nanded', 'Nandurbar', 'Nashik', 'Osmanabad', 'Palghar', 'Parbhani', 'Pune', 'Raigad', 'Ratnagiri', 'Sangli', 'Satara', 'Sindhudurg', 'Solapur', 'Thane', 'Wardha', 'Washim', 'Yavatmal'];
 
   const states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep', 'Delhi', 'Puducherry', 'Ladakh', 'Jammu and Kashmir'];
 
   return (
-    <div className="h-[80%] mt-7 flex items-center justify-center text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl px-4">
+    <div className="h-[80%] mt-14 flex items-center justify-center text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl px-4">
       <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6">
         <h2 className="text-xl font-semibold text-center mb-5">Login</h2>
 
@@ -139,8 +127,6 @@ const Login = () => {
               </option>
             ))}
           </select>
-
-          <ReCAPTCHA sitekey="6Lfw60oqAAAAAP6WEMG_uT3BjpSi7gW5FKsLkySs" onChange={handleCaptchaChange} />
 
           <input type="submit" className="w-full h-10 bg-[#6279B8] text-white text-lg font-medium rounded-md mt-4 cursor-pointer hover:bg-[#006653] transition-colors" value={loginWithOtp ? (isOtpSent ? "Verify OTP" : "Send OTP") : "Login"} />
         </form>

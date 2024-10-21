@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PanService = () => {
+  const navigate = useNavigate();
+
+  const handlenavigate = () => {
+      navigate("/service")
+   
+     };
   return (
     <>
       
@@ -11,7 +18,8 @@ const PanService = () => {
         {/* Form 49A Section for Citizens of India */}
         <div className="border border-gray-600   rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-lg font-semibold mb-2">
-            Application for allotment of New PAN 
+            Application for allotment of New PAN (Form 49A) – applicable for
+            Citizens of India
           </h2>
           <p>
             This form should be used when the applicant has never applied for a
@@ -33,16 +41,13 @@ const PanService = () => {
             </li>
           </ul>
           <a
-            href=""
+            onClick={handlenavigate}
             className="mt-4 inline-block text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded"
           >
             Apply
           </a>
         </div>
-
-        
-
-       
+      
         {/* New Div for Change/Correction in PAN Data */}
         <div className="border border-gray-600 rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-lg font-semibold mb-2">
@@ -54,7 +59,11 @@ const PanService = () => {
             PAN data. A new PAN card bearing the same PAN with updated details
             will be issued to the applicant.
           </p>
-         
+          <p>
+            Appropriate check boxes in front of the relevant core details (i.e.
+            name, father’s name, date of birth) should be selected, in order to
+            update the details.
+          </p>
           <ul className="list-disc ml-6 mt-2">
             
             <li>
@@ -70,13 +79,12 @@ const PanService = () => {
             
           </ul>
           <a
-            href=""
+            onClick={handlenavigate}
             className="mt-4 inline-block text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded"
           >
             Apply
           </a>
         </div>
-        
       </div>
     </>
   );

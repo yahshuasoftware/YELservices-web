@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, Routes, Route } from "react-router-dom";
-import { BiChevronRight,  BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
+import { NavLink, Routes, Route } from "react-router-dom";
+import { BiChevronRight, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
 import UserDashbords from "./UserDashbords";
 import UserNotification from "./UserNotification";
 import { Usercontext } from "../../Store/UserContext";
@@ -29,19 +29,13 @@ const UserSidebar = () => {
               Authorization: token,
             },
           });
-          console.log(response,"this is response")
 
           if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Error ${response.status}: ${errorText}`);
           }
-          const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Expected JSON, but got something else.");
-      }
 
           const userData = await response.json();
-          // console.log(userData.role); // Here we can get the user role (ADMIN/NORMAL)
           setUser(userData);
         } catch (error) {
           console.error("Error fetching user profile:", error.message);
@@ -81,7 +75,7 @@ const UserSidebar = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className={`${isDarkMode ? "dark" : ""} flex`}>
+    <div className={` ${isDarkMode ? "dark" : ""} flex`}>
       <nav className={`bg-white dark:bg-ocean-800 min-h-screen transition-all duration-300 ${isClosed ? "w-20" : "w-64"} p-4`}>
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
@@ -96,67 +90,80 @@ const UserSidebar = () => {
         </header>
 
         <div className="mt-8 space-y-6">
-        <ul className="space-y-4">
-        <li>
-    <Link to="/dashbord" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-      <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Home</span>}
-    </Link>
-  </li>
-  <li>
-    <Link to="/userdashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-      <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Dashboard</span>}
-    </Link>
-  </li>
-  
-  <li>
-    <Link to="/userdashboard/serviceslist" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-      <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Services list</span>}
-    </Link>
-  </li>
-  
-  <li>
-    <Link to="/userdashboard/notifications" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-      <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Notifications</span>}
-    </Link>
-  </li>
-  
-  <li>
-    <button onClick={handleLogout} className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md w-full">
-      <BiLogOut className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Logout</span>}
-    </button>
-  </li>
+          <ul className="space-y-4">
+            <li>
+              <NavLink
+                to="/dashbord"
+                className={({ isActive }) =>
+                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500 text-white' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
+                }
+              >
+                <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Home</span>}
+              </NavLink>
+            </li>
 
-  
-  {user?.role === 'admin' && (
-  <li>
-    <Link to="/Admindashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
-      <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
-      {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">AdminDashboard</span>}
-    </Link>
-  </li>
-)}
+            <li>
+              <NavLink
+                to="/userdashboard"
+                className={({ isActive }) =>
+                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500 text-white' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
+                }
+              >
+                <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Dashboard</span>}
+              </NavLink>
+            </li>
 
-  
-</ul>
+            <li>
+              <NavLink
+                to="/userdashboard/serviceslist"
+                className={({ isActive }) =>
+                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500 text-white' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
+                }
+              >
+                <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Services list</span>}
+              </NavLink>
+            </li>
 
+            <li>
+              <NavLink
+                to="/userdashboard/notifications"
+                className={({ isActive }) =>
+                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500 text-white' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
+                }
+              >
+                <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Notifications</span>}
+              </NavLink>
+            </li>
+
+            <li>
+              <button
+                onClick={handleLogout}
+                className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md w-full"
+              >
+                <BiLogOut className="text-xl text-ocean-600 dark:text-ocean-400" />
+                {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Logout</span>}
+              </button>
+            </li>
+
+            {user?.role === 'admin' && (
+              <li>
+                <NavLink
+                  to="/Admindashboard"
+                  className={({ isActive }) =>
+                    `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500 text-white' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
+                  }
+                >
+                  <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
+                  {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Admin Dashboard</span>}
+                </NavLink>
+              </li>
+            )}
+          </ul>
         </div>
-
-        {/* <div className="mt-auto">
-          <div className="flex items-center justify-between mt-6">
-            <div className="flex items-center space-x-4">
-              {isDarkMode ? <FaSun className="text-xl text-ocean-600 dark:text-ocean-400" /> : <FaMoon className="text-xl text-ocean-600 dark:text-ocean-400" />}
-              {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">{isDarkMode ? "Light Mode" : "Dark Mode"}</span>}
-            </div>
-            <button onClick={toggleDarkMode} className="relative inline-flex items-center bg-ocean-200 dark:bg-ocean-600 rounded-full p-1 w-10 h-5">
-              <span className={`w-4 h-4 bg-white dark:bg-ocean-800 rounded-full transform transition-transform ${isDarkMode ? "translate-x-5" : ""}`} />
-            </button>
-          </div>
-        </div> */}
       </nav>
 
       {/* Main content */}

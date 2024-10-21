@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Routes, Route } from "react-router-dom";
+import { NavLink, Routes, Route } from "react-router-dom";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { BiChevronRight, BiSearch, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
 import UserDashbords from "../UserDashbord/UserDashbords";
@@ -21,9 +21,6 @@ const UserSidebar = () => {
   const [error, setError] = useState(null); // Error state
   const navigate = useNavigate(); // For navigation
 
-  // console.log(JSON.stringify(user));
-  
-  // Fetch user data from API
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -57,7 +54,6 @@ const UserSidebar = () => {
     }
   }, []);
 
-  // Handle user logout
   const handleLogout = () => {
     localStorage.removeItem('token');
     toast.success('Logged out successfully!', {
@@ -66,17 +62,14 @@ const UserSidebar = () => {
     navigate('/home');
   };
 
-  // Toggle Sidebar state (open/close)
   const toggleSidebar = () => {
     setIsClosed(!isClosed);
   };
 
-  // Toggle Dark mode
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  // Loading and error handling
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -86,7 +79,7 @@ const UserSidebar = () => {
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
             <div className="flex flex-col">
-              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL Services</span>
+              <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL Seva</span>
               {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.name}</span>}
             </div>
           </div>
@@ -97,27 +90,40 @@ const UserSidebar = () => {
 
         <div className="mt-8 space-y-6">
           <ul className="space-y-4">
-          <li>
-              <Link to="/userdashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+            <li>
+              <NavLink
+                to="/userdashboard"
+                className={({ isActive }) => 
+                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
+                }
+              >
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">User Dashboard</span>}
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/Admindashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+              <NavLink
+                to="/Admindashboard"
+                className={({ isActive }) => 
+                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
+                }
+              >
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Admin Dashboard</span>}
-              </Link>
+              </NavLink>
             </li>
 
             <li>
-              <Link to="/admindashboard/department" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+              <NavLink
+                to="/admindashboard/department"
+                className={({ isActive }) => 
+                  `flex items-center space-x-4 p-2 rounded-md ${isActive ? 'bg-teal-500' : 'hover:bg-gray-100 dark:hover:bg-ocean-700'}`
+                }
+              >
                 <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Service Management</span>}
-              </Link>
+              </NavLink>
             </li>
-
-            
 
             <li>
               <button onClick={handleLogout} className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md w-full">
@@ -131,12 +137,12 @@ const UserSidebar = () => {
 
       {/* Main content */}
       <section className="flex-1 p-6">
-        <div className="text-xl font-semibold text-ocean-800 dark:text-ocean-100"> Admin Dashboard </div>
+        <div className="text-xl font-semibold text-ocean-800 dark:text-ocean-100">Admin Dashboard</div>
         <Usercontext.Provider value={user}>
           <Routes>
             <Route path="/" element={<UserDetails />} />
-            <Route path="/user/:userId" element={<UserInfo />} /> {/* Dynamic route for user info */}
-            <Route path="/department" element={<DepartmentPage />} /> {/* Dynamic route for user info */}
+            <Route path="/user/:userId" element={<UserInfo />} />
+            <Route path="/department" element={<DepartmentPage />} />
             <Route path="/addCertificate" element={<AddCertificateForm />} />
             <Route path="/addDepartment" element={<AddDepartmentForm />} />
           </Routes>

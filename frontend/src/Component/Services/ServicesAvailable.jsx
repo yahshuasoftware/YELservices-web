@@ -82,9 +82,9 @@ const ServicesAvailable = () => {
 
   return (
     <>
-      <div className="w-full bg-blue-300 bg-opacity-10 pb-9 text-base md:text-lg lg:text-xl xl:text-2xl">
+      <div className="w-full mt-9 bg-blue-300 bg-opacity-10 pb-9 text-base md:text-lg lg:text-xl xl:text-2xl">
 
-        <h1 className="rounded-t-md text-white bg-black flex justify-center">
+        <h1 className="rounded-t-md text-white bg-blue-500 flex justify-center">
           Services Available Online
         </h1>
         <div className="h-full p-2">

@@ -81,7 +81,7 @@ const ServicesList = () => {
 
   return (
     <>
-       <div className="w-4/5 md:w-full sm:w-full lg:w-full bg-white bg-opacity-10 pb-9 mx-auto">
+       <div className="w-4/5 md:w-full sm:w-full lg:w-full bg-white bg-opacity-10 pb-9 mx-auto mt-10">
       <h1 className="rounded-t-md text-black bg-white flex justify-center text-2xl font-bold">
         Services Available Online
       </h1>
