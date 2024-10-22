@@ -22,7 +22,7 @@ app.use(cors({
 }));
 
 // Define Routes
-app.use("/", router);
+app.use("/app", router);
 
 // Auto-assign certificates on server start
 autoAssignCertificates();

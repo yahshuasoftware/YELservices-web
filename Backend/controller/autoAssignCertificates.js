@@ -26,12 +26,18 @@ const autoAssignCertificates = async () => {
       `Total Certificates: ${totalCertificates}, Total Admins: ${totalAdmins}, Certificates per Admin: ${certificatesPerAdmin}`
     );
 
-    // Step 3: Distribute certificates evenly among admins
+    // Step 3: Clear previous assignments
+    for (const admin of admins) {
+      admin.assignedCertificates = []; // Clear previous assigned certificates
+      await admin.save();
+    }
+
+    // Step 4: Distribute certificates evenly among admins
     let adminIndex = 0; // Round-robin admin selection
     for (let i = 0; i < pendingCertificates.length; i++) {
       const certificate = pendingCertificates[i];
 
-      // Initialize `assignedCertificates` if not already initialized
+      // Ensure the admin has an assignedCertificates array
       if (!admins[adminIndex].assignedCertificates) {
         admins[adminIndex].assignedCertificates = [];
       }

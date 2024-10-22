@@ -5,7 +5,7 @@ const PanService = () => {
   const navigate = useNavigate();
 
   const handlenavigate = () => {
-      navigate("/service")
+      navigate("/userdashboard/serviceslist")
    
      };
   return (

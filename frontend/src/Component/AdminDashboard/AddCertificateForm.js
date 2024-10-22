@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -37,6 +37,9 @@ const proofOfAddressOptions = [
 
 const AddCertificateForm = () => {
   const [departmentName, setDepartmentName] = useState('');
+  const [departments, setDepartments] = useState([]);
+  console.log('fdasfasf',departments)
+
   const [certificates, setCertificates] = useState([{ name: '', description: '', proofOfIdentity: [], proofOfAddress: [] }]);
   const [message, setMessage] = useState('');
 
@@ -86,17 +89,43 @@ const AddCertificateForm = () => {
     setCertificates([{ name: '', description: '', proofOfIdentity: [], proofOfAddress: [] }]);
   };
 
+
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await fetch(SummaryApi.addDepartment.url); // Replace with your API endpoint
+        const data = await response.json();
+        setDepartments(data);
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    }
+
+    fetchDepartments();
+  }, []);
+
   return (
     <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg mt-6">
        <ToastContainer /> {/* Toast Container for notifications */}
       <h2 className="text-2xl font-bold text-center mb-4">Add New Certificates</h2>
-      <input
-        type="text"
+      <select
         className="block w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         value={departmentName}
         onChange={handleDepartmentChange}
-        placeholder="Department Name"
-      />
+      >
+        {/* Disabled option as placeholder */}
+        <option value="" disabled>
+          Select Department
+        </option>
+
+        {/* Map departments to dropdown options */}
+        {departments.map((department) => (
+          <option key={department._id} value={department.name}>
+            {department.name}
+          </option>
+        ))}
+      </select>
       <h3 className="text-xl font-semibold mb-2">Certificates</h3>
 
       {certificates.map((certificate, index) => (

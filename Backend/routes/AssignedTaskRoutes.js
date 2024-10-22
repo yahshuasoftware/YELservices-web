@@ -1,11 +1,11 @@
 const express = require("express");
-const getAssignedCertificates = require("../controller/getAssignedCertificates");
-// If you use authentication, ensure the auth middleware is applied, or remove it if not needed
-const authMiddleware = require("../middleware/AuthMiddleware"); // Optional: middleware to authenticate the user
+const getAssignedTasks = require("../controller/getAssignedCertificates");
+
+const {updateCertificateStatusById} = require("../controller/updateCertificateStatusById");
 
 const router = express.Router();
 
-// Route to fetch assigned certificates for an admin
-router.get("/admin/assigned-certificates", authMiddleware, getAssignedCertificates);
-
+// Route to fetch assigned tasks for a user by user ID from params
+router.get("/assigned-tasks/:userId", getAssignedTasks);
+router.put('/certificates/:certificateId/status', updateCertificateStatusById);
 module.exports = router;
