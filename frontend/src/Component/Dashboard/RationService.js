@@ -4,7 +4,7 @@ const RationService = () => {
     return (
         <>
             <h2 className="text-3xl flex justify-center font-bold text-blue-700 border-b-2 border-gray-300 pb-2 mb-6">
-                Application for Ration Card Services
+                Application for Ration Card Services 
             </h2>
             <div className="gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto mt-2 p-4">
 

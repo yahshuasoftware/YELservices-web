@@ -8,13 +8,13 @@ import Footer from '../Component/Footer/Footer';
 
 const Home = () => {
   return (
-    <div>
-      <Navbar/>
-        <div className="p-10 pl-28 h-[85vh]  bg-[url('../public/images/image.jpeg')] bg-cover bg-center gap-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex-grow px-5 h-auto lg:h-[85vh] bg-[url('../public/images/image.jpeg')] bg-cover bg-center gap-2 grid grid-cols-1 lg:grid-cols-2">
         <div>
           <ServicesAvailable />
         </div>
-        <div >
+        <div>
           <Routes>
             <Route path="*" element={<Login />} /> {/* Default Route */}
             <Route path="/" element={<Navigate to="/login" />} />{" "}

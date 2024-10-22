@@ -95,7 +95,7 @@ const DepartmentChart = () => {
     },
     {
       id: 11,
-      service: "Certificate of Resldence in Hilly Area",
+      service: "Certificate of Residence in Hilly Area",
       days: 7,
       officer: "Tahsildar",
       firstAppeal: "Sub-Divisional Officer",
@@ -109,9 +109,9 @@ const DepartmentChart = () => {
     <div className="flex flex-col md:flex-row">
       {/* Sidebar Component */}
       
-
+      
       {/* Main Content */}
-      <div className="flex-grow container mx-auto overflow-y-auto h-screen p-4">
+      <div className="flex-grow container mx-auto overflow-y-auto h-screen p-4 md:ml-64"> {/* Add margin-left to accommodate the sidebar */}
         <div className="bg-white shadow-lg rounded-lg p-3">
           <h2 className="text-2xl font-bold text-center text-white bg-blue-500 py-2 mb-6 rounded-md">
             Department Notified Services
@@ -163,7 +163,6 @@ const DepartmentChart = () => {
         </div>
       </div>
     </div>
-  
   );
 };
 

@@ -24,7 +24,7 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`w-64 h-[95vh] bg-blue-800 text-white top-0 left-0 overflow-y-auto transition-transform duration-300 ease-in-out ${
+        className={`fixed md:relative w-64 h-[95vh] bg-blue-800 text-white top-0 left-0 overflow-y-auto transition-transform duration-300 ease-in-out z-50 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`} // Toggle sidebar for small screens
       >

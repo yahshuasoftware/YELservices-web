@@ -98,7 +98,7 @@ const UserSidebar = () => {
         </header>
 
         <div className="mt-8 space-y-6">
-          <ul className="space-y-4">
+          <ul className="space-y-4 ">
             <li>
               <Link to="/dashbord" className={`flex items-center space-x-4 hover:text-black hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/dashbord' ? 'bg-teal-500' : ''}`}>
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />

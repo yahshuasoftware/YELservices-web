@@ -23,15 +23,11 @@ const Agriculture = () => {
     }
   };
 
-
   return (
-    <div className="flex flex-col md:flex-row w-full">
-      {/* Sidebar */}
-      {/* <Sidebar /> */}
-      
-      {/* Main Content */}
-      <div className="flex-grow container mx-auto px-4 py-6 md:ml-10">
-        <h1 className="text-3xl font-bold text-orange-600">
+    <div className="flex flex-col w-full items-center justify-center p-4"> {/* Main Container */}
+      {/* Inner Container */}
+      <div className="w-full md:max-w-4xl p-4"> {/* Set max width */}
+        <h1 className="text-3xl font-bold text-orange-600 ">
           Department: <span className="text-green-600">Agriculture</span>
         </h1>
 

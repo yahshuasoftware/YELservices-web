@@ -7,7 +7,7 @@ import UserNavbar from "../Component/Navbar/UserNavbar";
 const Dashbord = () => {
   return (
     <>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col h-screen gap-1">
         {/* Fixed Navbar */}
         <div className="fixed top-0 left-0 w-full z-10">
           <UserNavbar />
@@ -21,7 +21,7 @@ const Dashbord = () => {
           </div>
 
           {/* Main Content */}
-          <div className="ml-64 p-10 w-full overflow-auto" style={{ maxHeight: 'calc(100vh - 64px)' }}>
+          <div className="flex-item-center justify-center  p-10 w-full overflow-auto" style={{ maxHeight: 'calc(100vh - 64px)' }}>
             <Outlet />
           </div>
         </div>
