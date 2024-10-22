@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import SummaryApi from '../../common/Apis';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Import the jwt-decode library
+import {jwtDecode} from 'jwt-decode'; // Import the jwt-decode library
 
 const AssignedTaskPage = () => {
-  const [assignedCertificates, setAssignedCertificates] = useState([]); // Updated state
+  const [assignedCertificates, setAssignedCertificates] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [updating, setUpdating] = useState(false); // State to manage loading state during updates
+  const [updating, setUpdating] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
+  const [revertCertificateId, setRevertCertificateId] = useState(null); // For tracking the certificate to be reverted
+  const [issueText, setIssueText] = useState(''); // Text for the issue description
+  const [file, setFile] = useState(null); // File input for uploading documents
 
-  // Define status options
   const statusOptions = ['pending', 'approved', 'rejected'];
 
-  // Fetch assigned certificates
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Decode the token to extract user ID
       const decodedToken = jwtDecode(token);
-      const userId = decodedToken._id; // Get the user ID
+      const userId = decodedToken._id;
 
       const fetchAssignedData = async () => {
         try {
-          const url = `${SummaryApi.assignedCertificates.url}/${userId}`; // Use the userId in the URL
+          const url = `${SummaryApi.assignedCertificates.url}/${userId}`;
           const response = await axios.get(url);
-          setAssignedCertificates(response.data.assignedCertificates || []); // Set assigned certificates directly
+          setAssignedCertificates(response.data.assignedCertificates || []);
         } catch (error) {
           setError(error.message);
         } finally {
@@ -40,24 +41,19 @@ const AssignedTaskPage = () => {
     }
   }, []);
 
-  // Filter certificates by search term
   const filteredCertificates = assignedCertificates.filter((certificate) => {
-    const certificateName = certificate.certificateName || ''; // Default to empty string if undefined
+    const certificateName = certificate.certificateName || '';
     return certificateName.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  // Function to handle status change
   const handleStatusChange = async (certificateId, newStatus) => {
     const url = `${SummaryApi.CertificatesStatusHandle.url}/${certificateId}/status`;
-    setUpdating(true); // Start updating
+    setUpdating(true);
 
     try {
-      const response = await axios.put(url, {
-        status: newStatus,
-      });
+      const response = await axios.put(url, { status: newStatus });
 
       if (response.status === 200) {
-        // Update the state with the new status after the API call
         setAssignedCertificates((prevCertificates) =>
           prevCertificates.map((cert) =>
             cert._id === certificateId ? { ...cert, status: newStatus } : cert
@@ -68,7 +64,43 @@ const AssignedTaskPage = () => {
     } catch (error) {
       console.error('Error updating certificate status:', error);
     } finally {
-      setUpdating(false); // Stop updating
+      setUpdating(false);
+    }
+  };
+
+  // Handle the revert action
+  const handleRevertClick = (certificateId) => {
+    setRevertCertificateId(certificateId);
+    setIsModalOpen(true);
+  };
+
+  // Handle submit action for the revert form
+  const handleRevertSubmit = async () => {
+    if (!issueText || !file) {
+      alert("Please enter an issue description and upload a document.");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('issue', issueText);
+      formData.append('document', file);
+
+      const url = `${SummaryApi.CertificatesRevertHandle.url}/${revertCertificateId}/revert`;
+      const response = await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Revert submitted successfully!');
+        // Optionally, update the UI here after a successful revert
+      }
+    } catch (error) {
+      console.error('Error reverting the certificate:', error);
+    } finally {
+      setIsModalOpen(false); // Close the modal after the process
     }
   };
 
@@ -84,7 +116,6 @@ const AssignedTaskPage = () => {
     <div className="container mx-auto mt-4">
       <h1 className="text-2xl font-semibold">Assigned Certificates</h1>
 
-      {/* Search Input */}
       <input
         type="text"
         placeholder="Search by certificate name"
@@ -93,7 +124,6 @@ const AssignedTaskPage = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      {/* Certificates Table */}
       <table className="table-auto border-collapse w-full mt-4">
         <thead>
           <tr>
@@ -103,6 +133,7 @@ const AssignedTaskPage = () => {
             <th className="border px-4 py-2">Payment Status</th>
             <th className="border px-4 py-2">Status</th>
             <th className="border px-4 py-2">Application Date</th>
+            <th className="border px-4 py-2">Action</th> {/* New Action column */}
           </tr>
         </thead>
         <tbody>
@@ -129,7 +160,7 @@ const AssignedTaskPage = () => {
                     value={certificate.status}
                     onChange={(e) => handleStatusChange(certificate._id, e.target.value)}
                     className="border p-2 rounded-md"
-                    disabled={updating} // Disable dropdown while updating
+                    disabled={updating}
                   >
                     {statusOptions.map((status) => (
                       <option key={status} value={status}>
@@ -141,17 +172,60 @@ const AssignedTaskPage = () => {
                 <td className="border px-4 py-2">
                   {new Date(certificate.applicationDate).toLocaleDateString()}
                 </td>
+                <td className="border px-4 py-2">
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded"
+                    onClick={() => handleRevertClick(certificate._id)}
+                  >
+                    Revert
+                  </button>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="6" className="border px-4 py-2 text-center">
+              <td colSpan="7" className="border px-4 py-2 text-center">
                 No certificates found
               </td>
             </tr>
           )}
         </tbody>
       </table>
+
+      {/* Modal for reverting the application */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded shadow-lg w-1/3">
+            <h2 className="text-xl font-semibold mb-4">Revert Application</h2>
+            <textarea
+              placeholder="Describe the issue with the certificate"
+              value={issueText}
+              onChange={(e) => setIssueText(e.target.value)}
+              className="w-full p-2 border mb-4"
+              rows="4"
+            ></textarea>
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+              className="mb-4"
+            />
+            <div className="flex justify-end">
+              <button
+                className="bg-gray-500 text-white px-4 py-2 mr-2 rounded"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={handleRevertSubmit}
+              >
+                Submit Revert
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
