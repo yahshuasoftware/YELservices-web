@@ -24,6 +24,7 @@ import ElectionService from "../Component/Dashboard/ElectionCard";
 import AdminDashboard from "../pages/AdminDashboard";
 import SuperAdminSidebar from "../Component/SuperAdmin/SuperAdminSidebar"
 import AdminUserManagement from "../Component/SuperAdmin/AdminUserManagement";
+import AssignedTaskPage from "../Component/AdminDashboard/AssignedTaskPage";
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -113,6 +114,10 @@ const AppRoutes = () => {
           <Route path="addCertificate" element={<AddCertificateForm />} />
           <Route path="addDepartment" element={<AddDepartmentForm />} />
           <Route path="allcertificates" element={<AllUserCertificates/>}/>
+          <Route path="tasks" element={<AssignedTaskPage/>}/>
+          
+          
+
         </Route>
       )}
 

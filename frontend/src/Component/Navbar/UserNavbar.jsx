@@ -96,7 +96,7 @@ const UserNavbar = () => {
               {user.name}
             </li>
 
-            {user.role === "general user" ? (
+            {user.role === "normal" ? (
               <Link to="/userdashboard">
                 <li className="hover:bg-blue-400 m-2 hover:text-black flex items-center justify-center p-4 font-normal rounded-md text-xs h-14">
                   <span className="m-1">

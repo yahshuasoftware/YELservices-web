@@ -57,6 +57,14 @@ const SummaryApi = {
         url: `${backendDomain}/api/users`,
         
       },
+      assignedCertificates: {
+        url: `${backendDomain}/api/assigned-tasks`, // Adjust the URL as needed
+        method: 'GET',
+      },
+      CertificatesStatusHandle:{
+        url: `${backendDomain}/api/certificates`,
+
+      }
 
 }
 export default SummaryApi;
