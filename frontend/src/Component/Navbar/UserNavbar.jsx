@@ -70,17 +70,17 @@ const UserNavbar = () => {
         menuOpen ? "block" : "hidden"
       } md:flex`} // Reduced spacing with space-x-2
     >
-      <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+      <li className="hover:bg-blue-300  hover:text-black flex items-center p-4 rounded-md text-sm">
         <IoMdHome className="mr-1" />
         Home
       </li>
-      <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+      <li className="hover:bg-blue-300 hover:text-black flex items-center p-4 rounded-md text-sm">
         <FaUser className="mr-1" />
-        {user?.name}
+        <Link to="/profile">{user?.name}</Link> {/* Navigate to Profile */}
       </li>
       {user?.role === "general user" && (
         <Link to="/userdashboard">
-          <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+          <li className="hover:bg-blue-300 hover:text-black flex items-center p-4 rounded-md text-sm">
             <FaTachometerAlt className="mr-1" />
             DASHBOARD
           </li>
@@ -96,7 +96,7 @@ const UserNavbar = () => {
       )}
       {user?.role === "superadmin" && (
         <Link to="/Superadmin">
-          <li className="hover:bg-blue-400 hover:text-black flex items-center p-1 rounded-md text-sm">
+          <li className="hover:bg-blue-400 hover:text-black flex items-center p-4 rounded-md text-sm">
             <FaTachometerAlt className="mr-1" />
             SuperAdmin
           </li>

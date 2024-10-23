@@ -87,10 +87,20 @@ const UserSidebar = () => {
       <nav className={`bg-gray-700 text-white dark:bg-ocean-800 min-h-screen transition-all duration-300 ${isClosed ? "w-20" : "w-64"} p-4`}>
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
-            <div className="flex flex-col">
+            <div className="flex flex-col items-center">
               <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL-SEVA</span>
               {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.name}</span>}
+
+              {/* Edit Profile Button */}
+              <button
+                className="mt-2 px-4 py-1 text-white text-sm  rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                onClick={() => navigate('/profile')}
+              >
+                Edit Profile
+              </button>
             </div>
+
+
           </div>
           <button onClick={toggleSidebar} className="bg-black text-white w-10 p-2 rounded-full">
             <BiChevronRight className={`transform transition-transform duration-300 ${isClosed ? "" : "rotate-180"}`} />
@@ -100,31 +110,31 @@ const UserSidebar = () => {
         <div className="mt-8 space-y-6">
           <ul className="space-y-4 ">
             <li>
-              <Link to="/dashbord" className={`flex items-center space-x-4 hover:text-black hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/dashbord' ? 'bg-teal-500' : ''}`}>
+              <Link to="/dashbord" className={`flex items-center space-x-4 hover:text-white hover:bg-teal-500 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/dashbord' ? 'bg-teal-500' : ''}`}>
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Home</span>}
               </Link>
             </li>
             <li>
-              <Link to="/userdashboard" className={`flex items-center space-x-4 hover:text-black hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/userdashboard' ? 'bg-teal-500' : ''}`}>
+              <Link to="/userdashboard" className={`flex items-center space-x-4 hover:text-white hover:bg-teal-500 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/userdashboard' ? 'bg-teal-500' : ''}`}>
                 <BiHomeAlt className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Dashboard</span>}
               </Link>
             </li>
             <li>
-              <Link to="/userdashboard/serviceslist" className={`flex items-center space-x-4 hover:text-black hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/userdashboard/serviceslist' ? 'bg-teal-500' : ''}`}>
+              <Link to="/userdashboard/serviceslist" className={`flex items-center space-x-4 hover:text-white hover:bg-teal-500 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/userdashboard/serviceslist' ? 'bg-teal-500' : ''}`}>
                 <BiBarChartAlt2 className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Services list</span>}
               </Link>
             </li>
             <li>
-              <Link to="/userdashboard/notifications" className={`flex items-center space-x-4 hover:text-black hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/userdashboard/notifications' ? 'bg-teal-500' : ''}`}>
+              <Link to="/userdashboard/notifications" className={`flex items-center space-x-4 hover:text-white hover:bg-teal-500 dark:hover:bg-ocean-700 p-2 rounded-md ${currentPath === '/userdashboard/notifications' ? 'bg-teal-500' : ''}`}>
                 <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Notifications</span>}
               </Link>
             </li>
             <li>
-              <button onClick={handleLogout} className="flex items-center space-x-4 hover:text-black hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md w-full">
+              <button onClick={handleLogout} className="flex items-center space-x-4 hover:text-white hover:bg-teal-500 dark:hover:bg-ocean-700 p-2 rounded-md w-full">
                 <BiLogOut className="text-xl text-ocean-600 dark:text-ocean-400" />
                 {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">Logout</span>}
               </button>
