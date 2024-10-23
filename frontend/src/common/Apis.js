@@ -1,5 +1,5 @@
 
-const backendDomain= process.env.REACT_APP_LOCALHOST_URI
+const backendDomain= process.env.REACT_APP_LOCALHOST_URI || "http://localhost:8080/app"
 
 
 // const backendDomain=process.env.REACT_APP_API_URI

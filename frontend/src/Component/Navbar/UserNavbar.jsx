@@ -106,7 +106,7 @@ const UserNavbar = () => {
                 </li>
               </Link>
             ) : user.role === "admin" ? (
-              <Link to="/Admindashboard">
+              <Link to="/admindashboard">
                 <li className="hover:bg-blue-400 m-2 hover:text-black flex items-center justify-center p-4 font-normal rounded-md text-xs h-14">
                   <span className="m-1">
                     <FaTachometerAlt />
@@ -115,7 +115,7 @@ const UserNavbar = () => {
                 </li>
               </Link>
             ) : user.role === "superadmin" ? (
-              <Link to="/Superadmin">
+              <Link to="/superadmin">
                 <li className="hover:bg-blue-400 m-2 hover:text-black flex items-center justify-center p-4 font-normal rounded-md text-xs h-14">
                   <span className="m-1">
                     <FaTachometerAlt />

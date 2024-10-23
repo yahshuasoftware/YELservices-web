@@ -64,7 +64,7 @@ const UserDetails = () => {
   }
 
   const handleViewUser = (userId, index) => {
-    navigate(`/Admindashboard/user/${userId}`); // Use navigate for navigation
+    navigate(`/admindashboard/user/${userId}`); // Use navigate for navigation
   };
 
   return (

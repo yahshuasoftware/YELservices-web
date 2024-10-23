@@ -134,7 +134,7 @@ const UserSidebar = () => {
   
   {user?.role === 'admin' && (
   <li>
-    <Link to="/Admindashboard" className="flex items-center space-x-4 hover:text-black hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
+    <Link to="/admindashboard" className="flex items-center space-x-4 hover:text-black hover:bg-gray-100 dark:hover:bg-ocean-700 p-2 rounded-md">
       <BiBell className="text-xl text-ocean-600 dark:text-ocean-400" />
       {!isClosed && <span className="text-md font-medium text-ocean-800 dark:text-ocean-100">AdminDashboard</span>}
     </Link>
