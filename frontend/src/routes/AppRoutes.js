@@ -78,7 +78,7 @@ const AppRoutes = () => {
       {/* Redirect logic based on token */}
       {!token && <Route path="*" element={<Home />} />}
       {token && <Route path="/" element={<Navigate to="/dashboard" />} />}
-      {token && userRole ==='admin' &&<Route path="/" element={<Navigate to="/Admindashboard" />} />}
+      {token && userRole ==='admin' &&<Route path="/" element={<Navigate to="/admindashboard" />} />}
 
       {/* Main application routes */}
       <Route path="/dashbord" element={<Dashbord />}>
@@ -106,7 +106,7 @@ const AppRoutes = () => {
 
        {/* AdminDashboard route */}
       {token && userRole?.toLowerCase() === 'admin' && (
-        <Route path="/Admindashboard" element={<AdminDashboard/>}>
+        <Route path="/admindashboard" element={<AdminDashboard/>}>
           {/* Nested dashboard routes */}
           <Route index element={<UserDetails />} />
           <Route path="user/:userId" element={<UserInfo />} /> {/* Route for User Info page */}

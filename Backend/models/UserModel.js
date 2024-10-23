@@ -34,6 +34,28 @@ const userCertificateSchema = new mongoose.Schema({
       },
     ],
   },
+  revertReason: {
+    type: String, // Reason for reversion
+    default: '', // Will store the reason provided by admin/user
+  },
+  revertUploads: { // New uploads after reverting
+    proofOfIdentity: [
+      {
+        filename: String,
+        path: String,
+        mimetype: String,
+        size: Number,
+      },
+    ],
+    proofOfAddress: [
+      {
+        filename: String,
+        path: String,
+        mimetype: String,
+        size: Number,
+      },
+    ],
+  },
   applicationDate: {
     type: Date,
     default: Date.now, // Automatically store the date of application
