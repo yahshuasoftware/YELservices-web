@@ -22,15 +22,7 @@ const Navbar = () => {
           <li className="hover:bg-orange-700 hover:text-white flex items-center justify-start pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base lg:mx-7">
             <span className="m-1"><IoMdHome /></span> Home
           </li>
-          <li className="hover:bg-orange-700 hover:text-white flex items-center justify-start pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base">
-            <span className="m-1"><FaChild /></span> ABOUT RTS COMMISSION
-          </li>
-          <li className="hover:bg-orange-700 hover:text-white flex items-center justify-start  pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base">
-            <span className="m-1"><FaUser /></span> DEPARTMENT NOTIFIED SERVICES
-          </li>
-          <li className="hover:bg-orange-700 hover:text-white flex items-center justify-start  pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base">
-            <span className="m-1"><FaBriefcase /></span> EASE OF DOING BUSINESS
-          </li>
+         
           <li className="hover:bg-orange-700 hover:text-white flex items-center justify-start pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base">
             <span className="m-1"><FaBriefcase /></span> SERVICES INFORMATION
           </li>
