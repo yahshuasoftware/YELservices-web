@@ -21,12 +21,8 @@ const PanService = () => {
   }, []);
   console.log("this is the array or depatment", departments);
 
-  // const handlenavigate = (certificatename) => {
-  //   navigate("/service",{state:{certificatename}});
-  // };
-  const handlenavigate = () => {
-    navigate("/service");
-   
+  const handlenavigate = (certificatename) => {
+    navigate("/service",{state:{certificatename}});
   };
   return (
     <>
@@ -35,36 +31,36 @@ const PanService = () => {
       </h2>
       <div className="gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto mt-2 p-4">
         <div className="department-container">
-          {departments.map(
-            (department) =>
-              department.name === "Pan Services" && ( // Check if department name is "Aadhar Services"
-                <div key={department.id} className="flex gap-4 ">
-               
-                    {department.certificates &&
-                    department.certificates.length > 0 ? (
+        {departments.map(
+              (department) =>
+                department.name === "Pan Services" && ( // Check if department name is "Aadhar Services"
+                  <div key={department.id} className="flex gap-4">
+                    {department.certificates && department.certificates.length > 0 ? (
                       department.certificates.map((certificate, index) => (
-                        <div className="" key={index}>
-                          <div className="border border-gray-600 rounded-lg w-96  shadow-md p-6 mb-6">
-                            <h2 className="text-lg font-semibold mb-2">
-                             {certificate.name}
-                            </h2>
-                            <a
-                              onClick={handlenavigate}
-                              className="mt-4 inline-block text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">
-                              Apply
-                            </a>
+                        <div key={index}>
+                          <div className="border w-96 border-gray-600 rounded-lg shadow-sm mb-4">
+                            <div className="p-4">
+                              <h2 className="text-lg font-semibold text-gray-800">
+                                {certificate.name}
+                                <span className="ml-1">›</span>
+                              </h2>
+                              <a
+                                onClick={() => handlenavigate(certificate.name)}  // Pass the function on click
+                                className="mt-4 inline-block text-white bg-blue-500 cursor-pointer hover:bg-blue-600 px-4 py-2 rounded"
+                              >
+                                Apply
+                              </a>
+                            </div>
                           </div>
-                          <br />
-                          {/* Add other certificate details here */}
                         </div>
                       ))
                     ) : (
                       <p>No certificates available for this department.</p>
                     )}
-                
-                </div>
-              )
-          )}
+                  </div>
+                )
+            )}
+
         </div>
       </div>
     </>
