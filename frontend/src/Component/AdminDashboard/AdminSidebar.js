@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, Routes, Route } from "react-router-dom";
-
 import { BiChevronRight, BiHomeAlt, BiBarChartAlt2, BiBell, BiLogOut } from "react-icons/bi";
-
-import { Usercontext } from "../../Store/UserContext";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
-
 import SummaryApi from "../../common/Apis";
-import AllUserCertificates from "./AllUserCertificates";
 
 const AdminSidebar = () => {
   const [isClosed, setIsClosed] = useState(false); // Sidebar open/close state
@@ -82,7 +77,7 @@ const AdminSidebar = () => {
       <nav className={`bg-white dark:bg-ocean-800 min-h-screen transition-all duration-300 ${isClosed ? "w-20" : "w-64"} p-4 mt-10`}>
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
-            <div className="flex flex-col">
+            <div className="flex flex-col">   
               <span className="text-lg font-semibold text-ocean-900 dark:text-ocean-100">YEL-SEVA</span>
               {user && <span className="text-sm text-ocean-500 dark:text-ocean-400">{user.name}</span>}
             </div>

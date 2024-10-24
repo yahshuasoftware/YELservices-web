@@ -1,3 +1,14 @@
+{email:-tushar@gmail.com
+Pass:-Jaideep@123}
+
+{email:-jaideep@gmail.com
+Pass:-jaideep@123}
+
+{email:-main@gmail.com
+Pass:-1234}
+
+
+
 # SUPER_ADMIN APIS 
 
 1)
@@ -5,7 +16,7 @@
     json -  {
     "newRole":"superadmin",
     "userId":"66efb3a490eedcaa8b7ae79a"
-    }
+    },
 
 2)
    GET -   http://localhost:8080/api/adminusers

@@ -11,7 +11,7 @@ const Home = () => {
     <div>
       <Navbar/>
         <div className="p-10 pl-28 h-[85vh]  bg-[url('../public/images/image.jpeg')] bg-cover bg-center gap-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-        <div>
+        <div className='mt-4'>
           <ServicesAvailable />
         </div>
         <div >
