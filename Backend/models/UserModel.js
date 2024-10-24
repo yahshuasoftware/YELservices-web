@@ -2,13 +2,27 @@ const mongoose = require("mongoose");
 
 // User Certificate Schema
 const userCertificateSchema = new mongoose.Schema({
+  formFor :{
+    type:String
+  },
+  name :{
+    type:String
+  },
+
+  phoneNo:{
+    type:String
+  }
+ ,
+  address:{
+  type:String
+   },
   certificateName: {
     type: String,
     required: true,
   },
   status: {
     type: String,
-    enum: ['pending', 'approved', 'rejected'], // Status of the certificate application
+    enum: ['pending', 'approved', 'revert'], // Status of the certificate application
     default: 'pending',
   },
   paymentStatus: {

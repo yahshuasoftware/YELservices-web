@@ -129,12 +129,17 @@ const addCertificate = async (req, res) => {
     // Create a new certificate object
     const newCertificate = {
       certificateName: req.body.certificateName || 'Default Certificate Name',
+      formFor: req.body.formFor,
+      name: req.body.name,
+      phoneNo: req.body.phoneNo,
+      address: req.body.address,
       status: 'pending',
       uploadedDocuments: {
         proofOfIdentity: proofOfIdentityUploads,
         proofOfAddress: proofOfAddressUploads,
       },
     };
+    
 
     // Add the new certificate to the user's certificates array
     user.certificatesApplied.push(newCertificate);

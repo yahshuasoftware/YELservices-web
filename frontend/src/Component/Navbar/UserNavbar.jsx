@@ -28,13 +28,8 @@ const UserNavbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    // console.log("token test"    + token)
     if (token) {
       try {
-        // const decoded = jwtDecode(token);
-        // setUser(decoded);
-
-        // Fetch user profile data from the API
         const fetchUserData = async () => {
           try {
             const response = await fetch(SummaryApi.profile.url, {
@@ -44,20 +39,14 @@ const UserNavbar = () => {
               },
             });
 
-            // console.log("ttttt" + response)
-
-            // Check if the response is successful
             if (!response.ok) {
               const errorText = await response.text(); // Get the response as text (likely HTML)
               throw new Error(`Error ${response.status}: ${errorText}`);
             }
 
-            // Parse the response as JSON
             const userData = await response.json();
             setUser(userData);
-            // console.log("user role" + userData.role)
           } catch (error) {
-            // console.error("Error fetching user profile:", error.message);
             setError(error.message);
           } finally {
             setLoading(false);
@@ -76,11 +65,19 @@ const UserNavbar = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+
   return (
     <div>
-      <div className="justify-between  bg-gray-300 flex">
-        <div className="flex">
+      <div className="justify-between bg-gray-300 flex">
+        <div className="flex items-center">
+          <img
+            src="/images/YEL_LOGO_Nav.png"
+            alt="YEL Seva Logo"
+            className="w-16 h-auto object-contain ml-4" // Adjusted the image size
+          />
+
           <p className="m-5 font-bold">YEL-SEVA</p>
+
           <ul className="pl-10 pr-10 grid md:grid-cols-3 ml-5 grid-cols-4 lg:grid-cols-3">
             <li className="hover:bg-blue-400 m-2 hover:text-black flex items-center justify-center p-4 font-normal rounded-md text-xs h-14">
               <span className="m-1">
@@ -96,7 +93,7 @@ const UserNavbar = () => {
               {user.name}
             </li>
 
-            {user.role === "general user" ? (
+            {user.role === "normal" ? (
               <Link to="/userdashboard">
                 <li className="hover:bg-blue-400 m-2 hover:text-black flex items-center justify-center p-4 font-normal rounded-md text-xs h-14">
                   <span className="m-1">
@@ -131,7 +128,7 @@ const UserNavbar = () => {
             onClick={handleLogout}
             className="bg-gray-500 mr-10 h-10 mt-4 text-white py-2 px-4 rounded hover:bg-black"
           >
-            logout
+            Logout
           </button>
         </div>
       </div>

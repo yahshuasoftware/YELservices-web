@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode"; // Fix import for jwt-decode
+import {jwtDecode} from "jwt-decode"; // Fix import for jwt-decode
 import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify styles
-import SummaryApi from "../common/Apis";
+import SummaryApi from "../common/Apis"; // Assuming you have this in place
 
 const UploadServices = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const { certificatename } = location.state || {}; // Fallback in case state is undefined
-
   const [certificateName, setCertificateName] = useState(certificatename || ""); // Fallback for certificate name
   const [proofOfIdentity, setProofOfIdentity] = useState([""]);
   const [proofOfAddress, setProofOfAddress] = useState([""]);
@@ -19,8 +18,12 @@ const UploadServices = () => {
   const [availableAddressDocs, setAvailableAddressDocs] = useState([]);
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
-  const [payAmount,setAmount]=useState(0)
+  const [payAmount, setAmount] = useState(0);
 
+  // New States for form
+  const [formFor, setFormFor] = useState("self"); // Dropdown state
+  const [personName, setPersonName] = useState(""); // Name field state
+  const [mobileNumber, setMobileNumber] = useState(""); // Mobile number state
 
   // Extract user ID from JWT token
   useEffect(() => {
@@ -36,18 +39,12 @@ const UploadServices = () => {
   useEffect(() => {
     const url = `${SummaryApi.documents.url}/${certificateName}`;
     const fetchDocuments = async () => {
-      // original url=http://localhost:8080/app/api/documents/${certificateName}
       try {
         const response = await axios.get(url);
         const { proofOfIdentity, proofOfAddress, amount } = response.data; // Adjust based on response structure
-        console.log(amount);
-        setAmount(amount)
-
+        setAmount(amount);
         setAvailableIdentityDocs(proofOfIdentity);
         setAvailableAddressDocs(proofOfAddress);
-
-        console.log("Available Proof of Identity:", proofOfIdentity);
-        console.log("Available Proof of Address:", proofOfAddress);
       } catch (error) {
         console.error("Error fetching documents:", error);
       }
@@ -61,9 +58,9 @@ const UploadServices = () => {
   // Handle adding more inputs for identity/address proof
   const handleAddField = (fieldType) => {
     if (fieldType === "identity") {
-      setProofOfIdentity([...proofOfIdentity, null]);
+      setProofOfIdentity([...proofOfIdentity, ""]);
     } else if (fieldType === "address") {
-      setProofOfAddress([...proofOfAddress, null]);
+      setProofOfAddress([...proofOfAddress, ""]);
     }
   };
 
@@ -81,17 +78,16 @@ const UploadServices = () => {
     }
   };
 
+  // Handle Payment
   const handlePayment = async () => {
     try {
       const url = SummaryApi.payment.url;
-      // Create Razorpay order by calling your backend
       const paymentResponse = await axios.post(url, {
-        amount: payAmount, // Replace with the actual amount
+        amount: payAmount,
       });
 
       const { amount, id: order_id, currency } = paymentResponse.data;
 
-      // Ensure Razorpay script is available
       if (typeof window.Razorpay === "undefined") {
         console.error("Razorpay SDK not loaded");
         toast.error("Payment gateway not available");
@@ -99,7 +95,7 @@ const UploadServices = () => {
       }
 
       const options = {
-        key: "rzp_test_U4XuiM2cjeWzma", // Razorpay key ID
+        key: "rzp_test_U4XuiM2cjeWzma",
         amount: amount,
         currency: currency,
         name: "Certificate Service",
@@ -109,31 +105,30 @@ const UploadServices = () => {
           try {
             const paymentId = response.razorpay_payment_id;
             console.log("Payment successful:", paymentId);
-
-            // Proceed with form submission after successful payment
             await handleSubmit();
           } catch (error) {
             console.error("Error during payment handling:", error);
           }
         },
-        theme: {
-          color: "#3399cc",
-        },
+        theme: { color: "#3399cc" },
       };
 
-      const rzp = new window.Razorpay(options); // Razorpay instance
+      const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
-      console.error("Error creating Razorpay order:", error); // Inspect the error
+      console.error("Error creating Razorpay order:", error);
       toast.error("Error initiating payment");
     }
   };
+
   // Handle form submission (called after successful payment)
   const handleSubmit = async () => {
     setLoading(true);
-
     const formData = new FormData();
     formData.append("certificateName", certificateName);
+    formData.append("formFor", formFor);
+    formData.append("name", personName);
+    formData.append("phoneNo", mobileNumber);
 
     // Append proof of identity files
     proofOfIdentity.forEach((file) => {
@@ -152,7 +147,7 @@ const UploadServices = () => {
     try {
       const token = localStorage.getItem("token");
       const url = `${SummaryApi.users.url}/${userId}/certificates`;
-      const response = await axios.post(url, formData, {
+      await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -162,7 +157,6 @@ const UploadServices = () => {
       toast.success("Certificate details uploaded successfully");
 
       setTimeout(() => {
-        // Code to execute after 5000 milliseconds (5 seconds)
         navigate("/userdashboard");
       }, 5000);
     } catch (error) {
@@ -174,23 +168,22 @@ const UploadServices = () => {
   };
 
   const handleClick = () => {
-    navigate("/userdashboard/serviceslist"); // Navigate to desired route
+    navigate("/userdashboard/serviceslist");
   };
 
   return (
     <>
       <div className="flex">
-        <div className="ml-14 mt-5 ">
+        <div className="ml-14 mt-5">
           <button
-            className="bg-blue-700 text-white rounded-lg p-2 m-1 border "
+            className="bg-blue-700 text-white rounded-lg p-2 m-1 border"
             onClick={handleClick}
           >
             Go to Services List
           </button>
         </div>
-        <div className="max-w-lg mx-auto p-8 bg-white shadow-md">
+        <div className="w-[40%] mx-auto p-8 bg-white shadow-md">
           <h2 className="text-2xl font-bold mb-6">Add Certificate Details</h2>
-
           <form className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -200,13 +193,58 @@ const UploadServices = () => {
                 type="text"
                 value={certificateName}
                 onChange={(e) => setCertificateName(e.target.value)}
-                className="mt-1 p-2 block w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 p-2 block w-full border rounded-md"
                 placeholder="Enter certificate name"
                 required
               />
             </div>
 
-            {/* Proof of Identity */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Filling Form For
+              </label>
+              <select
+                value={formFor}
+                onChange={(e) => setFormFor(e.target.value)}
+                className="mt-1 p-2 block w-full border rounded-md"
+              >
+                <option value="self">Self</option>
+                <option value="son">Son</option>
+                <option value="daughter">Daughter</option>
+              </select>
+            </div>
+
+            {formFor !== "self" && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    value={personName}
+                    onChange={(e) => setPersonName(e.target.value)}
+                    className="mt-1 p-2 block w-full border rounded-md"
+                    placeholder="Enter name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Mobile Number
+                  </label>
+                  <input
+                    type="text"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
+                    className="mt-1 p-2 block w-full border rounded-md"
+                    placeholder="Enter mobile number"
+                    required
+                  />
+                </div>
+              </>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Proof of Identity
@@ -216,7 +254,7 @@ const UploadServices = () => {
                   <label className="block text-sm font-medium text-gray-700">
                     Select Proof of Identity
                   </label>
-                  <select className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500">
+                  <select className="w-full mt-1 p-2 border rounded-md">
                     <option value="">Select Document</option>
                     {availableIdentityDocs.map((doc, idx) => (
                       <option key={idx} value={doc}>
@@ -226,21 +264,20 @@ const UploadServices = () => {
                   </select>
                   <input
                     type="file"
+                    className="mt-1 block w-full border rounded-md"
                     onChange={(e) => handleFileUpload(e, "identity", index)}
-                    className="mt-2"
                   />
                 </div>
               ))}
               <button
                 type="button"
+                className="bg-blue-700 text-white rounded-lg p-2"
                 onClick={() => handleAddField("identity")}
-                className="text-blue-500 hover:text-blue-700"
               >
-                + Add more Identity
+                Add More Identity Proof
               </button>
             </div>
 
-            {/* Proof of Address */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Proof of Address
@@ -250,7 +287,7 @@ const UploadServices = () => {
                   <label className="block text-sm font-medium text-gray-700">
                     Select Proof of Address
                   </label>
-                  <select className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500">
+                  <select className="w-full mt-1 p-2 border rounded-md">
                     <option value="">Select Document</option>
                     {availableAddressDocs.map((doc, idx) => (
                       <option key={idx} value={doc}>
@@ -260,38 +297,31 @@ const UploadServices = () => {
                   </select>
                   <input
                     type="file"
+                    className="mt-1 block w-full border rounded-md"
                     onChange={(e) => handleFileUpload(e, "address", index)}
-                    className="mt-2"
                   />
                 </div>
               ))}
               <button
                 type="button"
+                className="bg-blue-700 text-white rounded-lg p-2"
                 onClick={() => handleAddField("address")}
-                className="text-blue-500 hover:text-blue-700"
               >
-                + Add more Address
+                Add More Address Proof
               </button>
             </div>
 
             <button
               type="button"
-              onClick={handlePayment} // Call Razorpay before submission
-              className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-              disabled={loading}
+              onClick={handlePayment}
+              className="bg-blue-700 text-white rounded-lg p-2"
             >
-              {loading ? "Processing..." : "Pay & Submit"}
+              {loading ? "Processing..." : "Submit Details and Pay"}
             </button>
           </form>
-
-          <ToastContainer />
-          {loading && (
-            <p className="text-center text-gray-500 mt-4">
-              Uploading, please wait...
-            </p>
-          )}
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
