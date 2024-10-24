@@ -2,37 +2,76 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div>
-      <footer>
-        <div className="bg-gray-600 p-5 ">
-              <div>
-                <ul className=" flex pl-24">
-                  <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Disclaimer and Policies</a> | </li>
-                  <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Accessibility Statement</a> | </li>
-                  <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Sitemap</a> |</li>
-                  <li className="text-sm  p-1 hover:underline cursor-pointer text-white"><a>Help</a></li>
-                </ul>
-                <div className="clearfix"></div>
-                <span  className="text-sm pl-24 p-1 text-white" >
-                  Copyright &#169; 2015 Maharashtra Information Technology
-                  Corporation, All Rights Reserved <b className="serverid">B | </b>
-                </span>
-                <div className="clearfix"></div>
-                <span  className="text-sm pl-24  p-1 text-white">
-                  Best Viewed on internet explorer 9+, firefox, Chrome |
-                </span>
-              </div>
-              <div className="col-md-4 col-sm-4 col-xs-12 footer-logo">
-                <a  target="_blank">
-                  {/* <img src="../../images/wc.png" class="pull-left img-responsive" alt="compliance" /> */}
-                </a>
-                <a className="ExternalLinkClick" rel="follow" target="_blank">
-                  {/* <img src="../../Images/Maha_IT_LogoB.png" alt="MahaIT Corporation Limited" class="pull-right img-responsive" /> */}
-                </a>
-              </div>
+    <footer className="bg-gray-800 text-white">
+      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between space-y-8 sm:space-y-0">
+          {/* Links Section */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li className="hover:underline">
+                <a href="/about">About Us</a>
+              </li>
+              <li className="hover:underline">
+                <a href="/services">Services</a>
+              </li>
+              <li className="hover:underline">
+                <a href="/privacy">Privacy Policy</a>
+              </li>
+              <li className="hover:underline">
+                <a href="/terms">Terms of Service</a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Information */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Contact Us</h3>
+            <p className="text-sm">
+              1234, Some Street, Pune, Maharashtra, India
+            </p>
+            <p className="text-sm">Phone: +91 9876543210</p>
+            <p className="text-sm">Email: info@example.com</p>
+          </div>
+
+          {/* Social Media Section */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Follow Us</h3>
+            <div className="flex space-x-4">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="https://via.placeholder.com/24x24?text=F"
+                  alt="Facebook"
+                />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="https://via.placeholder.com/24x24?text=T"
+                  alt="Twitter"
+                />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="https://via.placeholder.com/24x24?text=I"
+                  alt="Instagram"
+                />
+              </a>
+            </div>
+          </div>
         </div>
-      </footer>
-    </div>
+
+        {/* Divider */}
+        <div className="border-t border-gray-700 mt-8 pt-4 text-center">
+          <p className="text-sm">
+            Copyright &#169; {new Date().getFullYear()} Your Company Name, All
+            Rights Reserved.
+          </p>
+          <p className="text-sm">
+            Best viewed on Chrome, Firefox, or Safari.
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 };
 

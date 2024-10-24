@@ -1,32 +1,34 @@
-import React from 'react'
-import ServicesAvailable from '../Component/Services/ServicesAvailable'
-import Login from '../pages/Login'
-import Signup from '../pages/Signup'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import Navbar from '../Component/Navbar/Navbar'
-import Footer from '../Component/Footer/Footer'
+import React from 'react';
+import ServicesAvailable from '../Component/Services/ServicesAvailable';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Navbar from '../Component/Navbar/Navbar';
+import Footer from '../Component/Footer/Footer';
 
 const Home = () => {
   return (
-    <div>
-      <Navbar/>
-        <div className="p-10 pl-28 h-[85vh]  bg-[url('../public/images/image.jpeg')] bg-cover bg-center gap-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-        <div className='mt-4'>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex-grow sm:flex-col px-5  h-auto lg:h-[90vh] bg-[url('../public/images/image.jpeg')] bg-cover bg-center gap-2 grid grid-cols-1 lg:grid-cols-2">
+        <div>
           <ServicesAvailable />
         </div>
-        <div >
+        <div>
           <Routes>
-            <Route path="*" element={<Login />} /> {/* Default Route */}
-            <Route path="/" element={<Navigate to="/login" />} />{" "}
             {/* Redirect root to login */}
+            <Route path="/" element={<Navigate to="/login" />} /> 
+            {/* Define login and signup routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            {/* Default route if no match is found */}
+            <Route path="*" element={<Navigate to="/login" />} /> 
           </Routes>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

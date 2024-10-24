@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { FaToggleOn, FaToggleOff } from "react-icons/fa";
 import PopModel from "../Model/PopModel"; // Import the PopModel component
@@ -82,8 +83,9 @@ const ServicesAvailable = () => {
 
   return (
     <>
-      <div className="w-4/5  bg-blue-300 bg-opacity-10 md:w-full sm:w-full lg:w-full pb-9">
-        <h1 className="rounded-t-md text-white bg-black flex justify-center">
+      <div className="w-full rounded-md mt-7 bg-blue-300 bg-opacity-10 pb-9 text-base md:text-lg lg:text-xl xl:text-2xl">
+
+        <h1 className="rounded-t-md text-white flex justify-center pt-3">
           Services Available Online
         </h1>
         <div className="h-full p-2">
@@ -116,7 +118,7 @@ const ServicesAvailable = () => {
             {filteredDepartments.length > 0 ? (
               filteredDepartments.map((department, deptIndex) => (
                 <div key={deptIndex}>
-                  <h1 className="text-black text-2xl font-bold mb-4">
+                  <h1 className="text-black text-xl font-bold mb-4 md:text-2xl">
                     {department.name}
                   </h1>
                   <div className="grid grid-cols-2 gap-4 mb-8">
@@ -126,7 +128,7 @@ const ServicesAvailable = () => {
                         className="bg-blue-800 bg-opacity-50 text-white p-4 text-center rounded-lg shadow-md hover:bg-blue-700 transition cursor-pointer"
                         onClick={() => handleCertificateClick(certificate)}
                       >
-                        <h2 className="text-lg font-bold">
+                        <h2 className="text-sm font-bold md:text-lg">
                           {certificate.name}
                         </h2>
                       </div>
