@@ -211,6 +211,7 @@ const UploadServices = () => {
                 <option value="self">Self</option>
                 <option value="son">Son</option>
                 <option value="daughter">Daughter</option>
+                <option value="wife">Wife</option>
               </select>
             </div>
 

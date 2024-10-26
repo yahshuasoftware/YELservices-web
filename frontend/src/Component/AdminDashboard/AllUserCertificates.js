@@ -53,6 +53,7 @@ const AllUserCertificates = () => {
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  console.log( 'this is data from all user certificates',allUsers);
 
   // Function to handle status change
   const handleStatusChange = async (userId, certificateId, newStatus) => {

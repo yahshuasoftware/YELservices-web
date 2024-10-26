@@ -136,9 +136,9 @@ const DepartmentChart = () => {
                 </th>
                 <th className="py-2 px-4 border bg-blue-200 text-gray-700">
                   Second Appellate Officer
-                </th>
+                </th> 
                 <th className="py-2 px-4 border bg-blue-200 text-gray-700">
-                  Available in Aaple Sarkar
+                  Available at YEL-Seva
                 </th>
               </tr>
             </thead>
