@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div className="relative">
-      {/* Hamburger Icon */}.
+      {/* Hamburger Icon */}
       <div className="md:hidden p-2" onClick={toggleMenu}>
         <FaBars className="text-xl cursor-pointer" />
       </div>
