@@ -7,8 +7,8 @@ const DepartmentPage = () => {
       <div className="mx-auto p-6 bg-white shadow-md rounded-lg mt-6 max-w-md md:max-w-2xl lg:max-w-3xl">
         <h2 className="text-2xl font-bold text-center mb-4">Department Management</h2>
 
-        <div className="flex flex-col sm:flex-row justify-around m-10">
-          <div className="mb-4 w-full sm:w-96">
+        <div className="flex flex-col sm:flex-row justify-around m-10 ">
+          <div className="mb-4 w-full sm:w-96 sm:mr-6">
             <Link
               to="/admindashboard/addCertificate" // Link to your Add Certificate page
               className="block w-full text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline mb-2"

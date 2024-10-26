@@ -15,7 +15,7 @@ const AdminDashboard = () => {
         {/* Sidebar and Content Area */}
         <div className="flex flex-1 mt-16"> {/* Push content down under the navbar */}
           {/* Fixed Sidebar */}
-          <div className="fixed top-14 left-0 w-64 h-[calc(100vh-64px)]"> {/* 64px height reserved for the navbar */}
+          <div className="fixed top-14 left-0 w-64 h-[calc(100vh-64px)] "> {/* 64px height reserved for the navbar */}
             <AdminSidebar/>
           </div>
 

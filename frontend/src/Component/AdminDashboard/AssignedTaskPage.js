@@ -113,7 +113,7 @@ const AssignedTaskPage = () => {
   }
 
   return (
-    <div className="container mx-auto mt-4 ">
+    <div className="container mx-auto mt-4  ">
       <h1 className="text-2xl font-semibold">Assigned Certificates</h1>
 
       <input
