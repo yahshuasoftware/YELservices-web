@@ -9,6 +9,9 @@ import SummaryApi from "../../common/Apis";
 
 import AdminUserManagement from "./AdminUserManagement";
 import AllUserCertificates from "../AdminDashboard/AllUserCertificates";
+import DepartmentPage from "./DepartmentPage"
+import AddCertificateForm from "./AddCertificateForm";
+import AddDepartmentForm from "./AddDepartmentForm";
 
 const SuperAdminSidebar = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // Sidebar open/close state
@@ -93,19 +96,14 @@ const SuperAdminSidebar = () => {
         <div className="mt-8 space-y-6">
           <ul className="space-y-4">
             <li>
-              <Link to="/superadmindashboard" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-md">
+              <Link to="/superAdmin" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-md">
                 <BiHomeAlt className="text-xl text-gray-600 dark:text-gray-400" />
                 {!isSidebarCollapsed && <span className="text-md font-medium text-gray-800 dark:text-white">Dashboard</span>}
               </Link>
             </li>
+           
             <li>
-              <Link to="/superadmin/allcertificates" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-md">
-                <BiBarChartAlt2 className="text-xl text-gray-600 dark:text-gray-400" />
-                {!isSidebarCollapsed && <span className="text-md font-medium text-gray-800 dark:text-white">All Certificates</span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/superadmin/department" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-md">
+              <Link to="/superAdmin/department" className="flex items-center space-x-4 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-md">
                 <BiBarChartAlt2 className="text-xl text-gray-600 dark:text-gray-400" />
                 {!isSidebarCollapsed && <span className="text-md font-medium text-gray-800 dark:text-white">Manage Departments</span>}
               </Link>
@@ -126,7 +124,10 @@ const SuperAdminSidebar = () => {
         <Usercontext.Provider value={user}>
           <Routes>
             <Route path="/" element={<AdminUserManagement />} />
-            <Route path="/allcertificates" element={<AllUserCertificates />} />
+            <Route path="allcertificates" element={<AllUserCertificates />} />
+            <Route path="department" element={<DepartmentPage />} />
+            <Route path="addCertificate" element={<AddCertificateForm />} />
+            <Route path="addDepartment" element={<AddDepartmentForm />} />
 
            
           </Routes>

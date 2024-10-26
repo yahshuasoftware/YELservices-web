@@ -9,7 +9,7 @@ const UserNavbar = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // State to track menu open/close
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -19,7 +19,7 @@ const UserNavbar = () => {
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen(!menuOpen); // Toggle the menu open/close
   };
 
   useEffect(() => {
@@ -58,52 +58,67 @@ const UserNavbar = () => {
   return (
     <nav className="bg-gray-300 p-4 flex justify-between items-center">
       <div className="flex items-center">
-        <p className="font-bold mr-4">YEL-SEVA</p>
+        {/* Logo Section */}
+        <img
+          src="/images/YEL_LOGO_Nav.png"
+          alt="YEL Seva Logo"
+          className="w-12 h-auto object-contain mr-4" // Adjusted the image size for responsive logo
+        />
+        <p className="font-bold text-lg mr-4">YEL-SEVA</p>
+
         <button
           className="text-2xl md:hidden"
           onClick={toggleMenu}
         >
-          {menuOpen ? <FaTimes /> : <FaBars />}
+          {menuOpen ? <FaTimes /> : <FaBars />} {/* Hamburger Icon */}
         </button>
 
-        {/* Navbar links */}
         <ul
-          className={`${
+          className={`md:flex space-x-4 absolute md:static top-16 left-0 w-full md:w-auto bg-gray-300 md:bg-transparent p-4 md:p-0 transition-transform duration-300 ease-in-out ${
             menuOpen ? "block" : "hidden"
-          } md:flex md:flex-row md:space-x-4 absolute md:static top-16 left-0 w-full md:w-auto bg-gray-300 md:bg-transparent p-4 md:p-0 transition-transform duration-300 ease-in-out`}
+          } md:flex`}
         >
-          <li className="hover:bg-blue-300 hover:text-black flex items-center p-2 rounded-md text-sm md:mr-4">
+          <li className="hover:bg-blue-300 hover:text-black flex items-center p-4 rounded-md text-sm">
             <IoMdHome className="mr-1" />
             Home
           </li>
-          <li className="hover:bg-blue-300 hover:text-black flex items-center p-2 rounded-md text-sm md:mr-4">
+          <li className="hover:bg-blue-300 hover:text-black flex items-center p-4 rounded-md text-sm">
             <FaUser className="mr-1" />
             <Link to="/profile">{user?.name}</Link>
           </li>
+
           {user?.role === "normal" && (
             <Link to="/userdashboard">
-              <li className="hover:bg-blue-300 hover:text-black flex items-center p-2 rounded-md text-sm md:mr-4">
+              <li className="hover:bg-blue-300 hover:text-black flex items-center p-4 rounded-md text-sm">
                 <FaTachometerAlt className="mr-1" />
                 DASHBOARD
               </li>
             </Link>
           )}
           {user?.role === "admin" && (
-            <Link to="/Admindashboard">
-              <li className="hover:bg-blue-400 hover:text-black flex items-center p-2 rounded-md text-sm md:mr-4">
+            <Link to="/admindashboard">
+              <li className="hover:bg-blue-400 hover:text-black flex items-center p-4 rounded-md text-sm">
                 <FaTachometerAlt className="mr-1" />
                 Admin DASHBOARD
               </li>
             </Link>
           )}
           {user?.role === "superadmin" && (
-            <Link to="/Superadmin">
-              <li className="hover:bg-blue-400 hover:text-black flex items-center p-2 rounded-md text-sm md:mr-4">
+            <Link to="/superAdmin">
+              <li className="hover:bg-blue-400 hover:text-black flex items-center p-4 rounded-md text-sm">
                 <FaTachometerAlt className="mr-1" />
                 SuperAdmin
               </li>
             </Link>
+            
           )}
+
+        <Link to="/careers">
+            <li className="hover:bg-blue-400 hover:text-black flex items-center p-4 rounded-md text-sm">
+              <FaTachometerAlt className="mr-1" />
+              CAREERS
+            </li>
+          </Link>
         </ul>
       </div>
 

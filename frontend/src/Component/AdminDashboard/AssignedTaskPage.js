@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import SummaryApi from '../../common/Apis';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode'; // Import the jwt-decode library
+import {jwtDecode} from 'jwt-decode';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AssignedTaskPage = () => {
   const [assignedCertificates, setAssignedCertificates] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [updating, setUpdating] = useState(false); 
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
-  const [revertCertificateId, setRevertCertificateId] = useState(null); // For tracking the certificate to be reverted
-  const [issueText, setIssueText] = useState(''); // Text for the issue description
-  const [file, setFile] = useState(null); // File input for uploading documents
+  const [updating, setUpdating] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [revertCertificateId, setRevertCertificateId] = useState(null);
+  const [issueText, setIssueText] = useState('');
 
   const statusOptions = ['pending', 'approved', 'rejected'];
 
@@ -68,39 +69,31 @@ const AssignedTaskPage = () => {
     }
   };
 
-  // Handle the revert action
   const handleRevertClick = (certificateId) => {
     setRevertCertificateId(certificateId);
     setIsModalOpen(true);
   };
 
-  // Handle submit action for the revert form
   const handleRevertSubmit = async () => {
-    if (!issueText || !file) {
-      alert("Please enter an issue description and upload a document.");
+    if (!issueText.trim()) {
+      alert('Please enter a reason for the revert.');
       return;
     }
 
     try {
-      const formData = new FormData();
-      formData.append('issue', issueText);
-      formData.append('document', file);
-
-      const url = `${SummaryApi.CertificatesRevertHandle.url}/${revertCertificateId}/revert`;
-      const response = await axios.post(url, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const url = `${SummaryApi.CertificatesRevertHandle.url}/${revertCertificateId}`;
+      const response = await axios.put(url, { issue: issueText });
 
       if (response.status === 200) {
-        console.log('Revert submitted successfully!');
-        // Optionally, update the UI here after a successful revert
+        console.log('Revert reason submitted successfully!');
+        toast.success('Revert reason submitted successfully!');
+        setIssueText('');
       }
     } catch (error) {
       console.error('Error reverting the certificate:', error);
+      toast.error('Error submitting revert reason.');
     } finally {
-      setIsModalOpen(false); // Close the modal after the process
+      setIsModalOpen(false);
     }
   };
 
@@ -113,7 +106,8 @@ const AssignedTaskPage = () => {
   }
 
   return (
-    <div className="container mx-auto mt-4  ">
+    <div className="container mx-auto mt-4">
+      <ToastContainer />
       <h1 className="text-2xl font-semibold">Assigned Certificates</h1>
 
       <input
@@ -133,7 +127,7 @@ const AssignedTaskPage = () => {
             <th className="border px-4 py-2">Payment Status</th>
             <th className="border px-4 py-2">Status</th>
             <th className="border px-4 py-2">Application Date</th>
-            <th className="border px-4 py-2">Action</th> {/* New Action column */}
+            <th className="border px-4 py-2">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -192,7 +186,6 @@ const AssignedTaskPage = () => {
         </tbody>
       </table>
 
-      {/* Modal for reverting the application */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-lg w-1/3">
@@ -204,11 +197,6 @@ const AssignedTaskPage = () => {
               className="w-full p-2 border mb-4"
               rows="4"
             ></textarea>
-            <input
-              type="file"
-              onChange={(e) => setFile(e.target.files[0])}
-              className="mb-4"
-            />
             <div className="flex justify-end">
               <button
                 className="bg-gray-500 text-white px-4 py-2 mr-2 rounded"

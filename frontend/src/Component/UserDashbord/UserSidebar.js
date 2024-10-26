@@ -8,6 +8,7 @@ import ServicesList from "./ServicesList";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import SummaryApi from "../../common/Apis";
+import Careers from "../../Careers/Careers";
 
 const UserSidebar = () => {
   const [isClosed, setIsClosed] = useState(false); // Sidebar open/close state
@@ -160,6 +161,8 @@ const UserSidebar = () => {
             <Route path="/" element={<UserDashbords />} />
             <Route path="notifications" element={<UserNotification />} />
             <Route path="serviceslist" element={<ServicesList />} />
+            {/* <Route path="service" element={<UplodeServices />} /> */}
+            <Route path="careers" element={<Careers />} />
           </Routes>
         </Usercontext.Provider>
       </section>

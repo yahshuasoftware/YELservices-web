@@ -15,9 +15,9 @@ import PanService from "../Component/Dashboard/PanService";
 import UserDetails from "../Component/AdminDashboard/UserDetails";
 import AllUserCertificates from "../Component/AdminDashboard/AllUserCertificates";
 import UserInfo from "../Component/AdminDashboard/UserInfo";
-import DepartmentPage from "../Component/AdminDashboard/DepartmentPage";
-import AddCertificateForm from "../Component/AdminDashboard/AddCertificateForm";
-import AddDepartmentForm from "../Component/AdminDashboard/AddDepartmentForm";
+import DepartmentPage from "../Component/SuperAdmin/DepartmentPage";
+import AddCertificateForm from "../Component/SuperAdmin/AddCertificateForm";
+import AddDepartmentForm from "../Component/SuperAdmin/AddDepartmentForm";
 import SummaryApi from "../common/Apis";
 import RationCard from "../Component/Dashboard/RationCard";
 import ElectionService from "../Component/Dashboard/ElectionCard";
@@ -25,7 +25,8 @@ import AdminDashboard from "../pages/AdminDashboard";
 import SuperAdminSidebar from "../Component/SuperAdmin/SuperAdminSidebar"
 import AdminUserManagement from "../Component/SuperAdmin/AdminUserManagement";
 import AssignedTaskPage from "../Component/AdminDashboard/AssignedTaskPage";
-import ProfilePage from "../Component/UserDashbord/ProfilePage";
+import Careers from "../Careers/Careers";
+import ProfilePage from "../pages/profilePage"
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -81,6 +82,8 @@ const AppRoutes = () => {
       {token && <Route path="/" element={<Navigate to="/dashboard" />} />}
       {token && userRole ==='admin' &&<Route path="/" element={<Navigate to="/admindashboard" />} />}
 
+      <Route path="careers" element={<Careers />} />
+
       {/* Main application routes */}
       <Route path="/dashbord" element={<Dashbord />}>
         <Route index element={<DepartmentChart />} />
@@ -90,9 +93,11 @@ const AppRoutes = () => {
         <Route path="pan" element={<PanService />} />
         <Route path="ration" element={<RationCard/>} />
         <Route path="election" element={<ElectionService/>} />
+        <Route path="careers" element={<Careers />} />
+        
       </Route>
 
-      <Route path="service" element={<UplodeServices />} />
+     
 
       {/* User dashboard route */}
       {token && (
@@ -101,8 +106,15 @@ const AppRoutes = () => {
           <Route path="" element={<UserDashbords />} /> {/* Default dashboard content */}
           <Route path="notifications" element={<UserNotification />} />
           <Route path="serviceslist" element={<ServicesList />} />
+          <Route path="service" element={<UplodeServices />} />
+          <Route path="careers" element={<Careers />} />
+          
         </Route>
       )}
+      {token &&  
+      <Route path="service" element={<UplodeServices />} /> }
+      {token &&  
+      <Route path="profile" element={<ProfilePage/>} />}
 
 
        {/* AdminDashboard route */}
