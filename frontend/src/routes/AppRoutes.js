@@ -25,6 +25,9 @@ import AdminDashboard from "../pages/AdminDashboard";
 import SuperAdminSidebar from "../Component/SuperAdmin/SuperAdminSidebar";
 import AdminUserManagement from "../Component/SuperAdmin/AdminUserManagement";
 import AssignedTaskPage from "../Component/AdminDashboard/AssignedTaskPage";
+import Careers from "../Careers/Careers";
+import ProfilePage from "../pages/profilePage";
+
 
 const AppRoutes = () => {
   const token = localStorage.getItem("token");
@@ -81,6 +84,8 @@ const AppRoutes = () => {
       )}
        {token && userRole === "superadmin" && <Route path="/" element={<Navigate to="/superAdmin" />} />} */}
 
+      <Route path="careers" element={<Careers />} />
+
       {/* Main application routes */}
       <Route path="/dashbord" element={<Dashbord />}>
         <Route index element={<DepartmentChart />} />
@@ -88,10 +93,13 @@ const AppRoutes = () => {
         <Route path="contact-us" element={<ContactUs />} />
         <Route path="aadhar" element={<AadharService />} />
         <Route path="pan" element={<PanService />} />
-        <Route path="ration" element={<RationCard />} />
-        <Route path="election" element={<ElectionService />} />
+        <Route path="ration" element={<RationCard/>} />
+        <Route path="election" element={<ElectionService/>} />
+        <Route path="careers" element={<Careers />} />
+        
       </Route>
 
+     
 
       {/* User dashboard route */}
       {token && userRole?.toLowerCase() === "normal" && (
@@ -102,8 +110,15 @@ const AppRoutes = () => {
           <Route path="service" element={<UplodeServices />} />
           <Route path="notifications" element={<UserNotification />} />
           <Route path="serviceslist" element={<ServicesList />} />
+          <Route path="careers" element={<Careers />} />
         </Route>
       )}
+
+{token &&  
+      <Route path="service" element={<UplodeServices />} /> }
+      {token &&  
+      <Route path="profile" element={<ProfilePage/>} />}
+   
 
       {/* AdminDashboard route */}
       {token && userRole?.toLowerCase() === "admin" && (

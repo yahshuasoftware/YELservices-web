@@ -2,8 +2,8 @@ const usermodel = require("../models/UserModel");
 
 const revertApplication = async (req, res) => {
   const { certificateId } = req.params;
-  const { revertReason, revertDocuments } = req.body; // Receive reason and documents
-  
+  const { revertReason } = req.body; // Receive reason and documents
+  console.log("revert contoller test")
   try {
     const user = await usermodel.findOne({ 'certificatesApplied._id': certificateId });
     
@@ -14,9 +14,8 @@ const revertApplication = async (req, res) => {
         return res.status(404).json({ message: 'Certificate not found' });
       }
       
-      certificate.status = 'reverted';
-      certificate.revertReason = revertReason;
-      certificate.revertUploads = revertDocuments; // Save new uploaded documents
+      certificate.status = 'revert';
+      certificate.revertReason = revertReason;// Save new uploaded documents
       
       await user.save();
       
@@ -29,4 +28,4 @@ const revertApplication = async (req, res) => {
   }
 };
 
-module.exports = revertApplication;
+module.exports = revertApplication;  

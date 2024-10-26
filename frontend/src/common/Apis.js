@@ -64,6 +64,9 @@ const SummaryApi = {
       CertificatesStatusHandle:{
         url: `${backendDomain}/api/certificates`,
 
+      },
+      CertificatesRevertHandle:{
+        url:`${backendDomain}/api/revert-certificate`
       }
 
 }

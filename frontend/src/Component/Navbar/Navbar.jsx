@@ -17,8 +17,8 @@ const Navbar = () => {
       </div>
 
       {/* Full Navbar for larger screens and mobile screens */}
-      <div className={`md:block ${isOpen ? "block" : "hidden"} text-sm sm:text-xs md:text-base lg:text-lg`}>
-        <ul className="pl-1 pr-1 grid grid-cols-1 md:grid-cols-8 bg-gray-300">
+      <div className={`md:block ${isOpen ? "block" : "hidden"} text-sm sm:text-xs md:text-base p-2 bg-gray-300 lg:text-lg`}>
+        <ul className="pl-1 pr-1 grid grid-cols-1 md:grid-cols-8  bg-gray-300">
           <li className="hover:bg-orange-700 hover:text-white flex items-center justify-start pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base lg:mx-7">
             <span className="m-1"><IoMdHome /></span> Home
           </li>
@@ -34,6 +34,9 @@ const Navbar = () => {
           </li>
           <li className="hover:bg-orange-700 hover:text-white  flex items-center justify-start pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base">
             <span className="m-1"><FaTachometerAlt /></span> DASHBOARD
+          </li>
+          <li className="hover:bg-orange-700 hover:text-white  flex items-center justify-start pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base">
+            <span className="m-1"><FaTachometerAlt /></span> CAREERS
           </li>
         </ul>
       </div>
