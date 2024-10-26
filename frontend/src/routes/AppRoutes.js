@@ -25,6 +25,7 @@ import AdminDashboard from "../pages/AdminDashboard";
 import SuperAdminSidebar from "../Component/SuperAdmin/SuperAdminSidebar"
 import AdminUserManagement from "../Component/SuperAdmin/AdminUserManagement";
 import AssignedTaskPage from "../Component/AdminDashboard/AssignedTaskPage";
+import Careers from "../Careers/Careers";
 
 const AppRoutes = () => {
   const token = localStorage.getItem('token');
@@ -80,6 +81,8 @@ const AppRoutes = () => {
       {token && <Route path="/" element={<Navigate to="/dashboard" />} />}
       {token && userRole ==='admin' &&<Route path="/" element={<Navigate to="/admindashboard" />} />}
 
+      <Route path="careers" element={<Careers />} />
+
       {/* Main application routes */}
       <Route path="/dashbord" element={<Dashbord />}>
         <Route index element={<DepartmentChart />} />
@@ -89,9 +92,10 @@ const AppRoutes = () => {
         <Route path="pan" element={<PanService />} />
         <Route path="ration" element={<RationCard/>} />
         <Route path="election" element={<ElectionService/>} />
+        <Route path="careers" element={<Careers />} />
       </Route>
 
-      <Route path="service" element={<UplodeServices />} />
+     
 
       {/* User dashboard route */}
       {token && (
@@ -100,6 +104,8 @@ const AppRoutes = () => {
           <Route path="" element={<UserDashbords />} /> {/* Default dashboard content */}
           <Route path="notifications" element={<UserNotification />} />
           <Route path="serviceslist" element={<ServicesList />} />
+          <Route path="service" element={<UplodeServices />} />
+          <Route path="careers" element={<Careers />} />
         </Route>
       )}
 

@@ -28,4 +28,4 @@ const revertApplication = async (req, res) => {
   }
 };
 
-module.exports = revertApplication;
+module.exports = revertApplication;  

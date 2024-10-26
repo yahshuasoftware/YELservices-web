@@ -110,7 +110,15 @@ const UserNavbar = () => {
                 SuperAdmin
               </li>
             </Link>
+            
           )}
+
+        <Link to="/careers">
+            <li className="hover:bg-blue-400 hover:text-black flex items-center p-4 rounded-md text-sm">
+              <FaTachometerAlt className="mr-1" />
+              CAREERS
+            </li>
+          </Link>
         </ul>
       </div>
 

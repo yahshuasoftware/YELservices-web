@@ -35,6 +35,9 @@ const Navbar = () => {
           <li className="hover:bg-orange-700 hover:text-white  flex items-center justify-start pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base">
             <span className="m-1"><FaTachometerAlt /></span> DASHBOARD
           </li>
+          <li className="hover:bg-orange-700 hover:text-white  flex items-center justify-start pt-1 pb-1 font-thin text-xs md:text-sm lg:text-base">
+            <span className="m-1"><FaTachometerAlt /></span> CAREERS
+          </li>
         </ul>
       </div>
     </div>
