@@ -21,6 +21,9 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
 
+app.get("/app/health", (req, res) => {
+    res.status(200).json({ message: 'Server is healthy' });
+});
 // Define Routes
 app.use("/app", router);
 
