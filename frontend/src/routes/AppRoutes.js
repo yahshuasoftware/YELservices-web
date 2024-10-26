@@ -24,6 +24,7 @@ import ElectionService from "../Component/Dashboard/ElectionCard";
 import AdminDashboard from "../pages/AdminDashboard";
 import SuperAdminSidebar from "../Component/SuperAdmin/SuperAdminSidebar"
 import AdminUserManagement from "../Component/SuperAdmin/AdminUserManagement";
+import AssignedTaskPage from "../Component/AdminDashboard/AssignedTaskPage";
 import ProfilePage from "../Component/UserDashbord/ProfilePage";
 
 const AppRoutes = () => {
@@ -78,7 +79,7 @@ const AppRoutes = () => {
       {/* Redirect logic based on token */}
       {!token && <Route path="*" element={<Home />} />}
       {token && <Route path="/" element={<Navigate to="/dashboard" />} />}
-      {token && userRole ==='admin' &&<Route path="/" element={<Navigate to="/Admindashboard" />} />}
+      {token && userRole ==='admin' &&<Route path="/" element={<Navigate to="/admindashboard" />} />}
 
       {/* Main application routes */}
       <Route path="/dashbord" element={<Dashbord />}>
@@ -106,7 +107,7 @@ const AppRoutes = () => {
 
        {/* AdminDashboard route */}
       {token && userRole?.toLowerCase() === 'admin' && (
-        <Route path="/Admindashboard" element={<AdminDashboard/>}>
+        <Route path="/admindashboard" element={<AdminDashboard/>}>
           {/* Nested dashboard routes */}
           <Route index element={<UserDetails />} />
           <Route path="user/:userId" element={<UserInfo />} /> {/* Route for User Info page */}
@@ -114,6 +115,10 @@ const AppRoutes = () => {
           <Route path="addCertificate" element={<AddCertificateForm />} />
           <Route path="addDepartment" element={<AddDepartmentForm />} />
           <Route path="allcertificates" element={<AllUserCertificates/>}/>
+          <Route path="tasks" element={<AssignedTaskPage/>}/>
+          
+          
+
         </Route>
       )}
 

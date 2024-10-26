@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SummaryApi from "../../common/Apis";
 
 const AadharService = () => {
   const navigate = useNavigate();
+  const [departments, setDepartments] = useState([]);
 
-  const handlenavigate = () => {
-    navigate('/userdashboard/serviceslist');
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await fetch(SummaryApi.addDepartment.url); // Replace with your API endpoint
+        const data = await response.json();
+        setDepartments(data);
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
+  const handlenavigate = (certificatename) => {
+    navigate("/service", { state: { certificatename } });
   };
 
   return (
@@ -17,47 +33,33 @@ const AadharService = () => {
           Aadhaar Services
         </h2>
 
-       
-
         {/* Cards Container */}
-        <div className="gap-4  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-auto ml-6 mt-6">
-          {/* First Card - New Aadhaar Card */}
-          <div className="border  w-full max-w-xs border-gray-600 rounded-lg shadow-sm mb-4">
-            <div className="bg-gradient-to-r from-red-500 to-teal-400 h-1 rounded-t-lg"></div>
-            <div className="p-4">
-              <h2 className="text-lg font-semibold text-gray-800">
-                New Aadhar Card<span className="ml-1">›</span>
-              </h2>
-              <p className="text-gray-600 mt-2">
-                Update the documents in your Aadhaar database for better service delivery and accurate Aadhaar based authentication.
-              </p>
-              <a
-                onClick={handlenavigate}
-                className="text-blue-600 font-medium cursor-pointer mt-2 inline-block hover:underline"
-              >
-                New Aadhar Card
-              </a>
-            </div>
-          </div>
-
-          {/* Second Card - Update Aadhaar Address */}
-          <div className="border w-full max-w-xs border-gray-600 rounded-lg shadow-sm mb-4">
-            <div className="bg-gradient-to-r from-red-500 to-teal-400 h-1 rounded-t-lg"></div>
-            <div className="p-4">
-              <h2 className="text-lg font-semibold text-gray-800">
-                Update Aadhar Address<span className="ml-1">›</span>
-              </h2>
-              <p className="text-gray-600 mt-2">
-                View your Aadhaar and your Bank account linking status. Aadhaar Linking status is fetched from NPCI Server.
-              </p>
-              <a
-                onClick={handlenavigate}
-                className="text-blue-600 font-medium mt-2 cursor-pointer inline-block hover:underline"
-              >
-                Update Aadhar Address
-              </a>
-            </div>
-          </div>
+        <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-auto ml-6 mt-6">
+          {departments.map((department) =>
+            department.name === "Aadhar Services" ? (
+              department.certificates && department.certificates.length > 0 ? (
+                department.certificates.map((certificate, index) => (
+                  <div key={index} className="border w-full max-w-xs border-gray-600 rounded-lg shadow-sm mb-4">
+                    <div className="bg-gradient-to-r from-red-500 to-teal-400 h-1 rounded-t-lg"></div>
+                    <div className="p-4">
+                      <h2 className="text-lg font-semibold text-gray-800">
+                        {certificate.name} <span className="ml-1">›</span>
+                      </h2>
+                     
+                      <a
+                        onClick={() => handlenavigate(certificate.name)}
+                          className="mt-4 inline-block text-white bg-blue-500 cursor-pointer hover:bg-blue-600 px-4 py-2 rounded"
+                      >
+                        Apply
+                      </a>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No certificates available for this department.</p>
+              )
+            ) : null
+          )}
         </div>
       </div>
     </div>

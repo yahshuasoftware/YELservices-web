@@ -21,7 +21,7 @@ const Dashbord = () => {
           </div>
 
           {/* Main Content */}
-          <div className="flex-item-center justify-center  p-10 w-full overflow-auto" style={{ maxHeight: 'calc(100vh - 64px)' }}>
+          <div className=" p-10 w-full overflow-auto" style={{ maxHeight: 'calc(100vh - 64px)' }}>
             <Outlet />
           </div>
         </div>

@@ -17,7 +17,7 @@ const ContactUs = () => {
         </p>
 
         {/* Call Center Info */}
-        <div className="bg-red-100 p-6 rounded-md shadow-lg w-full max-w-lg mx-auto">
+        <div className="bg-gray-100 p-6 rounded-md shadow-lg w-full max-w-lg mx-auto">
           <p className="text-sm text-red-500 mb-2 text-center">
             For Queries Contact numbers for clarifications
           </p>

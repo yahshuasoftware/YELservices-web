@@ -84,7 +84,7 @@ const UserSidebar = () => {
 
   return (
     <div className={`${isDarkMode ? "dark" : ""} flex`}>
-      <nav className={`bg-gray-700 text-white dark:bg-ocean-800 min-h-screen transition-all duration-300 ${isClosed ? "w-20" : "w-64"} p-4`}>
+      <nav className={`bg-gray-700 h-screen  text-white dark:bg-ocean-800  min-h-screen transition-all duration-300 ${isClosed ? "w-20" : "w-64"} p-4`}>
         <header className="relative flex items-center justify-between">
           <div className={`flex items-center ${isClosed ? "hidden" : ""}`}>
             <div className="flex flex-col items-center">

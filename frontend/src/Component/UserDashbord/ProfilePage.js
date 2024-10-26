@@ -19,7 +19,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-blue-200">
       <UserNavbar /> {/* Render UserNavbar here */}
 
       <div className="flex items-center justify-center h-screen">

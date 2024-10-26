@@ -99,7 +99,7 @@ const AllUserCertificates = () => {
   }
 
   return (
-    <div className="container mx-auto mt-4">
+    <div className="container mx-auto mt-4 ">
       <h1 className="text-2xl font-semibold">All Certificates from Each User</h1>
 
       {/* Search Input */}

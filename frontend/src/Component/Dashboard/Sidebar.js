@@ -1,32 +1,30 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars } from "react-icons/fa"; // Import the hamburger icon
+import { FaBars } from "react-icons/fa";
 
 const Sidebar = () => {
-  const [activeLink, setActiveLink] = useState(null); // State to track the active link
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to toggle sidebar
+  const [activeLink, setActiveLink] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLinkClick = (index) => {
-    setActiveLink(index); // Update the active link when clicked
-    setIsSidebarOpen(false); // Close sidebar after link click (for small screens)
+    setActiveLink(index);
+    setIsSidebarOpen(false);
   };
 
   const toggleMenu = () => {
-    setIsSidebarOpen((prev) => !prev); // Toggle the sidebar open state
+    setIsSidebarOpen((prev) => !prev);
   };
 
   return (
     <div className="relative mt-2">
-      {/* Hamburger button for small screens */}
       <div className="md:hidden p-2" onClick={toggleMenu}>
         <FaBars className="text-xl cursor-pointer" />
       </div>
 
-      {/* Sidebar */}
       <div
-        className={`fixed md:relative w-64 h-[95vh] bg-blue-800 text-white top-0 left-0 overflow-y-auto transition-transform duration-300 ease-in-out z-50 ${
+        className={`fixed md:relative w-64 h-screen bg-[#075985] text-white top-0 left-0 overflow-y-auto transition-transform duration-300 ease-in-out z-50 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0`} // Toggle sidebar for small screens
+        } md:translate-x-0`} 
       >
         <ul className="space-y-2 py-4">
           <li

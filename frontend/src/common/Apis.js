@@ -1,5 +1,5 @@
 
-const backendDomain= process.env.REACT_APP_LOCALHOST_URI
+const backendDomain= process.env.REACT_APP_LOCALHOST_URI || "http://localhost:8080/app"
 
 
 // const backendDomain=process.env.REACT_APP_API_URI
@@ -57,6 +57,14 @@ const SummaryApi = {
         url: `${backendDomain}/api/users`,
         
       },
+      assignedCertificates: {
+        url: `${backendDomain}/api/assigned-tasks`, // Adjust the URL as needed
+        method: 'GET',
+      },
+      CertificatesStatusHandle:{
+        url: `${backendDomain}/api/certificates`,
+
+      }
 
 }
 export default SummaryApi;

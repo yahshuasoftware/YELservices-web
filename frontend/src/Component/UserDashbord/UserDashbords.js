@@ -3,7 +3,11 @@ import AppliedCertificates from './AppliedCertificates'
 
 const UserDashbords = () => {
   return (
-    <div><AppliedCertificates/></div>
+    <div><AppliedCertificates/>
+    
+    </div>
+    
+
   )
 }
 

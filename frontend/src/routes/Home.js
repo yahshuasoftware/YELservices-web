@@ -8,10 +8,10 @@ import Footer from '../Component/Footer/Footer';
 
 const Home = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
+    <div>
+      <Navbar/>
       <div className="flex-grow px-5 h-auto lg:h-[85vh] bg-[url('../public/images/image.jpeg')] bg-cover bg-center gap-2 grid grid-cols-1 lg:grid-cols-2">
-        <div>
+        <div className='mt-4 '>
           <ServicesAvailable />
         </div>
         <div>

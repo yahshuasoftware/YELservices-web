@@ -95,7 +95,7 @@ const DepartmentChart = () => {
     },
     {
       id: 11,
-      service: "Certificate of Residence in Hilly Area",
+      service: "Certificate of Resldence in Hilly Area",
       days: 7,
       officer: "Tahsildar",
       firstAppeal: "Sub-Divisional Officer",
@@ -106,60 +106,58 @@ const DepartmentChart = () => {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex">
       {/* Sidebar Component */}
       
-      
+
       {/* Main Content */}
-      <div className="flex-grow container mx-auto overflow-y-auto h-screen p-4 md:ml-64"> {/* Add margin-left to accommodate the sidebar */}
+      <div className="flex-grow container mx-auto overflow-y-auto h-screen pl-4 md:pl-64"> {/* Adjusted margin-left here */}
         <div className="bg-white shadow-lg rounded-lg p-3">
           <h2 className="text-2xl font-bold text-center text-white bg-blue-500 py-2 mb-6 rounded-md">
             Department Notified Services
           </h2>
-
-          {/* Responsive Table */}
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white table-auto">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 border border-black bg-gray-300 text-xs md:text-sm lg:text-base">
-                    Sr. No
-                  </th>
-                  <th className="py-2 px-4 border bg-blue-200 text-gray-700 text-xs md:text-sm lg:text-base">
-                    Public Service
-                  </th>
-                  <th className="py-2 px-4 border bg-blue-200 text-gray-700 text-xs md:text-sm lg:text-base sm:table-cell">
-                    Time limit (Days)
-                  </th>
-                  <th className="py-2 px-4 border bg-blue-200 text-gray-700 text-xs md:text-sm lg:text-base md:table-cell">
-                    Designated Officer
-                  </th>
-                  <th className="py-2 px-4 border bg-blue-200 text-gray-700 text-xs md:text-sm lg:text-base lg:table-cell">
-                    First Appellate Officer
-                  </th>
-                  <th className="py-2 px-4 border bg-blue-200 text-gray-700 text-xs md:text-sm lg:text-base xl:table-cell">
-                    Second Appellate Officer
-                  </th>
-                  <th className="py-2 px-4 border bg-blue-200 text-gray-700 text-xs md:text-sm lg:text-base">
-                    Available in Aaple Sarkar
-                  </th>
+          <table className="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th className="py-2 px-4 border border-solid border-black bg-gray-300">
+                  Sr. No
+                </th>
+                <th className="py-2 px-4 border bg-blue-200 text-gray-700">
+                  Public Service
+                </th>
+                <th className="py-2 px-4 border bg-blue-200 text-gray-700">
+                  Time limit (Days)
+                </th>
+                <th className="py-2 px-4 border bg-blue-200 text-gray-700">
+                  Designated Officer
+                </th>
+                <th className="py-2 px-4 border bg-blue-200 text-gray-700">
+                  First Appellate Officer
+                </th>
+                <th className="py-2 px-4 border bg-blue-200 text-gray-700">
+                  Second Appellate Officer
+                </th>
+                <th className="py-2 px-4 border bg-blue-200 text-gray-700">
+                  Available in Aaple Sarkar
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={item.id}>
+                  <td className="py-2 px-4 border text-center">{index + 1}</td>
+                  <td className="py-2 px-4 border">{item.service}</td>
+                  <td className="py-2 px-4 border text-center">{item.days}</td>
+                  <td className="py-2 px-4 border">{item.officer}</td>
+                  <td className="py-2 px-4 border">{item.firstAppeal}</td>
+                  <td className="py-2 px-4 border">{item.secondAppeal}</td>
+                  <td className="py-2 px-4 border text-center">
+                    {item.available}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {data.map((item, index) => (
-                  <tr key={item.id} className="text-xs md:text-sm lg:text-base">
-                    <td className="py-2 px-4 border text-center">{index + 1}</td>
-                    <td className="py-2 px-4 border">{item.service}</td>
-                    <td className="py-2 px-4 border text-center hidden sm:table-cell">{item.days}</td>
-                    <td className="py-2 px-4 border hidden md:table-cell">{item.officer}</td>
-                    <td className="py-2 px-4 border hidden lg:table-cell">{item.firstAppeal}</td>
-                    <td className="py-2 px-4 border hidden xl:table-cell">{item.secondAppeal}</td>
-                    <td className="py-2 px-4 border text-center">{item.available}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
