@@ -130,7 +130,7 @@ const Login = () => {
   return (
     <div className="h-[80%] mt-7 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6">
-        <h2 className="text-xl font-semibold text-center mb-5">Login</h2>
+        <h2 className="text-xl font-semibold text-center mb-5">Login Arjun</h2>
 
         {/* Toggle between Email/Password and Phone/OTP login */}
         <div className="mb-2 flex justify-center">
