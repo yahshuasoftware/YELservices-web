@@ -16,13 +16,13 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="relative mt-2">
-      <div className="md:hidden p-2" onClick={toggleMenu}>
+    <div className="relative mt-3 pt-1">
+      <div className="md:hidden pt-4" onClick={toggleMenu}>
         <FaBars className="text-xl cursor-pointer" />
       </div>
 
       <div
-        className={`fixed md:relative w-64 h-screen bg-[#075985] text-white top-0 left-0 overflow-y-auto transition-transform duration-300 ease-in-out z-50 ${
+        className={`fixed md:relative w-64 h-screen bg-[#075985] text-white top-0 left-0 overflow-y-auto transition-transform duration-300 ease-in-out z-50  ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`} 
       >
@@ -36,7 +36,7 @@ const Sidebar = () => {
             <Link className="block">Home</Link>
           </li>
           <li
-            className={`px-4 py-2 text-left ${
+            className={`px-4 py-2 text-left  ${
               activeLink === 1 ? "bg-orange-400" : "hover:bg-blue-500"
             }`}
             onClick={() => handleLinkClick(1)}

@@ -9,7 +9,7 @@ const UserNavbar = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); // State to track menu open/close
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -19,7 +19,7 @@ const UserNavbar = () => {
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen); // Toggle the menu open/close
+    setMenuOpen(!menuOpen);
   };
 
   useEffect(() => {
@@ -58,11 +58,10 @@ const UserNavbar = () => {
   return (
     <nav className="bg-gray-300 p-4 flex justify-between items-center">
       <div className="flex items-center">
-        {/* Logo Section */}
         <img
           src="/images/YEL_LOGO_Nav.png"
           alt="YEL Seva Logo"
-          className="w-12 h-auto object-contain mr-4" // Adjusted the image size for responsive logo
+          className="w-12 h-auto object-contain mr-4"
         />
         <p className="font-bold text-lg mr-4">YEL-SEVA</p>
 
@@ -70,13 +69,13 @@ const UserNavbar = () => {
           className="text-2xl md:hidden"
           onClick={toggleMenu}
         >
-          {menuOpen ? <FaTimes /> : <FaBars />} {/* Hamburger Icon */}
+          {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
         <ul
-          className={`md:flex space-x-4 absolute md:static top-16 left-0 w-full md:w-auto bg-gray-300 md:bg-transparent p-4 md:p-0 transition-transform duration-300 ease-in-out ${
+          className={`md:flex flex-col md:flex-row md:space-y-0 md:space-x-4 absolute md:static top-16 left-0 w-full md:w-auto bg-gray-300 md:bg-transparent p-4 md:p-0 transition-transform duration-300 ease-in-out ${
             menuOpen ? "block" : "hidden"
-          } md:flex`}
+          }`}
         >
           <li className="hover:bg-blue-300 hover:text-black flex items-center p-4 rounded-md text-sm">
             <IoMdHome className="mr-1" />
@@ -110,10 +109,9 @@ const UserNavbar = () => {
                 SuperAdmin
               </li>
             </Link>
-            
           )}
 
-        <Link to="/careers">
+          <Link to="/careers">
             <li className="hover:bg-blue-400 hover:text-black flex items-center p-4 rounded-md text-sm">
               <FaTachometerAlt className="mr-1" />
               CAREERS
